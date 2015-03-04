@@ -19,23 +19,11 @@
  ***********************************************************/
 package com.verisign.epp.codec.gen;
 
-import java.io.ByteArrayOutputStream;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.verisign.epp.util.EPPCatFactory;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.log4j.Logger;
+import org.apache.xerces.dom.DocumentImpl;
+import org.w3c.dom.*;
 
 import javax.xml.bind.DatatypeConverter;
 import javax.xml.transform.OutputKeys;
@@ -43,17 +31,13 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import org.apache.commons.codec.binary.Base64;
-import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
-
-import com.sun.org.apache.xerces.internal.dom.DocumentImpl;
-import com.verisign.epp.util.EPPCatFactory;
+import java.io.ByteArrayOutputStream;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Provides a set of utility static methods for use by the EPP Codec classes.

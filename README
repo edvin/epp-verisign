@@ -79,3 +79,5 @@ Line 785:
 		if (theCmdTransId == null)
 			return;
 
+
+gen/EPPUtil.java: Switched out sun internal import com.sun.org.apache.xerces.internal.dom with org.apache.xerces.dom.DocumentImpl
