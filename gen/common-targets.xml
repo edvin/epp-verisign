@@ -1,0 +1,160 @@
+<!--
+#############################################################
+# Copyright (C) 2004 VeriSign, Inc.
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# 
+# http://www.verisign.com/nds/naming/namestore/techdocs.html
+#############################################################
+-->
+
+<project name="EPP SDK-Gen Common Targets" default="test" basedir=".">
+
+  <!-- =================================================================== -->
+  <!-- Run All Tests 				 	                                   -->
+  <!-- =================================================================== -->
+  <target 	name="test" depends="test-parser, test-codec, test-client-server"
+  			description="Run EPP SDK-Gen Unit Tests  Requires JDK 1.4" >
+
+ </target>
+ 
+  <!-- =================================================================== -->
+  <!-- Codec Unit Test					 	                               -->
+  <!-- =================================================================== -->
+  <target	 name="test-codec" depends="jar" unless="gen.test.codec.disable"
+  			description="Run CODEC Unit Test" >
+
+	<junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+		<sysproperty key="validate" value="${eppsdk.gen.xml.validate}"/>
+		<sysproperty key="fullschemachecking" value="${eppsdk.gen.xml.fullschemachecking}"/>
+		<formatter type="plain" usefile="true" />
+		<classpath refid="gen.test.classpath" />
+		<test name="com.verisign.epp.codec.gen.EPPCodecTst"
+			fork="yes" todir="${gen.results.dir}"
+		/>
+	</junit>
+
+  </target>
+
+
+  <!-- =================================================================== -->
+  <!-- XML Parser test			 	                           -->
+  <!-- =================================================================== -->
+  <target	 name="test-parser" depends="jar" unless="gen.test.parser.disable"
+  			description="Run XMLParserTst Unit Test" >
+
+	<junit printsummary="yes" haltonfailure="yes" fork="yes" showoutput="yes">
+		<formatter type="plain" usefile="true" />
+
+		<classpath refid="gen.test.classpath" />
+
+        <sysproperty key="eppsdk.gen.xml.dir" value="${eppsdk.gen.xml.dir}"/>
+        <sysproperty key="eppsdk.gen.xml.test.parserImpl"
+                        value="com.verisign.epp.util.EPPSchemaCachingParser"/>
+        <sysproperty key="eppsdk.gen.xml.test.iterations"
+                        value="${eppsdk.gen.xml.test.iterations}"/>
+        <sysproperty key="eppsdk.gen.xml.test.threads"
+                        value="${eppsdk.gen.xml.test.threads}"/>
+        <sysproperty key="eppsdk.gen.xml.instance"
+                        value="${eppsdk.gen.xml.instance}"/>
+
+
+		<test name="com.verisign.epp.util.XMLParserTst"
+			fork="yes" todir="${gen.results.dir}"
+		/>
+	</junit>
+  </target>
+
+
+  <!-- =================================================================== -->
+  <!-- Run full client/server test                                         -->
+  <!-- =================================================================== -->
+  <target	 name="test-client-server" depends="jar" unless="gen.test.client-server.disable"
+  			description="Run full client server test.  Requires JDK 1.4" >
+
+	<parallel> 
+		<daemons>
+			<property name="EPP.ConfigFile" value="epp.config"/>
+			<echo message="Starting server with ConfigFile = ${EPP.ConfigFile}"/>
+			<java classname="com.verisign.epp.serverstub.Server" fork="yes">
+				<arg value="${EPP.ConfigFile}"/>
+				<classpath refid="gen.test.classpath" />
+			</java> 
+		</daemons>
+		<sequential>
+			<sleep seconds="2"/>
+			<junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+				<formatter type="plain" usefile="true" />
+				<classpath refid="gen.test.classpath" />
+				<test name="com.verisign.epp.interfaces.EPPSessionTst"
+					fork="yes" todir="${gen.results.dir}"
+				/>
+				<test name="com.verisign.epp.pool.EPPSessionPoolTst"
+					fork="yes" todir="${gen.results.dir}"
+				/>
+				<test name="com.verisign.epp.pool.EPPSystemSessionPoolTst"
+					fork="yes" todir="${gen.results.dir}"
+				/>
+
+			</junit>
+		</sequential>
+	</parallel>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Run full client/server test                                         -->
+  <!-- =================================================================== -->
+  <target	 name="test-client" depends="jar" unless="gen.test.client.disable"
+  			description="Run client test against an already running server" >
+
+		<!-- Default values for epp config file and epp session class -->
+		<property name="EPP.ConfigFile" value="epp.config"/>
+		<property name="EPP.SessionClass" value="com.verisign.epp.interfaces.EPPSession"/>
+		<echo message="Startup client with ConfigFile = ${EPP.ConfigFile}, SessionClass = ${EPP.SessionClass}"/>
+
+		<junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+			<sysproperty key="EPP.ConfigFile" value="${EPP.ConfigFile}"/>
+			<sysproperty key="EPP.SessionClass" value="${EPP.SessionClass}"/>
+			<formatter type="plain" usefile="true" />
+			<classpath refid="gen.test.classpath" />
+			<test name="com.verisign.epp.interfaces.EPPSessionTst"
+				fork="yes" todir="${gen.results.dir}"
+			/>
+			<test name="com.verisign.epp.pool.EPPSessionPoolTst"
+					fork="yes" todir="${gen.results.dir}"
+			/>
+			<test name="com.verisign.epp.pool.EPPSystemSessionPoolTst"
+				fork="yes" todir="${gen.results.dir}"
+			/>
+
+		</junit>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Start the server stub                                               -->
+  <!-- =================================================================== -->
+  <target	 name="start-server" depends="jar"
+  			description="Start the server stub" >
+
+		<property name="EPP.ConfigFile" value="epp.config"/>
+		<echo message="Starting server with ConfigFile = ${EPP.ConfigFile}"/>
+
+ 		<java classname="com.verisign.epp.serverstub.Server" fork="true">
+			<arg value="${EPP.ConfigFile}"/>
+			<classpath refid="gen.test.classpath" />
+		</java> 
+  </target>
+	
+</project>

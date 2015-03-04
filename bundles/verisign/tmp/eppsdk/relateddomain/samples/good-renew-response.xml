@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<epp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="urn:ietf:params:xml:ns:epp-1.0 epp-1.0.xsd" 
+	xmlns="urn:ietf:params:xml:ns:epp-1.0">
+  <response>
+    <result code="1000">
+      <msg>Command completed successfully</msg>
+    </result>
+    <resData>
+      <domain:renData 
+      	xmlns:domain="urn:ietf:params:xml:ns:domain-1.0" 
+      	xsi:schemaLocation="urn:ietf:params:xml:ns:domain-1.0 domain-1.0.xsd">
+        <domain:name>example1.com</domain:name>
+        <domain:exDate>2018-07-10T00:00:00.0000Z</domain:exDate>
+      </domain:renData>
+    </resData>
+    <extension>
+      <relDom:renData 
+      	xmlns:relDom="http://www.verisign.com/epp/relatedDomain-1.0"
+      	xsi:schemaLocation="http://www.verisign.com/epp/relatedDomain-1.0 relatedDomain-1.0.xsd">
+        <relDom:domain>
+          <relDom:name>example2.com</relDom:name>
+          <relDom:exDate>2018-07-10T00:00:00.0000Z</relDom:exDate>
+        </relDom:domain>
+        <relDom:domain>
+          <relDom:name>example3.com</relDom:name>
+          <relDom:exDate>2018-07-10T00:00:00.0000Z</relDom:exDate>
+        </relDom:domain>
+      </relDom:renData>
+    </extension>
+    <trID>
+      <clTRID>ABC-12345</clTRID>
+      <svTRID>54321-XYZ</svTRID>
+    </trID>
+  </response>
+</epp>

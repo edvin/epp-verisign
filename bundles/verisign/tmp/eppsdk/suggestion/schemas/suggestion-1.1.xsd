@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.verisign-grs.com/epp/suggestion-1.1"
+	xmlns:suggestion="http://www.verisign-grs.com/epp/suggestion-1.1"
+	xmlns:epp="urn:ietf:params:xml:ns:epp-1.0"
+	xmlns:eppcom="urn:ietf:params:xml:ns:eppcom-1.0"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+
+	<import namespace="urn:ietf:params:xml:ns:eppcom-1.0" schemaLocation="eppcom-1.0.xsd"/>
+	<import namespace="urn:ietf:params:xml:ns:epp-1.0" schemaLocation="epp-1.0.xsd"/>
+
+	<annotation>
+		<documentation>
+			Extensible Provisioning Protocol v1.1
+			Suggestion provisioning schema
+		</documentation>
+	</annotation>
+
+	<element name="info" type="suggestion:infoType"/>
+
+	<complexType name="infoType">
+		<sequence>
+			<element name="key" type="suggestion:keyType" minOccurs="1" maxOccurs="1"/>
+			<element name="language" type="language" minOccurs="0" maxOccurs="1" default="ENG"/>
+			<choice>
+				<element name="filter" type="suggestion:filterType" minOccurs="0" maxOccurs="1"/>
+				<element name="filterid" type="suggestion:filterIdType" minOccurs="0" maxOccurs="1"/>
+			</choice>
+		</sequence>
+	</complexType>
+
+	<simpleType name="keyType">
+		<restriction base="string">
+		</restriction>
+	</simpleType>
+
+	<simpleType name="filterIdType">
+		<restriction base="unsignedLong">
+		</restriction>
+	</simpleType>
+
+	<complexType name="filterType">
+		<sequence>
+			<element name="action" type="suggestion:actionType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="tld" type="suggestion:tldType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="geo" type="suggestion:geoType" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+		<attribute name="contentfilter" type="boolean" />
+		<attribute name="customfilter" type="boolean" />
+		<attribute name="forsale" type="suggestion:weightType"/>
+		<attribute name="maxlength" type="suggestion:lengthType"/>
+		<attribute name="maxresults" type="suggestion:resultsType"/>
+		<attribute name="usehyphens" type="boolean"/>
+		<attribute name="usenumbers" type="boolean"/>
+		<attribute name="view" type="suggestion:viewType"/>
+		<attribute name="useidns" type="boolean"/>
+		
+	</complexType>
+
+	<complexType name="actionType">
+		<attribute name="name" type="string" use="required"/>
+		<attribute name="weight" type="suggestion:weightType" use="required"/>
+	</complexType>
+
+	<simpleType name="tldType">
+		<restriction base="eppcom:labelType" />
+	</simpleType>
+
+	<complexType name="weightedTldType">
+		<simpleContent>
+			<extension base="suggestion:tldType">
+				<attribute name="weight" type="suggestion:weightType" />
+			</extension>
+		</simpleContent>
+	</complexType>
+
+	<simpleType name="weightType">
+		<restriction base="string">
+			<enumeration value="off"/>
+			<enumeration value="low"/>
+			<enumeration value="medium"/>
+			<enumeration value="high"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="lengthType">
+		<restriction base="unsignedShort">
+			<minInclusive value="1"/>
+			<maxInclusive value="63"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="resultsType">
+		<restriction base="unsignedShort">
+			<minInclusive value="1"/>
+			<maxInclusive value="100"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="viewType">
+		<restriction base="token">
+			<enumeration value="table"/>
+			<enumeration value="grid"/>
+		</restriction>
+	</simpleType>
+
+
+	<element name="infData" type="suggestion:infDataType"/>
+
+	<complexType name="infDataType">
+		<sequence>
+			<element name="key" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="language" type="language" minOccurs="0" maxOccurs="1" default="ENG"/>
+			<element name="token" type="suggestion:tokenType" minOccurs="0" maxOccurs="unbounded"/>
+			<element name="answer" type="suggestion:answerType" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="tokenType">
+		<sequence>
+			<element name="related" type="token" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+		<attribute name="name" type="string" use="required"/>
+	</complexType>
+
+	<complexType name="answerType">
+		<choice>
+			<element name="table" type="suggestion:tableType" minOccurs="1" maxOccurs="1"/>
+			<element name="grid" type="suggestion:gridType" minOccurs="1" maxOccurs="1"/>
+		</choice>
+	</complexType>
+
+	<complexType name="tableType">
+		<sequence>
+			<element name="row" type="suggestion:rowType" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="rowType">
+		<attribute name="name" type="string" use="required"/>
+		<attribute name="score" type="suggestion:scoreType" use="required"/>
+		<attribute name="status" type="suggestion:statusType" use="required"/>
+		<attribute name="source" type="string"/>
+		<attribute name="morelikethis" type="string"/>
+		<attribute name="ppcvalue" type="integer"/>
+		<attribute name="uName" type="string"/>
+	</complexType>
+
+	<complexType name="gridType">
+		<sequence>
+			<element name="record" type="suggestion:recordType" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="recordType">
+		<sequence>
+			<element name="cell" type="suggestion:cellType" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+		<attribute name="name" type="suggestion:labelType" use="required"/>
+		<attribute name="source" type="string"/>
+		<attribute name="morelikethis" type="string"/>
+		<attribute name="ppcvalue" type="integer"/>
+		<attribute name="uName" type="string"/>
+	</complexType>
+
+	<complexType name="cellType">
+		<attribute name="tld" type="suggestion:tldType" use="required"/>
+		<attribute name="score" type="suggestion:scoreType" use="required"/>
+		<attribute name="status" type="suggestion:statusType" use="required"/>
+		<attribute name="uTld" type="string"/>
+	</complexType>
+
+	<simpleType name="labelType">
+		<restriction base="token">
+			<pattern value="[a-zA-Z0-9]([a-zA-Z0-9\-]*[a-zA-Z0-9])?"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="scoreType">
+		<restriction base="unsignedShort">
+			<minInclusive value="0"/>
+			<maxInclusive value="1000"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="statusType">
+		<restriction base="string">
+			<enumeration value="available"/>
+			<enumeration value="forsale"/>
+			<enumeration value="registered"/>
+			<enumeration value="unknown"/>
+			<enumeration value="restricted"/>
+		</restriction>
+	</simpleType>
+	
+	<complexType name="geoType">
+		<choice>
+			<element name="coordinates" type="suggestion:coordinatesType" minOccurs="0" maxOccurs="1"/>
+			<element name="addr" type="suggestion:addrType" minOccurs="0" maxOccurs="1"/>
+		</choice>
+	</complexType>
+
+	<complexType name="coordinatesType">
+		<attribute name="lat" type="suggestion:latitudeType" use="required"/>
+		<attribute name="lng" type="suggestion:longitudeType" use="required"/>
+	</complexType>
+
+	<simpleType name="latitudeType">
+		<restriction base="decimal">
+			<fractionDigits value="6"/>
+			<minInclusive value="-90"/>
+			<maxInclusive value="90"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="longitudeType">
+		<restriction base="decimal">
+			<fractionDigits value="6"/>
+			<minInclusive value="-180"/>
+			<maxInclusive value="180"/>
+		</restriction>
+	</simpleType>
+	
+	<complexType name="addrType">
+    	<simpleContent>
+      		<extension base="suggestion:addrStringType">
+        		<attribute name="ip" type="suggestion:ipType" default="v4"/>
+      		</extension>
+    	</simpleContent>
+  	</complexType>
+
+  	<simpleType name="addrStringType">
+    	<restriction base="token">
+      		<minLength value="3"/>
+      		<maxLength value="45"/>
+    	</restriction>
+ 	</simpleType>
+
+	<simpleType name="ipType">
+    	<restriction base="token">
+      		<enumeration value="v4"/>
+      		<enumeration value="v6"/>
+    	</restriction>
+  	</simpleType>
+
+</schema>

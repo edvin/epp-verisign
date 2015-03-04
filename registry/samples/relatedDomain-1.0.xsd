@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns:relatedDomain="urn:ietf:params:xml:ns:relatedDomain-1.0" 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:eppcom="urn:ietf:params:xml:ns:eppcom-1.0" 
+	targetNamespace="urn:ietf:params:xml:ns:relatedDomain-1.0" 
+	elementFormDefault="qualified">
+	<annotation>
+		<documentation>
+         Extensible Provisioning Protocol v1.0 
+         IDN TLD  extension
+       </documentation>
+	</annotation>
+	<import namespace="urn:ietf:params:xml:ns:eppcom-1.0"/>
+	<element name="transfer">
+		<complexType>
+			<sequence>
+				<element name="primary" type="relatedDomain:primaryDomainType"/>
+				<element name="enabled" minOccurs="0">
+					<complexType>
+						<sequence>
+							<element name="domainName" 
+								type="relatedDomain:domainNameType" 
+								maxOccurs="unbounded"/>
+						</sequence>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="infData" type="relatedDomain:infDataType"/>
+	<complexType name="infDataType">
+		<sequence>
+			<element name="primary" type="relatedDomain:primaryDomainType"/>
+			<element name="enabled" minOccurs="0">
+				<complexType>
+					<sequence>
+						<element name="domainName" 
+							type="relatedDomain:domainNameType" 
+							maxOccurs="unbounded"/>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="available" minOccurs="0">
+				<complexType>
+					<sequence>
+						<element name="domainName" 
+							type="relatedDomain:domainNameType" 
+							maxOccurs="unbounded"/>
+					</sequence>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	<complexType name="primaryDomainType">
+		<sequence>
+			<element name="domainName" type="eppcom:labelType"/>
+		</sequence>
+	</complexType>
+	<simpleType name="domainType">
+		<restriction base="token">
+			<minLength value="1"/>
+			<maxLength value="20"/>
+		</restriction>
+	</simpleType>
+	<complexType name="domainNameType">
+		<simpleContent>
+			<extension base="eppcom:labelType">
+				<attribute name="type">
+					<simpleType>
+						<restriction base="relatedDomain:domainType"/>
+					</simpleType>
+				</attribute>
+				<attribute name="paidTo" type="dateTime"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<!--
+   End of schema.
+   -->
+</schema>

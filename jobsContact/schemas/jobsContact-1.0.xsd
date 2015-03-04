@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.verisign.com/epp/jobsContact-1.0"
+        xmlns:jobsContact="http://www.verisign.com/epp/jobsContact-1.0"
+        xmlns:eppcom="urn:ietf:params:xml:ns:eppcom-1.0"
+        xmlns="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+<!--
+  Import common element types.
+-->
+  <import namespace="urn:ietf:params:xml:ns:eppcom-1.0"
+          schemaLocation="eppcom-1.0.xsd"/>
+
+  <annotation>
+   <documentation>
+     Extensible Provisioning Protocol v1.0 
+      extension schema for dotJobs Contact 
+   </documentation>
+  </annotation>
+
+  <!--
+    Child elements found in Extension commands.
+  -->
+
+  <element name="create" type="jobsContact:createType"/>
+  <element name="update" type="jobsContact:updateType"/>
+
+  <!--
+    Child response elements in extension.
+  -->  
+  <element name="infData" type="jobsContact:infDataType"/>
+
+
+  <!--
+    Child elements of the <create> command extension.
+  -->
+  <complexType name="createType">
+	<sequence>
+	  <element name="title" type="jobsContact:optType" minOccurs="0"/>
+	  <element name="website" type="jobsContact:labelType"/>
+	  <element name="industryType" type="jobsContact:optType" minOccurs="0"/>
+	  <element name="isAdminContact" type="jobsContact:booleanType"/>
+	  <element name="isAssociationMember" type="jobsContact:booleanType" minOccurs="0"/>
+	</sequence>
+  </complexType>
+
+  <!--
+    Child elements of the <update> command extension.
+  -->
+  <complexType name="updateType">
+	<sequence>
+	  <element name="title" type="jobsContact:optType" minOccurs="0"/>
+	  <element name="website" type="jobsContact:labelType" minOccurs="0"/>
+	  <element name="industryType" type="jobsContact:optType" minOccurs="0"/>
+	  <element name="isAdminContact" type="jobsContact:booleanType" minOccurs="0"/>
+	  <element name="isAssociationMember" type="jobsContact:booleanType" minOccurs="0"/>
+	</sequence>
+  </complexType>
+
+  <!--
+    Child elements of the <info> response extension.
+  -->
+
+  <complexType name="infDataType">
+	<sequence>
+	  <element name="title" type="jobsContact:optType" minOccurs="0"/>
+	  <element name="website" type="jobsContact:labelType"/>
+	  <element name="industryType" type="jobsContact:optType" minOccurs="0"/>
+	  <element name="isAdminContact" type="jobsContact:booleanType"/>
+	  <element name="isAssociationMember" type="jobsContact:booleanType" minOccurs="0"/>
+	</sequence>
+  </complexType>
+
+  <simpleType name="booleanType">
+    <restriction base="token">
+      <enumeration value="Yes"/>
+      <enumeration value="No"/>
+    </restriction>
+  </simpleType>
+  
+  <simpleType name="optType">
+    <restriction base="normalizedString">
+       <maxLength value="128"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="labelType">
+    <restriction base="normalizedString">
+       <maxLength value="256"/>
+    </restriction>
+  </simpleType>
+
+<!--
+End of schema.
+-->
+</schema>

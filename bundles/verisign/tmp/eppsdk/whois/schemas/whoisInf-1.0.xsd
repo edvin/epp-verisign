@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.verisign.com/epp/whoisInf-1.0"
+        xmlns:whoisInf="http://www.verisign.com/epp/whoisInf-1.0"
+        xmlns:eppcom="urn:ietf:params:xml:ns:eppcom-1.0"
+        xmlns="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+  <import namespace="urn:ietf:params:xml:ns:eppcom-1.0"
+          schemaLocation="eppcom-1.0.xsd"/>
+
+	<annotation>
+	   <documentation>
+	     Extensible Provisioning Protocol v1.0 
+	      extension schema for Whois Info
+	   </documentation>
+	</annotation>
+
+<!-- 
+Possible Whois Info extension root elements
+-->
+	<element name="whoisInf" type="whoisInf:whoisInfType"/>
+	<element name="whoisInfData" type="whoisInf:whoisInfDataType"/>
+
+<!--
+Child elements for the <whoisInf> extension which 
+is used as an extension to an info command.
+-->
+	<complexType name="whoisInfType">
+		<sequence>
+			<element name="flag" type="boolean"/>
+		</sequence>
+	</complexType>
+
+<!--
+Child elements for the <whoisInfData> extension which 
+is used as an extension to the info response.
+-->
+	<complexType name="whoisInfDataType">
+		<sequence>
+			<element name="registrar" type="string"/>
+			<element name="whoisServer" type="eppcom:labelType" minOccurs="0"/>
+			<element name="url" type="token"  minOccurs="0"/>
+			<element name="irisServer" type="eppcom:labelType" minOccurs="0"/>
+		</sequence>
+	</complexType>
+
+  
+<!--
+End of schema.
+-->
+</schema>

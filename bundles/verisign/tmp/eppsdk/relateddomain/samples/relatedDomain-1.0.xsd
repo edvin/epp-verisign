@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns:relDom="http://www.verisign.com/epp/relatedDomain-1.0" 
+   xmlns="http://www.w3.org/2001/XMLSchema" 
+   xmlns:eppcom="urn:ietf:params:xml:ns:eppcom-1.0" 
+   targetNamespace="http://www.verisign.com/epp/relatedDomain-1.0" 
+   elementFormDefault="qualified">
+   <annotation>
+      <documentation>
+         Extensible Provisioning Protocol v1.0 
+         Related Domain extension
+       </documentation>
+   </annotation>
+   <!--
+   Import common element types.
+   -->
+   <import namespace="urn:ietf:params:xml:ns:eppcom-1.0" 
+      schemaLocation="eppcom-1.0.xsd"/>
+   <!-- 
+   Related Domain info command extension root element
+   -->
+   <element name="info" type="relDom:infoType"/>
+
+   <!--
+   Info type attribute values
+   -->
+   <simpleType name="infoTypeType">
+      <restriction base="string">
+         <enumeration value="domain"/>
+         <enumeration value="related"/>
+      </restriction>
+   </simpleType>
+   
+   <!-- 
+   Related Domain Info type
+   -->
+   <complexType name="infoType">
+      <attribute name="type" type="relDom:infoTypeType" 
+         default="domain"/>
+   </complexType>
+   
+   <!-- 
+   Related Domain info response extension root element
+   -->
+   <element name="infData" type="relDom:infDataType"/>
+   <complexType name="infDataType">
+      <sequence>
+         <element name="group" type="relDom:relatedDomainGroupType" 
+            maxOccurs="unbounded"/>
+      </sequence>
+   </complexType>
+   <simpleType name="fieldNameType">
+      <restriction base="normalizedString">
+         <minLength value="1"/>
+         <maxLength value="64"/>
+      </restriction>
+   </simpleType>
+   <!-- 
+   Field that needs to be synchronized.
+   -->
+   <complexType name="fieldType">
+      <attribute name="name" type="relDom:fieldNameType" 
+         use="required"/>
+      <attribute name="inSync" type="boolean" 
+         use="required"/>
+   </complexType>
+   <!-- 
+   Related Domain group types
+   -->
+   <simpleType name="groupType">
+      <restriction base="string">
+         <enumeration value="tld"/>
+         <enumeration value="variant"/>
+      </restriction>
+   </simpleType>
+   <!--
+   Fields that need to be synchronized
+   -->
+   <complexType name="fieldsType">
+      <sequence>
+         <element name="field" type="relDom:fieldType" 
+            maxOccurs="unbounded"/>
+      </sequence>
+      <attribute name="inSync" use="required"/>
+   </complexType>
+   <!-- 
+   Domain names that are registered or available.
+   -->
+   <complexType name="domainListType">
+      <sequence>
+         <element name="name" type="eppcom:labelType" 
+            maxOccurs="unbounded"/>
+      </sequence>
+   </complexType>
+   <!--
+   Related Domain Group
+   -->
+   <complexType name="relatedDomainGroupType">
+      <sequence>
+         <element name="fields" type="relDom:fieldsType"/>
+         <element name="registered" type="relDom:domainListType" 
+            minOccurs="0"/>
+         <element name="available" type="relDom:domainListType" 
+            minOccurs="0"/>
+      </sequence>
+      <attribute name="type" type="relDom:groupType" 
+         use="required"/>
+   </complexType>
+   <!--
+   Related Domain Auth Info Type
+   -->
+   <complexType name="authInfoType">
+      <choice>
+         <element name="pw" type="eppcom:pwAuthInfoType"/>
+         <element name="ext" type="eppcom:extAuthInfoType"/>
+      </choice>
+   </complexType>
+   <!--
+   Related Domain Period Type
+   -->
+   <complexType name="periodType">
+      <simpleContent>
+         <extension base="relDom:pLimitType">
+            <attribute name="unit" type="relDom:pUnitType" 
+               use="required"/>
+         </extension>
+      </simpleContent>
+   </complexType>
+   <!--
+   Related Domain Period Limit Type
+   -->
+   <simpleType name="pLimitType">
+      <restriction base="unsignedShort">
+         <minInclusive value="1"/>
+         <maxInclusive value="99"/>
+      </restriction>
+   </simpleType>
+   <!--
+   Related Domain Period Unit Type
+   -->
+   <simpleType name="pUnitType">
+      <restriction base="token">
+         <enumeration value="y"/>
+         <enumeration value="m"/>
+      </restriction>
+   </simpleType>
+   <!--
+   Related Domain Create Request Type
+   -->
+   <complexType name="createRequestType">
+      <sequence>
+         <element name="name" type="eppcom:labelType"/>
+         <element name="authInfo" type="relDom:authInfoType"/>
+         <element name="period" type="relDom:periodType" 
+            minOccurs="0"/>
+         <element name="lang" type="language" 
+            minOccurs="0"/>
+      </sequence>
+   </complexType>
+   <!--
+   Related Domain Create Request element
+   -->
+   <element name="create">
+      <complexType>
+         <sequence>
+            <element name="domain" type="relDom:createRequestType" 
+               maxOccurs="unbounded"/>
+         </sequence>
+      </complexType>
+   </element>
+   <!--
+   Related Domain Create Response type
+   -->
+   <complexType name="creDataType">
+      <sequence>
+         <element name="name" type="eppcom:labelType"/>
+         <element name="crDate" type="dateTime"/>
+         <element name="exDate" type="dateTime" 
+            minOccurs="0"/>
+      </sequence>
+   </complexType>
+   <!--
+   Related Domain Create Request element
+   -->
+   <element name="creData">
+      <complexType>
+         <sequence>
+            <element name="domain" type="relDom:creDataType" 
+               maxOccurs="unbounded"/>
+         </sequence>
+      </complexType>
+   </element>
+   <!--
+   Related Domain Delete Request element
+   -->
+   <element name="delete" type="relDom:domainListType"/>
+   <simpleType name="deleteResultType">
+      <restriction base="string">
+         <enumeration value="deleted"/>
+         <enumeration value="pendingDelete"/>
+      </restriction>
+   </simpleType>
+   <!--
+   Related Domain Delete Response type
+   -->
+   <complexType name="delDataType">
+      <sequence>
+         <element name="name" type="eppcom:labelType"/>
+         <element name="result" type="relDom:deleteResultType"/>
+      </sequence>
+   </complexType>
+   <!--
+   Related Domain Delete Response element
+   -->
+   <element name="delData">
+      <complexType>
+         <sequence>
+            <element name="domain" type="relDom:delDataType" 
+               maxOccurs="unbounded"/>
+         </sequence>
+      </complexType>
+   </element>
+   <!--
+   Related Domain Update Request element
+   -->
+   <element name="update" type="relDom:domainListType"/>
+   <!--
+   Related Domain Renew type
+   -->
+   <complexType name="renewType">
+      <sequence>
+         <element name="name" type="eppcom:labelType"/>
+         <element name="curExpDate" type="date"/>
+         <element name="period" type="relDom:periodType" 
+            minOccurs="0"/>
+      </sequence>
+   </complexType>
+   <!--
+   Related Domain Renew element
+   -->
+   <element name="renew">
+      <complexType>
+         <sequence>
+            <element name="domain" type="relDom:renewType" 
+               maxOccurs="unbounded"/>
+         </sequence>
+      </complexType>
+   </element>
+   <!--
+   Related Domain Renew Data type
+   -->
+   <complexType name="renDataType">
+      <sequence>
+         <element name="name" type="eppcom:labelType"/>
+         <element name="exDate" type="dateTime"/>
+      </sequence>
+   </complexType>
+   <!--
+   Related Domain Renew Data element
+   -->
+   <element name="renData">
+      <complexType>
+         <sequence>
+            <element name="domain" type="relDom:renDataType" 
+               maxOccurs="unbounded"/>
+         </sequence>
+      </complexType>
+   </element>
+   <!--
+   Related Domain Transfer type
+   -->
+   <complexType name="transferType">
+      <sequence>
+         <element name="name" type="eppcom:labelType"/>
+         <element name="authInfo" type="relDom:authInfoType" 
+            minOccurs="0"/>
+         <element name="period" type="relDom:periodType" 
+            minOccurs="0"/>
+      </sequence>
+   </complexType>
+   <!--
+   Related Domain Transfer element
+   -->
+   <element name="transfer">
+      <complexType>
+         <sequence>
+            <element name="domain" type="relDom:transferType" 
+               maxOccurs="unbounded"/>
+         </sequence>
+      </complexType>
+   </element>
+   <!--
+   Related Domain Transfer Data Type
+   -->
+   <complexType name="trnDataType">
+      <sequence>
+         <element name="name" type="eppcom:labelType"/>
+         <element name="trStatus" type="eppcom:trStatusType"/>
+         <element name="reID" type="eppcom:clIDType"/>
+         <element name="reDate" type="dateTime"/>
+         <element name="acID" type="eppcom:clIDType"/>
+         <element name="acDate" type="dateTime"/>
+         <element name="exDate" type="dateTime" minOccurs="0"/>
+      </sequence>
+   </complexType>
+   <!--
+   Related Domain Transfer Data element
+   -->
+   <element name="trnData">
+      <complexType>
+         <sequence>
+            <element name="domain" type="relDom:trnDataType" 
+               maxOccurs="unbounded"/>
+         </sequence>
+      </complexType>
+   </element>
+</schema>

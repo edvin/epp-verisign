@@ -1,0 +1,397 @@
+<!--
+Copyright (C) 2004 VeriSign, Inc.
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-0107  USA
+
+http://www.verisign.com/nds/naming/namestore/techdocs.html
+-->
+
+<project name="EPP SDK-PREMIUM DOMAIN" default="jar" basedir=".">
+
+	<import file="${basedir}/common-targets.xml"/>	
+
+	<!-- SDK home directory -->
+    <property name="sdk.home.dir" location=".."/>
+
+	<!-- Ensure environment variables are set to env prefixed properties -->
+	<property environment="env"/>
+
+	<!-- All properties can be overridden in build.properties -->
+    <property file="${basedir}/build.properties"/>
+
+	<!-- Gen directories -->
+    <property name="premiumdomain.gen.dir" value="${sdk.home.dir}/gen"/>
+    <property name="premiumdomain.gen.src.dir" value="${premiumdomain.gen.dir}/java"/>
+
+	<!-- Domain directories -->
+    <property name="premiumdomain.domain.dir" value="${sdk.home.dir}/domain"/>
+    <property name="premiumdomain.domain.src.dir" value="${premiumdomain.domain.dir}/java"/>
+
+	<!-- Host directories -->
+    <property name="premiumdomain.host.dir" value="${sdk.home.dir}/host"/>
+    <property name="premiumdomain.host.src.dir" value="${premiumdomain.host.dir}/java"/>	
+	
+	<!-- Temporary directory used for distribution -->
+    <property name="premiumdomain.tmp.dir" location="${premiumdomain.dir}/tmp"/>
+
+	<!-- compiler option properties -->
+    <property name="debug" value="on"/>
+    <property name="optimize" value="on"/>
+    <property name="deprecation" value="on"/>
+
+	<!-- classpath to use for compilation tasks -->
+	<path id="premiumdomain.compile.classpath">
+		<fileset dir="${premiumdomain.lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${premiumdomain.epp.lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<!-- classpath to use for compilation tasks -->
+	<path id="premiumdomain.test.classpath">
+		<fileset dir="${premiumdomain.epp.lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<path refid="premiumdomain.compile.classpath"/>
+	</path>
+
+  <!-- =================================================================== -->
+  <!-- Initialization target                                               -->
+  <!-- =================================================================== -->
+  <target name="init"
+			description="Initializes the build for rest of targets ">
+
+	<!-- set time stamp properties -->
+    <tstamp/>
+
+	<!-- Give build.version a default value of SNAPSHOT -->
+	<property name="build.version" value="SNAPSHOT"/>
+
+    <echo message="----------- ${ant.project.name} ${build.version} ------------"/>
+
+	<mkdir dir="${premiumdomain.results.dir}" />
+	<mkdir dir="${premiumdomain.build.dir}" />
+	<mkdir dir="${premiumdomain.epp.lib.dir}" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Builds the epp-gen.jar file               		                   -->
+  <!-- =================================================================== -->
+  <target name="jar-gen"
+  			description="Build the dependent epp-gen.jar file" >
+		<ant dir="${premiumdomain.gen.dir}" target="jar" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Cleans the epp-gen files               		                       -->
+  <!-- =================================================================== -->
+  <target name="clean-gen"
+  			description="Clean the epp-gen files" >
+		<ant dir="${premiumdomain.gen.dir}" target="clean" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Builds the epp-domain.jar file               		                   -->
+  <!-- =================================================================== -->
+  <target name="jar-domain"
+  			description="Build the dependent epp-domain.jar file" >
+		<ant dir="${premiumdomain.domain.dir}" target="jar" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Builds the epp-host.jar file               		                   -->
+  <!-- =================================================================== -->
+  <target name="jar-host"
+  			description="Build the dependent epp-host.jar file" >
+		<ant dir="${premiumdomain.host.dir}" target="jar" />
+  </target>
+		
+  <!-- =================================================================== -->
+  <!-- Cleans the epp-domain files               		                       -->
+  <!-- =================================================================== -->
+  <target name="clean-domain"
+  			description="Clean the epp-domain files" >
+		<ant dir="${premiumdomain.domain.dir}" target="clean" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Cleans the epp-host files               		                       -->
+  <!-- =================================================================== -->
+  <target name="clean-host"
+  			description="Clean the epp-host files" >
+		<ant dir="${premiumdomain.host.dir}" target="clean" />
+  </target>
+	
+  <!-- =================================================================== -->
+  <!-- Compiles source files                                     		   -->
+  <!-- =================================================================== -->
+  <target 	name="compile" depends="init, jar-gen, jar-domain, jar-host"
+  			description="Compile EPP SDK-Premiumdomain source files" >
+
+    <echo message="${ant.project.name} ${build.version} Compile"/>
+    <javac srcdir="${premiumdomain.src.dir}"
+		   destdir="${premiumdomain.build.dir}"
+           debug="${debug}"
+           optimize="${optimize}"
+		   deprecation="${deprecation}"
+ 	       target="1.6"
+		   failonerror="true">
+
+		<classpath refid="premiumdomain.compile.classpath" />
+	</javac>
+
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Creates epp-premiumdomain.jar                                                -->
+  <!-- =================================================================== -->
+  <target 	name="jar" depends="compile"
+  			description="Generates EPP SDK-Premiumdomain .jar file (default)" >
+
+	<!-- Set default value of build.version to SNAPSHOT -->
+	<property name="build.version" value="SNAPSHOT"/>
+
+	<jar jarfile="${premiumdomain.epp.lib.dir}/epp-premiumdomain.jar" >
+			<manifest>
+					<attribute name="baseline" value="EPP-PREMIUMDOMAIN-SDK-${build.version}"/>
+			</manifest>
+		<fileset dir="${premiumdomain.build.dir}"
+			includes="com/**/*.class" />
+		<fileset dir="${premiumdomain.dir}"
+			includes="schemas/*.xsd" />
+	</jar>
+
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Creates epp-premiumdomain-src.jar                                    -->
+  <!-- =================================================================== -->
+  <target 	name="jar-src" depends="init"
+  			description="Generates EPP SDK-premiumdomain-src.jar file " >
+		
+		<mkdir dir="${premiumdomain.dist.dir}/jar-src" />
+	
+		<!-- Create source .jar distribution -->
+		<zip destfile="${premiumdomain.dist.dir}/jar-src/epp-premiumdomain-${build.version}-src.jar">			
+			<zipfileset dir="${premiumdomain.dir}/java" includes="com/**/*.java">				
+			</zipfileset>			
+		</zip>
+  </target>
+  
+  <!-- =================================================================== -->
+  <!-- Formats the source code using Jalopy                                -->
+  <!-- =================================================================== -->
+  <target name="format"
+		  description="Format the source code">
+  		<taskdef name="jalopy"
+				 classname="de.hunsicker.jalopy.plugin.ant.AntPlugin">
+			<classpath>
+				<fileset dir="${premiumdomain.lib.dir}/jalopy">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+		</taskdef>
+		<jalopy fileformat="unix"
+				convention="${premiumdomain.lib.dir}/jalopy/sdk-convention.xml"
+				loglevel="info"
+				threads="2"
+				classpathref="premiumdomain.compile.classpath">
+				<fileset dir="${premiumdomain.src.dir}">
+					<include name="**/*.java"/>
+				</fileset>
+		</jalopy>
+
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Creates the HTML API documentation                                  -->
+  <!-- =================================================================== -->
+  <target 	name="doc"
+  			description="Generate EPP SDK-PremiumDomain HTML API documentation" >
+
+    <mkdir dir="${premiumdomain.doc.dir}/html"/>
+    <javadoc packagenames="com.verisign.epp.*"
+             sourcepath="${premiumdomain.src.dir}:${premiumdomain.gen.src.dir}:${premiumdomain.domain.src.dir}:${premiumdomain.host.src.dir}"
+             destdir="${premiumdomain.doc.dir}/html"
+             author="true"
+             version="true"
+             use="true"
+             splitindex="true"
+			 breakiterator="true"
+             noindex="false"
+             windowtitle="${ant.project.name} API"
+             doctitle="${ant.project.name}"
+             bottom="Copyright &#169; VeriSign Inc. All Rights Reserved.">
+		<classpath refid="premiumdomain.compile.classpath" />
+	</javadoc>
+
+  </target>
+
+
+
+	<!-- =================================================================== -->
+	<!-- Ensure that build.version is set                                    -->
+	<!-- =================================================================== -->
+	<target name="check-build-version" unless="build.version">
+		<fail message="Must set build.version with -Dbuild.version=X"/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates SDK source distribution                                     -->
+	<!-- =================================================================== -->
+	<target name="dist-src" depends="check-build-version, init"
+				description = "Creates SDK source distribution (-Dbuild.version required)" >
+		<mkdir dir="${premiumdomain.dist.dir}" />
+
+		<!-- Create source .zip distribution -->
+		<zip destfile="${premiumdomain.dist.dir}/epp-premiumdomain-${build.version}-src.zip">
+			<zipfileset dir="${premiumdomain.license.dir}" prefix="eppsdk/license"/>
+			<zipfileset dir="${premiumdomain.lib.dir}" prefix="eppsdk/lib">
+				<exclude name="epp/**"/>
+			</zipfileset>
+			<zipfileset dir="${premiumdomain.epp.lib.dir}" prefix="eppsdk/lib/epp">
+				<include name="${premiumdomain.epp.lib.dir}/epp-gen-${build.version}.jar"/>
+			</zipfileset>
+			<zipfileset dir="${premiumdomain.dir}" prefix="eppsdk/premiumdomain">
+				<exclude name="junit*"/>
+				<exclude name="*.log*"/>
+				<exclude name="*.err"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.xml"/>
+				<exclude name="doc/html/**"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+			</zipfileset>
+		</zip>
+
+		<!-- Create source .tar.gz distribution -->
+		<tar destfile="${premiumdomain.dist.dir}/epp-premiumdomain-${build.version}-src.tar.gz"
+			compression="gzip">
+			<tarfileset dir="${premiumdomain.license.dir}" prefix="eppsdk/license"/>
+			<tarfileset dir="${premiumdomain.lib.dir}" prefix="eppsdk/lib">
+				<exclude name="epp/**"/>
+			</tarfileset>
+			<tarfileset dir="${premiumdomain.dir}" mode="755" prefix="eppsdk/premiumdomain">
+				<exclude name="junit*"/>
+				<exclude name="*.log*"/>
+				<exclude name="*.err"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.xml"/>
+				<exclude name="doc/html/**"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+			</tarfileset>
+		</tar>
+
+	</target>
+
+
+
+	<!-- =================================================================== -->
+	<!-- Creates SDK binary distribution                                     -->
+	<!-- =================================================================== -->
+	<target name="dist-bin" depends="check-build-version, jar, test, doc"
+				description = "Creates SDK binary distribution (-Dbuild.version required)" >
+		<mkdir dir="${premiumdomain.dist.dir}" />
+		<mkdir dir="${premiumdomain.tmp.dir}" />
+
+		<copy file="${premiumdomain.dir}/build-bin.xml" tofile="${premiumdomain.tmp.dir}/build.xml"/>
+
+
+		<!-- Create binary .zip distribution -->
+		<zip destfile="${premiumdomain.dist.dir}/epp-premiumdomain-${build.version}-bin.zip">
+			<zipfileset dir="${premiumdomain.license.dir}" prefix="eppsdk/license"/>
+			<zipfileset dir="${premiumdomain.lib.dir}" prefix="eppsdk/lib"/>
+			<zipfileset dir="${premiumdomain.tmp.dir}" includes="build.xml" prefix="eppsdk/premiumdomain"/>
+			<zipfileset dir="${premiumdomain.dir}" prefix="eppsdk/premiumdomain">
+				<exclude name="*.log"/>
+				<exclude name="*.err"/>
+				<exclude name="java/**"/>
+				<exclude name="schemas/**"/>
+				<exclude name="build.xml"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.xml"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+				<exclude name="tmp/**"/>
+			</zipfileset>
+		</zip>
+
+		<!-- Create binary .tar.gz distribution -->
+		<tar destfile="${premiumdomain.dist.dir}/epp-premiumdomain-${build.version}-bin.tar.gz"
+			compression="gzip">
+			<tarfileset dir="${premiumdomain.license.dir}" prefix="eppsdk/license"/>
+			<tarfileset dir="${premiumdomain.lib.dir}" prefix="eppsdk/lib"/>
+			<tarfileset dir="${premiumdomain.tmp.dir}" includes="build.xml" prefix="eppsdk/premiumdomain"/>
+			<tarfileset dir="${premiumdomain.dir}" mode="755" prefix="eppsdk/premiumdomain">
+				<exclude name="*.log"/>
+				<exclude name="*.err"/>
+				<exclude name="java/**"/>
+				<exclude name="schemas/**"/>
+				<exclude name="build.xml"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.xml"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+				<exclude name="tmp/**"/>
+			</tarfileset>
+		</tar>
+
+		<delete dir="${premiumdomain.tmp.dir}"/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates SDK distributions						                     -->
+	<!-- =================================================================== -->
+	<target name="dist" depends="dist-src, dist-bin"
+				description = "Creates SDK distributions (-Dbuild.version required)" >
+	</target>
+
+  <!-- =================================================================== -->
+  <!-- Clean targets                                                       -->
+  <!-- =================================================================== -->
+  <target 	name="clean" depends="init, clean-gen, clean-domain, clean-host"
+			description="Clean EPP SDK-PremiumDomain compiled files" >
+
+		<!-- Clean build directory -->
+		<delete dir="${premiumdomain.build.dir}" quiet="true"/>
+
+		<!-- Clean the EPP lib directory -->
+		<delete dir="${premiumdomain.epp.lib.dir}" quiet="true"/>
+
+		<!-- Clean results directory -->
+		<delete dir="${premiumdomain.results.dir}" quiet="true"/>
+
+		<!-- Clean log files -->
+		<delete>
+			<fileset dir="${premiumdomain.dir}" includes="*.log, *.err"/>
+		</delete>
+
+		<!-- Clean generated documentation files -->
+		<delete dir="${premiumdomain.doc.dir}/html" quiet="true"/>
+
+		<!-- Clean distribution directory -->
+		<delete dir="${premiumdomain.dist.dir}" quiet="true"/>
+
+		<!-- Clean the tmp directory -->
+		<delete dir="${premiumdomain.tmp.dir}" quiet="true"/>
+
+  </target>
+
+</project>
+
+<!-- End of file -->

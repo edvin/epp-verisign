@@ -1,0 +1,448 @@
+
+
+
+VeriSign Inc. Proprietary Information                           J. Gould
+                                                          VeriSign, Inc.
+                                                       December 10, 2013
+
+
+    RGP Poll Mapping for the Extensible Provisioning Protocol (EPP)
+
+Abstract
+
+   This document describes an Extensible Provisioning Protocol (EPP)
+   mapping for the Registry Grace Period (RGP) Poll Notification when a
+   restore report has not been submitted for a restore request in the
+   Domain Registry Grace Period Mapping (RFC 3915).
+
+Legal Disclaimer
+
+   COPYRIGHT NOTIFICATION
+
+   Copyright 2013 VeriSign, Inc. All rights reserved.  VERISIGN; the
+   Verisign logo; and other trademarks, service marks and Verisign
+   designs are registered or unregistered trademarks of VeriSign Inc.
+   and its subsidiaries in the United States and foreign countries.
+   Copyright laws and international treaties protect this document, and
+   any Verisign product to which it relates.
+
+   VERISIGN PROPRIETARY INFORMATION
+
+   This document is the property of VeriSign, Inc. and its subsidiaries
+   (together "Verisign") It may be used by recipient only for the
+   purpose for which it was transmitted and must be returned upon
+   request or when no longer needed by recipient.  It may not be copied
+   or communicated without the prior written consent of Verisign.
+
+   NOTICE AND CAUTION
+
+   Concerning U.S. Patent or Trademark Rights
+
+   Verisign and other trademarks, service marks and logos are registered
+   or unregistered trademarks of Verisign and its subsidiaries in the
+   United States and in foreign countries.  The inclusion in this
+   document, the associated on-line file or the associated software of
+   any information covered by any other patent, trademark or service
+   mark rights does not constitute nor imply a grant of or authority to
+   exercise, any right or privilege protected by such patent, trademark
+   or service mark.  All such rights and privileges are vested in the
+   patent, trademark or service mark owner and no other person may
+   exercise such rights without express permission, authority or license
+   secured from the patent, trademark or service mark owner.
+
+
+
+Gould                                                           [Page 1]
+
+                                rgp-poll                   December 2013
+
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . . . 3
+     1.1.  Conventions Used in This Document . . . . . . . . . . . . . 3
+   2.  Object Attributes . . . . . . . . . . . . . . . . . . . . . . . 3
+     2.1.  Language Tag  . . . . . . . . . . . . . . . . . . . . . . . 3
+     2.2.  Dates and Times . . . . . . . . . . . . . . . . . . . . . . 3
+   3.  EPP Command Mapping . . . . . . . . . . . . . . . . . . . . . . 4
+     3.1.  EPP <poll> Command  . . . . . . . . . . . . . . . . . . . . 4
+   4.  Formal Syntax . . . . . . . . . . . . . . . . . . . . . . . . . 5
+     4.1.  RGP Poll Mapping Schema . . . . . . . . . . . . . . . . . . 6
+   5.  Change History  . . . . . . . . . . . . . . . . . . . . . . . . 8
+     5.1.  Version 00  . . . . . . . . . . . . . . . . . . . . . . . . 8
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . . . 8
+   7.  Normative References  . . . . . . . . . . . . . . . . . . . . . 8
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . . . 8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gould                                                           [Page 2]
+
+                                rgp-poll                   December 2013
+
+
+1.  Introduction
+
+   This document describes an extension mapping for version 1.0 of the
+   Extensible Provisioning Protocol (EPP) [RFC5730].  This EPP extension
+   supports the poll message created by the server when a restore report
+   has not been submitted for a restore request in the Domain Registry
+   Grace Period (RGP) Mapping [RFC3915].
+
+1.1.  Conventions Used in This Document
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in RFC 2119 [RFC2119].
+
+   XML is case sensitive.  Unless stated otherwise, XML specifications
+   and examples provided in this document MUST be interpreted in the
+   character case presented in order to develop a conforming
+   implementation.
+
+   In examples, "C:" represents lines sent by a protocol client and "S:"
+   represents lines returned by a protocol server.  Indentation and
+   white space in examples are provided only to illustrate element
+   relationships and are not a REQUIRED feature of this protocol.
+
+   "rgp-poll-1.0" is used as an abbreviation for
+   "http://www.verisign.com/epp/rgp-poll-1.0".  The XML namespace prefix
+   "rgp-poll" is used, but implementations MUST NOT depend on it and
+   instead employ a proper namespace-aware XML parser and serializer to
+   interpret and output the XML documents.
+
+
+2.  Object Attributes
+
+   The EPP RGP Poll has attributes and associated values that may be
+   viewed by the sponsoring client or server.  This section describes
+   each attribute type in detail.
+
+2.1.  Language Tag
+
+   The RGP status attribute includes the non-grace period statuses
+   defined in the Domain Registry Grace Period (RGP) Mapping [RFC3915].
+   Specifically, the redemptionPeriod, pendingRestore, and pendingDelete
+   statuses MUST be used.
+
+2.2.  Dates and Times
+
+   Date and time attribute values MUST be represented in Universal
+   Coordinated Time (UTC) using the Gregorian calendar.  The extended
+
+
+
+Gould                                                           [Page 3]
+
+                                rgp-poll                   December 2013
+
+
+   date-time form using upper case "T" and "Z" characters defined in XML
+   Schema Part 2 [1] MUST be used to represent date-time values, as XML
+   Schema does not support truncated date-time forms or lower case "T"
+   and "Z" characters.
+
+
+3.  EPP Command Mapping
+
+   A detailed description of the EPP syntax and semantics can be found
+   in the EPP core protocol specification [RFC5730].  The command
+   mapping described here is specifically for use with the Domain
+   Registry Grace Period (RGP) Mapping [RFC3915].
+
+3.1.  EPP <poll> Command
+
+   The EPP <poll> command and response is defined in section 2.9.2.3 of
+   [RFC5730].  The RGP Poll Notification is included in the EPP <poll>
+   response of [RFC5730].
+
+   For the RGP Poll Notification, poll messages apply whenever an
+   [RFC3915] RGP restore request command is successfully completed and
+   the RGP restore report command has not been received.  The RGP Poll
+   message includes the domain name, the restore request date, the
+   restore report due date, and the current RGP status of the domain as
+   defined in section 3.1 of [RFC3915].  In the case of a RGP specific
+   message, a <rgp-poll:pollData> element will be included within the
+   <resData> element of the standard <poll> response.  The <rgp-
+   poll:pollData> element will include a reference to the rgp-poll
+   namespace.  EPP data contained within the <rgp-poll:pollData> element
+   is formatted according to the rgp-poll schema.
+
+   Example <poll> command:
+
+   C:<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+   C:<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+   C:  <command>
+   C:  <poll op="req"/>
+   C:    <clTRID>ABC-12345</clTRID>
+   C:  </command>
+   C:</epp>
+
+   An RGP Poll Message consists of the <rgp-poll:pollData> element with
+   the following child elements:
+
+
+
+
+
+
+
+
+Gould                                                           [Page 4]
+
+                                rgp-poll                   December 2013
+
+
+   <rgp-poll:name>  The domain name that is a candidate for restoration.
+   <rgp-poll:rgpStatus>  The RGP status, using the "s" attribute value
+       of the element, of the domain name as defined in [RFC3915],
+       exclusive of the grace period statuses.
+   <rgp-poll:reqDate>  The date and time the server received the restore
+       request.
+   <rgp-poll:reportDueDate>  The date and time the restore report MUST
+       be received by the server to restore the domain name.
+
+   Example <poll> response with the RGP Poll Message:
+
+   S:<?xml version="1.0" encoding="UTF-8"?>
+   S:<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+   S:  <response>
+   S:    <result code="1301">
+   S:      <msg>Command completed successfully; ack to dequeue</msg>
+   S:    </result>
+   S:    <msgQ count="5" id="12345">
+   S:      <qDate>2013-05-03T20:06:17.0002Z</qDate>
+   S:      <msg>Restore Request Pending</msg>
+   S:    </msgQ>
+   S:    <resData>
+   S:      <rgp-poll:pollData
+   S:        xmlns:rgp-poll="http://www.verisign.com/epp/rgp-poll-1.0">
+   S:        <rgp-poll:name>foobar.com</rgp-poll:name>
+   S:        <rgp-poll:rgpStatus s="pendingDelete"/>
+   S:        <rgp-poll:reqDate>2013-05-03T20:06:17.0002Z
+   S:        </rgp-poll:reqDate>
+   S:        <rgp-poll:reportDueDate>2013-05-08T20:06:17.0002Z
+   S:        </rgp-poll:reportDueDate>
+   S:      </rgp-poll:pollData>
+   S:    </resData>
+   S:    <trID>
+   S:      <clTRID>ABC-12345</clTRID>
+   S:      <svTRID>54322-XYZ</svTRID>
+   S:    </trID>
+   S:  </response>
+   S:</epp>
+
+
+4.  Formal Syntax
+
+   One schema is presented here that is the RGP Poll Mapping schema.
+
+   The formal syntax presented here is a complete schema representation
+   of the object mapping suitable for automated validation of EPP XML
+   instances.  The BEGIN and END tags are not part of the schema; they
+   are used to note the beginning and ending of the schema for URI
+
+
+
+Gould                                                           [Page 5]
+
+                                rgp-poll                   December 2013
+
+
+   registration purposes.
+
+4.1.  RGP Poll Mapping Schema
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gould                                                           [Page 6]
+
+                                rgp-poll                   December 2013
+
+
+   BEGIN
+   <?xml version="1.0" encoding="UTF-8"?>
+   <schema targetNamespace="http://www.verisign.com/epp/rgp-poll-1.0"
+     xmlns:rgp-poll="http://www.verisign.com/epp/rgp-poll-1.0"
+     xmlns:eppcom="urn:ietf:params:xml:ns:eppcom-1.0"
+     xmlns:rgp="urn:ietf:params:xml:ns:rgp-1.0"
+     xmlns="http://www.w3.org/2001/XMLSchema"
+     elementFormDefault="qualified">
+     <!--
+     Import common element types.
+     -->
+     <import namespace="urn:ietf:params:xml:ns:eppcom-1.0"
+       schemaLocation="eppcom-1.0.xsd"/>
+     <import namespace="urn:ietf:params:xml:ns:rgp-1.0"
+       schemaLocation="rgp-1.0.xsd"/>
+
+     <annotation>
+       <documentation>
+         Extensible Provisioning Protocol v1.0
+         VeriSign poll notification specification for
+         registry grace period
+         poll notifications.
+       </documentation>
+     </annotation>
+
+     <!--
+     Child elements found in EPP commands.
+     -->
+     <element name="pollData" type="rgp-poll:pollDataType"/>
+
+     <!--
+     Child elements of the <notifyData> element for the
+     redemption grace period.
+     -->
+     <complexType name="pollDataType">
+       <sequence>
+         <element name="name" type="eppcom:labelType"/>
+         <element name="rgpStatus" type="rgp:statusType"/>
+         <element name="reqDate" type="dateTime"/>
+         <element name="reportDueDate" type="dateTime"/>
+       </sequence>
+     </complexType>
+     <!--
+     End of schema.
+     -->
+   </schema>
+   END
+
+
+
+
+Gould                                                           [Page 7]
+
+                                rgp-poll                   December 2013
+
+
+5.  Change History
+
+5.1.  Version 00
+
+   1.  Initial version of Internet-Draft format of the RGP Poll Mapping,
+       version 1.2.
+
+
+6.  Security Considerations
+
+   The mapping extensions described in this document do not provide any
+   security services beyond those described by EPP [RFC5730] and
+   protocol layers used by EPP.  The security considerations described
+   in these other specifications apply to this specification as well.
+
+
+7.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+   [RFC3915]  Hollenbeck, S., "Domain Registry Grace Period Mapping for
+              the Extensible Provisioning Protocol (EPP)", RFC 3915,
+              September 2004.
+
+   [RFC5730]  Hollenbeck, S., "Extensible Provisioning Protocol (EPP)",
+              STD 69, RFC 5730, August 2009.
+
+   [1]  <http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/>
+
+
+Author's Address
+
+   James Gould
+   VeriSign, Inc.
+   12061 Bluemont Way
+   Reston, VA  20190
+   US
+
+   Email: jgould@verisign.com
+   URI:   http://www.verisigninc.com
+
+
+
+
+
+
+
+
+
+
+Gould                                                           [Page 8]
+

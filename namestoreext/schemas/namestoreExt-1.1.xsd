@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.verisign-grs.com/epp/namestoreExt-1.1" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:namestoreExt="http://www.verisign-grs.com/epp/namestoreExt-1.1" elementFormDefault="qualified">
+	<annotation>
+		<documentation>       Extensible Provisioning Protocol v1.0       Namestore extension schema for destination registry routing.</documentation>
+	</annotation>
+	<!-- General Data types. -->
+	<simpleType name="subProductType">
+		<restriction base="token">
+			<minLength value="1"/>
+			<maxLength value="64"/>
+		</restriction>
+	</simpleType>
+	<complexType name="extAnyType">
+		<sequence>
+			<any namespace="##other" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	<!-- Child elements found in EPP commands and responses. -->
+	<element name="namestoreExt" type="namestoreExt:namestoreExtType"/>
+	<!-- Child elements of the <product> command. -->
+	<complexType name="namestoreExtType">
+		<sequence>
+			<element name="subProduct" type="namestoreExt:subProductType"/>
+		</sequence>
+	</complexType>
+	<!-- Child response elements. -->
+	<element name="nsExtErrData" type="namestoreExt:nsExtErrDataType"/>
+
+	<!-- <prdErrData> error response elements. -->
+	<complexType name="nsExtErrDataType">
+		<sequence>
+			<element name="msg" type="namestoreExt:msgType"/>
+		</sequence>
+	</complexType>
+	<!-- <prdErrData> <msg> element. -->
+	<complexType name="msgType">
+		<simpleContent>
+			<extension base="normalizedString">
+				<attribute name="code" type="namestoreExt:prdErrCodeType" use="required"/>
+				<attribute name="lang" type="language" default="en"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	<!-- <prdErrData> error response codes. -->
+	<simpleType name="prdErrCodeType">
+		<restriction base="unsignedShort">
+			<enumeration value="1"/>
+		</restriction>
+	</simpleType>
+	<!-- End of schema. -->
+</schema>

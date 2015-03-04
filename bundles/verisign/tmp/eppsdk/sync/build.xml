@@ -1,0 +1,379 @@
+<!--
+Copyright (C) 2004 VeriSign, Inc.
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-0107  USA
+
+http://www.verisign.com/nds/naming/namestore/techdocs.html
+-->
+
+
+<project name="EPP SDK-SYNC" default="jar" basedir=".">
+
+	<import file="${basedir}/common-targets.xml"/>	
+
+	<!-- SDK home directory -->
+    <property name="sdk.home.dir" location=".."/>
+
+	<!-- Ensure environment variables are set to env prefixed properties -->
+	<property environment="env"/>
+
+	<!-- All properties can be overridden in build.properties -->
+    <property file="${basedir}/build.properties"/>
+
+	<!-- Gen directories -->
+    <property name="sync.gen.dir" value="${sdk.home.dir}/gen"/>
+    <property name="sync.gen.src.dir" value="${sync.gen.dir}/java"/>
+
+
+	<!-- Domain directories -->
+    <property name="sync.domain.dir" value="${sdk.home.dir}/domain"/>
+    <property name="sync.domain.src.dir" value="${sync.domain.dir}/java"/>
+
+	<!-- Temporary directory used for distribution -->
+    <property name="sync.tmp.dir" location="${sync.dir}/tmp"/>
+
+	<!-- compiler option properties -->
+    <property name="debug" value="on"/>
+    <property name="optimize" value="on"/>
+    <property name="deprecation" value="on"/>
+
+	<!-- classpath to use for compilation tasks -->
+	<path id="sync.compile.classpath">
+		<fileset dir="${sync.lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${sync.epp.lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<!-- classpath to use for compilation tasks -->
+	<path id="sync.test.classpath">
+		<fileset dir="${sync.epp.lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<path refid="sync.compile.classpath"/>
+	</path>
+
+  <!-- =================================================================== -->
+  <!-- Initialization target                                               -->
+  <!-- =================================================================== -->
+  <target 	name="init"
+			description="Initializes the build for rest of targets ">
+
+	<!-- set time stamp properties -->
+    <tstamp/>
+
+	<!-- Give build.version a default value of SNAPSHOT -->
+	<property name="build.version" value="SNAPSHOT"/>
+
+    <echo message="----------- ${ant.project.name} ${build.version} ------------"/>
+
+	<mkdir dir="${sync.results.dir}" />
+	<mkdir dir="${sync.build.dir}" />
+	<mkdir dir="${sync.epp.lib.dir}" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Builds the epp-gen.jar file               		                   -->
+  <!-- =================================================================== -->
+  <target 	name="jar-gen"
+  			description="Build the dependent epp-gen.jar file" >
+		<ant dir="${sync.gen.dir}" target="jar" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Cleans the epp-gen files               		                       -->
+  <!-- =================================================================== -->
+  <target 	name="clean-gen"
+  			description="Clean the epp-gen files" >
+		<ant dir="${sync.gen.dir}" target="clean" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Builds the epp-domain.jar file               		                   -->
+  <!-- =================================================================== -->
+  <target 	name="jar-domain"
+  			description="Build the dependent epp-domain.jar file" >
+		<ant dir="${sync.domain.dir}" target="jar" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Cleans the epp-domain files               		                       -->
+  <!-- =================================================================== -->
+  <target 	name="clean-domain"
+  			description="Clean the epp-domain files" >
+		<ant dir="${sync.domain.dir}" target="clean" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Compiles source files                                     		   -->
+  <!-- =================================================================== -->
+  <target 	name="compile" depends="init, jar-gen, jar-domain"
+  			description="Compile EPP SDK-Domain source files" >
+
+    <echo message="${ant.project.name} ${build.version} Compile"/>
+    <javac srcdir="${sync.src.dir}"
+		   destdir="${sync.build.dir}"
+           debug="${debug}"
+           optimize="${optimize}"
+		   deprecation="${deprecation}"
+	       target="1.6"
+		   failonerror="true">
+
+		<classpath refid="sync.compile.classpath" />
+	</javac>
+
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Creates epp-sync.jar                                                -->
+  <!-- =================================================================== -->
+  <target 	name="jar" depends="compile"
+  			description="Generates EPP SDK-Domain .jar file (default)" >
+
+	<!-- Set default value of build.version to SNAPSHOT -->
+	<property name="build.version" value="SNAPSHOT"/>
+
+	<jar jarfile="${sync.epp.lib.dir}/epp-sync.jar" >
+			<manifest>
+					<attribute name="baseline" value="EPP-DOMAIN-SDK-${build.version}"/>
+			</manifest>
+		<fileset dir="${sync.build.dir}"
+			includes="com/**/*.class" />
+		<fileset dir="${sync.dir}"
+			includes="schemas/*.xsd" />
+	</jar>
+
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Creates epp-sync-src.jar                                                -->
+  <!-- =================================================================== -->
+  <target 	name="jar-src" depends="init"
+  			description="Generates EPP SDK-sync-src.jar file " >
+		
+		<mkdir dir="${sync.dist.dir}/jar-src" />
+	
+		<!-- Create source .jar distribution -->
+		<zip destfile="${sync.dist.dir}/jar-src/epp-sync-${build.version}-src.jar">			
+			<zipfileset dir="${sync.dir}/java" includes="com/**/*.java">				
+			</zipfileset>			
+		</zip>
+  </target>
+  
+  <!-- =================================================================== -->
+  <!-- Formats the source code using Jalopy                                -->
+  <!-- =================================================================== -->
+  <target name="format"
+		  description="Format the source code">
+		  		<taskdef name="jalopy"
+				 classname="de.hunsicker.jalopy.plugin.ant.AntPlugin">
+			<classpath>
+				<fileset dir="${sync.lib.dir}/jalopy">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+		</taskdef>
+		<jalopy fileformat="unix"
+				convention="${sync.lib.dir}/jalopy/sdk-convention.xml"
+				loglevel="info"
+				threads="2"
+				classpathref="sync.compile.classpath">
+				<fileset dir="${sync.src.dir}">
+					<include name="**/*.java"/>
+				</fileset>
+		</jalopy>
+
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Creates the HTML API documentation                                  -->
+  <!-- =================================================================== -->
+  <target 	name="doc"
+  			description="Generate EPP SDK-Domain HTML API documentation" >
+
+    <mkdir dir="${sync.doc.dir}/html"/>
+    <javadoc packagenames="com.verisign.epp.*"
+             sourcepath="${sync.src.dir}:${sync.gen.src.dir}:${sync.domain.src.dir}"
+             destdir="${sync.doc.dir}/html"
+             author="true"
+             version="true"
+             use="true"
+             splitindex="true"
+			 breakiterator="true"
+             noindex="false"
+             windowtitle="${ant.project.name} API"
+             doctitle="${ant.project.name}"
+             bottom="Copyright &#169; VeriSign Inc. All Rights Reserved.">
+		<classpath refid="sync.compile.classpath" />
+	</javadoc>
+
+  </target>
+
+
+
+	<!-- =================================================================== -->
+	<!-- Ensure that build.version is set                                    -->
+	<!-- =================================================================== -->
+	<target name="check-build-version" unless="build.version">
+		<fail message="Must set build.version with -Dbuild.version=X"/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates SDK source distribution                                     -->
+	<!-- =================================================================== -->
+	<target name="dist-src" depends="check-build-version, init"
+				description = "Creates SDK source distribution (-Dbuild.version required)" >
+		<mkdir dir="${sync.dist.dir}" />
+
+		<!-- Create source .zip distribution -->
+		<zip destfile="${sync.dist.dir}/epp-sync-${build.version}-src.zip">
+			<zipfileset dir="${sync.license.dir}" prefix="eppsdk/license"/>
+			<zipfileset dir="${sync.lib.dir}" prefix="eppsdk/lib">
+				<exclude name="epp/**"/>
+			</zipfileset>
+			<zipfileset dir="${sync.epp.lib.dir}" prefix="eppsdk/lib/epp">
+				<include name="${sync.epp.lib.dir}/epp-gen-${build.version}.jar"/>
+			</zipfileset>
+			<zipfileset dir="${sync.dir}" prefix="eppsdk/sync">
+				<exclude name="junit*"/>
+				<exclude name="*.log*"/>
+				<exclude name="*.err"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.doc"/>
+				<exclude name="doc/html/**"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+			</zipfileset>
+		</zip>
+
+		<!-- Create source .tar.gz distribution -->
+		<tar destfile="${sync.dist.dir}/epp-sync-${build.version}-src.tar.gz"
+			compression="gzip">
+			<tarfileset dir="${sync.license.dir}" prefix="eppsdk/license"/>
+			<tarfileset dir="${sync.lib.dir}" prefix="eppsdk/lib">
+				<exclude name="epp/**"/>
+			</tarfileset>
+			<tarfileset dir="${sync.dir}" mode="755" prefix="eppsdk/sync">
+				<exclude name="junit*"/>
+				<exclude name="*.log*"/>
+				<exclude name="*.err"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.doc"/>
+				<exclude name="doc/html/**"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+			</tarfileset>
+		</tar>
+
+	</target>
+
+
+
+	<!-- =================================================================== -->
+	<!-- Creates SDK binary distribution                                     -->
+	<!-- =================================================================== -->
+	<target name="dist-bin" depends="check-build-version, jar, test, doc"
+				description = "Creates SDK binary distribution (-Dbuild.version required)" >
+		<mkdir dir="${sync.dist.dir}" />
+		<mkdir dir="${sync.tmp.dir}" />
+
+		<copy file="${sync.dir}/build-bin.xml" tofile="${sync.tmp.dir}/build.xml"/>
+
+
+		<!-- Create binary .zip distribution -->
+		<zip destfile="${sync.dist.dir}/epp-sync-${build.version}-bin.zip">
+			<zipfileset dir="${sync.license.dir}" prefix="eppsdk/license"/>
+			<zipfileset dir="${sync.lib.dir}" prefix="eppsdk/lib"/>
+			<zipfileset dir="${sync.tmp.dir}" includes="build.xml" prefix="eppsdk/sync"/>
+			<zipfileset dir="${sync.dir}" prefix="eppsdk/sync">
+				<exclude name="*.log"/>
+				<exclude name="*.err"/>
+				<exclude name="java/**"/>
+				<exclude name="schemas/**"/>
+				<exclude name="build.xml"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.doc"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+				<exclude name="tmp/**"/>
+			</zipfileset>
+		</zip>
+
+		<!-- Create binary .tar.gz distribution -->
+		<tar destfile="${sync.dist.dir}/epp-sync-${build.version}-bin.tar.gz"
+			compression="gzip">
+			<tarfileset dir="${sync.license.dir}" prefix="eppsdk/license"/>
+			<tarfileset dir="${sync.lib.dir}" prefix="eppsdk/lib"/>
+			<tarfileset dir="${sync.tmp.dir}" includes="build.xml" prefix="eppsdk/sync"/>
+			<tarfileset dir="${sync.dir}" mode="755" prefix="eppsdk/sync">
+				<exclude name="*.log"/>
+				<exclude name="*.err"/>
+				<exclude name="java/**"/>
+				<exclude name="schemas/**"/>
+				<exclude name="build.xml"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.doc"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+				<exclude name="tmp/**"/>
+			</tarfileset>
+		</tar>
+
+		<delete dir="${sync.tmp.dir}"/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates SDK distributions						                     -->
+	<!-- =================================================================== -->
+	<target name="dist" depends="dist-src, dist-bin"
+				description = "Creates SDK distributions (-Dbuild.version required)" >
+	</target>
+
+  <!-- =================================================================== -->
+  <!-- Clean targets                                                       -->
+  <!-- =================================================================== -->
+  <target 	name="clean" depends="init, clean-gen, clean-domain"
+			description="Clean EPP SDK-Domain compiled files" >
+
+		<!-- Clean build directory -->
+		<delete dir="${sync.build.dir}" quiet="true"/>
+
+		<!-- Clean the EPP lib directory -->
+		<delete dir="${sync.epp.lib.dir}" quiet="true"/>
+
+		<!-- Clean results directory -->
+		<delete dir="${sync.results.dir}" quiet="true"/>
+
+		<!-- Clean log files -->
+		<delete>
+			<fileset dir="${sync.dir}" includes="*.log, *.err"/>
+		</delete>
+
+		<!-- Clean generated documentation files -->
+		<delete dir="${sync.doc.dir}/html" quiet="true"/>
+
+		<!-- Clean distribution directory -->
+		<delete dir="${sync.dist.dir}" quiet="true"/>
+
+		<!-- Clean the tmp directory -->
+		<delete dir="${sync.tmp.dir}" quiet="true"/>
+
+  </target>
+
+</project>
+
+<!-- End of file -->

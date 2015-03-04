@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!--
+Copyright (C) 2005 VeriSign, Inc.
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-0107  USA
+
+http://www.verisign.com/nds/naming/namestore/techdocs.html
+-->
+
+
+<log4j:configuration>
+
+		<!--
+			Direct diagnostic logging to a rolling log file prefixed with epp.log.
+		-->
+        <appender name="DATEFILE" class="org.apache.log4j.DailyRollingFileAppender">
+			<param 	name="File" value="epp.log" />
+			<param 	name="DatePattern" value="yyyyMMdd" />
+			<layout class="org.apache.log4j.PatternLayout">
+				<param 	name="ConversionPattern"
+					value="%d{yyyyMMdd HHmmss}  %c %-5p %m\n"/>
+           </layout>
+        </appender>
+        
+       <appender name="PACKETFILE" class="org.apache.log4j.DailyRollingFileAppender">
+			<param 	name="File" value="epp-packet.log" />
+			<param 	name="DatePattern" value="yyyyMMdd" />
+			<layout class="org.apache.log4j.PatternLayout">
+				<param 	name="ConversionPattern"
+					value="%d{yyyyMMdd HHmmss}  %c %-5p %m\n"/>
+           </layout>
+        </appender>
+
+        
+
+		<!--
+			Direct warning and errors to a rolling error log prefixed with epp.err.
+		-->
+        <appender name="ERROR" class="org.apache.log4j.DailyRollingFileAppender">
+			<param 	name="File" value="epp.err" />
+			<param 	name="DatePattern" value="yyyyMMdd" />
+			<layout class="org.apache.log4j.PatternLayout">
+				<param 	name="ConversionPattern"
+					value="%d{yyyyMMdd HHmmss}  %c %-5p %m\n"/>
+           </layout>
+			<filter class="org.apache.log4j.varia.LevelRangeFilter">
+				<param name="LevelMin" value="WARN"/>
+				<param name="LevelMax" value="FATAL"/>
+				<param name="AcceptOnMatch" value="true"/>
+			</filter>
+        </appender>
+        
+        <logger name="com.verisign.epp.interfaces.EPPSession">
+        	<level value="error"/>
+        </logger>
+        <logger name="com.verisign.epp.codec.gen.EPPLoginCmd">
+        	<level value="error"/>
+        </logger>
+
+        <!-- turn off the logging of the apache commons software -->
+        <logger name="org.apache.commons">
+            <level value="OFF"/>
+        </logger>
+
+       <logger name="com.verisign.epp.util.EPPXMLStream.packet">
+            <level value="debug"/>
+           <appender-ref ref="DATEFILE" />
+           <appender-ref ref="PACKETFILE" />
+        </logger>
+
+		<!--
+			Default level (info) and appender:
+				o debug - Is the default level
+				o All logs will go to the dated log file (DATEFILE)
+				o All warnings and errors will go to the dated log file (ERROR)
+		 -->
+        <root>
+           <priority value ="debug" />
+           <appender-ref ref="DATEFILE" />
+           <appender-ref ref="ERROR" />
+        </root>
+
+</log4j:configuration>

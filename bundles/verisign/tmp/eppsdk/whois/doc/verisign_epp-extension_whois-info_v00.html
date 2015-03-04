@@ -1,0 +1,628 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en"><head><title>VeriSign Inc. Proprietary Information: Whois Info Extension for the Extensible Provisioning Protocol (EPP)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="description" content="Whois Info Extension for the Extensible Provisioning Protocol (EPP)">
+<meta name="generator" content="xml2rfc v1.36 (http://xml.resource.org/)">
+<style type='text/css'><!--
+        body {
+                font-family: verdana, charcoal, helvetica, arial, sans-serif;
+                font-size: small; color: #000; background-color: #FFF;
+                margin: 2em;
+        }
+        h1, h2, h3, h4, h5, h6 {
+                font-family: helvetica, monaco, "MS Sans Serif", arial, sans-serif;
+                font-weight: bold; font-style: normal;
+        }
+        h1 { color: #900; background-color: transparent; text-align: right; }
+        h3 { color: #333; background-color: transparent; }
+
+        td.RFCbug {
+                font-size: x-small; text-decoration: none;
+                width: 30px; height: 30px; padding-top: 2px;
+                text-align: justify; vertical-align: middle;
+                background-color: #000;
+        }
+        td.RFCbug span.RFC {
+                font-family: monaco, charcoal, geneva, "MS Sans Serif", helvetica, verdana, sans-serif;
+                font-weight: bold; color: #666;
+        }
+        td.RFCbug span.hotText {
+                font-family: charcoal, monaco, geneva, "MS Sans Serif", helvetica, verdana, sans-serif;
+                font-weight: normal; text-align: center; color: #FFF;
+        }
+
+        table.TOCbug { width: 30px; height: 15px; }
+        td.TOCbug {
+                text-align: center; width: 30px; height: 15px;
+                color: #FFF; background-color: #900;
+        }
+        td.TOCbug a {
+                font-family: monaco, charcoal, geneva, "MS Sans Serif", helvetica, sans-serif;
+                font-weight: bold; font-size: x-small; text-decoration: none;
+                color: #FFF; background-color: transparent;
+        }
+
+        td.header {
+                font-family: arial, helvetica, sans-serif; font-size: x-small;
+                vertical-align: top; width: 33%;
+                color: #FFF; background-color: #666;
+        }
+        td.author { font-weight: bold; font-size: x-small; margin-left: 4em; }
+        td.author-text { font-size: x-small; }
+
+        /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+        a.info {
+                /* This is the key. */
+                position: relative;
+                z-index: 24;
+                text-decoration: none;
+        }
+        a.info:hover {
+                z-index: 25;
+                color: #FFF; background-color: #900;
+        }
+        a.info span { display: none; }
+        a.info:hover span.info {
+                /* The span will display just on :hover state. */
+                display: block;
+                position: absolute;
+                font-size: smaller;
+                top: 2em; left: -5em; width: 15em;
+                padding: 2px; border: 1px solid #333;
+                color: #900; background-color: #EEE;
+                text-align: left;
+        }
+
+        a { font-weight: bold; }
+        a:link    { color: #900; background-color: transparent; }
+        a:visited { color: #633; background-color: transparent; }
+        a:active  { color: #633; background-color: transparent; }
+
+        p { margin-left: 2em; margin-right: 2em; }
+        p.copyright { font-size: x-small; }
+        p.toc { font-size: small; font-weight: bold; margin-left: 3em; }
+        table.toc { margin: 0 0 0 3em; padding: 0; border: 0; vertical-align: text-top; }
+        td.toc { font-size: small; font-weight: bold; vertical-align: text-top; }
+
+        ol.text { margin-left: 2em; margin-right: 2em; }
+        ul.text { margin-left: 2em; margin-right: 2em; }
+        li      { margin-left: 3em; }
+
+        /* RFC-2629 <spanx>s and <artwork>s. */
+        em     { font-style: italic; }
+        strong { font-weight: bold; }
+        dfn    { font-weight: bold; font-style: normal; }
+        cite   { font-weight: normal; font-style: normal; }
+        tt     { color: #036; }
+        tt, pre, pre dfn, pre em, pre cite, pre span {
+                font-family: "Courier New", Courier, monospace; font-size: small;
+        }
+        pre {
+                text-align: left; padding: 4px;
+                color: #000; background-color: #CCC;
+        }
+        pre dfn  { color: #900; }
+        pre em   { color: #66F; background-color: #FFC; font-weight: normal; }
+        pre .key { color: #33C; font-weight: bold; }
+        pre .id  { color: #900; }
+        pre .str { color: #000; background-color: #CFF; }
+        pre .val { color: #066; }
+        pre .rep { color: #909; }
+        pre .oth { color: #000; background-color: #FCF; }
+        pre .err { background-color: #FCC; }
+
+        /* RFC-2629 <texttable>s. */
+        table.all, table.full, table.headers, table.none {
+                font-size: small; text-align: center; border-width: 2px;
+                vertical-align: top; border-collapse: collapse;
+        }
+        table.all, table.full { border-style: solid; border-color: black; }
+        table.headers, table.none { border-style: none; }
+        th {
+                font-weight: bold; border-color: black;
+                border-width: 2px 2px 3px 2px;
+        }
+        table.all th, table.full th { border-style: solid; }
+        table.headers th { border-style: none none solid none; }
+        table.none th { border-style: none; }
+        table.all td {
+                border-style: solid; border-color: #333;
+                border-width: 1px 2px;
+        }
+        table.full td, table.headers td, table.none td { border-style: none; }
+
+        hr { height: 1px; }
+        hr.insert {
+                width: 80%; border-style: none; border-width: 0;
+                color: #CCC; background-color: #CCC;
+        }
+--></style>
+</head>
+<body>
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<table summary="layout" width="66%" border="0" cellpadding="0" cellspacing="0"><tr><td><table summary="layout" width="100%" border="0" cellpadding="2" cellspacing="1">
+<tr><td class="header">VeriSign Inc. Proprietary Information</td><td class="header">J. Gould</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">S. Veeramachaneni</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">VeriSign, Inc.</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">January 10, 2014</td></tr>
+</table></td></tr></table>
+<h1><br />Whois Info Extension for the Extensible Provisioning Protocol (EPP)</h1>
+
+<h3>Abstract</h3>
+
+<p>This document describes an Extensible Provisioning Protocol (EPP)
+      extension mapping for retrieving additional information for a domain name, 
+      as defined in the EPP domain name mapping, 
+      that has historically been available only in Whois.
+</p>
+<h3>Legal Disclaimer</h3>
+
+<p>COPYRIGHT NOTIFICATION
+</p>
+<p>Copyright 2014 VeriSign, Inc. All rights reserved. VERISIGN; 
+      the Verisign logo; and other trademarks, service marks and Verisign designs are registered or 
+      unregistered trademarks of VeriSign Inc. and its subsidiaries in the United States and foreign countries. 
+      Copyright laws and international treaties protect this document, and any Verisign product to which it relates.
+</p>
+<p>VERISIGN PROPRIETARY INFORMATION
+</p>
+<p>This document is the property of VeriSign, Inc. and its subsidiaries (together "Verisign") It may be used by 
+      recipient only for the purpose for which it was transmitted and must be returned upon request or when no longer 
+      needed by recipient. It may not be copied or communicated without the prior written consent of Verisign.
+</p>
+<p>NOTICE AND CAUTION
+</p>
+<p>Concerning U.S. Patent or Trademark Rights
+</p>
+<p>Verisign and other trademarks, service marks and logos are registered or unregistered trademarks of 
+      Verisign and its subsidiaries in the United States and in foreign countries. The inclusion in this 
+      document, the associated on-line file or the associated software of any information covered by any 
+      other patent, trademark or service mark rights does not constitute nor imply a grant of or authority 
+      to exercise, any right or privilege protected by such patent, trademark or service mark. All such 
+      rights and privileges are vested in the patent, trademark or service mark owner and no other person 
+      may exercise such rights without express permission, authority or license secured from the patent, 
+      trademark or service mark owner.
+</p><a name="toc"></a><br /><hr />
+<h3>Table of Contents</h3>
+<p class="toc">
+<a href="#anchor1">1.</a>&nbsp;
+Introduction<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor2">1.1.</a>&nbsp;
+Conventions Used in This Document<br />
+<a href="#attrs">2.</a>&nbsp;
+Object Attributes<br />
+<a href="#commands">3.</a>&nbsp;
+EPP Command Mapping<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#queryCommands">3.1.</a>&nbsp;
+EPP Query Commands<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#checkCommand">3.1.1.</a>&nbsp;
+EPP &lt;check&gt; Command<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#infoCommand">3.1.2.</a>&nbsp;
+EPP &lt;info&gt; Command<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#transferQueryCommand">3.1.3.</a>&nbsp;
+EPP &lt;transfer&gt; Command<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#transformCommands">3.2.</a>&nbsp;
+EPP Transform Commands<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#createCommand">3.2.1.</a>&nbsp;
+EPP &lt;create&gt; Command<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#deleteCommand">3.2.2.</a>&nbsp;
+EPP &lt;delete&gt; Command<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#renewCommand">3.2.3.</a>&nbsp;
+EPP &lt;renew&gt; Command<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#transferCommand">3.2.4.</a>&nbsp;
+EPP &lt;transfer&gt; Command<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#updateCommand">3.2.5.</a>&nbsp;
+EPP &lt;update&gt; Command<br />
+<a href="#syntax">4.</a>&nbsp;
+Formal Syntax<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor3">4.1.</a>&nbsp;
+Whois Info Extension Schema<br />
+<a href="#anchor4">5.</a>&nbsp;
+Change History<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#version-00">5.1.</a>&nbsp;
+Version 00<br />
+<a href="#Security">6.</a>&nbsp;
+Security Considerations<br />
+<a href="#rfc.references1">7.</a>&nbsp;
+Normative References<br />
+<a href="#rfc.authors">&#167;</a>&nbsp;
+Authors' Addresses<br />
+</p>
+<br clear="all" />
+
+<a name="anchor1"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.1"></a><h3>1.&nbsp;
+Introduction</h3>
+
+<p>This document describes an extension mapping for version 1.0 of the
+      <a class='info' href='#RFC5730'>Extensible Provisioning Protocol (EPP)<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP),&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5730].
+      This EPP extension enables a client to retrieve additional information for a domain name, 
+      as defined in the <a class='info' href='#RFC5731'>EPP domain name mapping<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Domain Name Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5731], 
+      that has historically been available only in <a class='info' href='#RFC3912'>Whois<span> (</span><span class='info'>Daigle, L., &ldquo;WHOIS Protocol Specification,&rdquo; September&nbsp;2004.</span><span>)</span></a> [RFC3912].
+</p>
+<a name="anchor2"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.1.1"></a><h3>1.1.&nbsp;
+Conventions Used in This Document</h3>
+
+<p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+        "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+        document are to be interpreted as described in <a class='info' href='#RFC2119'>RFC 2119<span> (</span><span class='info'>Bradner, S., &ldquo;Key words for use in RFCs to Indicate Requirement Levels,&rdquo; March&nbsp;1997.</span><span>)</span></a> [RFC2119].
+</p>
+<p>XML is case sensitive. Unless stated otherwise, XML specifications
+        and examples provided in this document MUST be interpreted in the
+        character case presented in order to develop a conforming
+        implementation.
+</p>
+<p>In examples, "C:" represents lines sent by a protocol client and "S:" represents lines returned by a protocol server.  
+        Indentation and white space in examples are provided only to illustrate element relationships 
+        and are not a REQUIRED feature of this protocol.        
+        
+</p>
+<p>"whoisInf-1.0" is used as an abbreviation for
+        "http://www.verisign.com/epp/whoisInf-1.0". The XML namespace prefix "whoisInf"
+        is used, but implementations MUST NOT depend on it and instead employ
+        a proper namespace-aware XML parser and serializer to interpret and
+        output the XML documents.
+</p>
+<a name="attrs"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.2"></a><h3>2.&nbsp;
+Object Attributes</h3>
+
+<p>This extension adds additional elements to the <a class='info' href='#RFC5731'>EPP domain name mapping<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Domain Name Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5731]. Only those new elements
+      are described here.
+</p>
+<a name="commands"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3"></a><h3>3.&nbsp;
+EPP Command Mapping</h3>
+
+<p>A detailed description of the EPP syntax and semantics can be found
+      in the EPP core protocol specification <a class='info' href='#RFC5730'>[RFC5730]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP),&rdquo; August&nbsp;2009.</span><span>)</span></a>.
+</p>
+<a name="queryCommands"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.1"></a><h3>3.1.&nbsp;
+EPP Query Commands</h3>
+
+<p>EPP provides three commands to retrieve object information: &lt;check&gt; to determine 
+        if an object is known to the server, &lt;info&gt; to retrieve detailed information associated 
+        with an object, and &lt;transfer&gt; to retrieve object transfer status information.
+</p>
+<a name="checkCommand"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.1.1"></a><h3>3.1.1.&nbsp;
+EPP &lt;check&gt; Command</h3>
+
+<p>This extension does not add any elements to the EPP &lt;check&gt; command 
+       or &lt;check&gt; response described in the 
+       <a class='info' href='#RFC5731'>EPP domain name mapping<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Domain Name Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5731].
+</p>
+<a name="infoCommand"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.1.2"></a><h3>3.1.2.&nbsp;
+EPP &lt;info&gt; Command</h3>
+
+<p>This extension defines additional elements to extend the EPP
+        &lt;info&gt; command described in <a class='info' href='#RFC5731'>EPP domain name mapping<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Domain Name Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5731].
+</p>
+<p>The EPP &lt;info&gt; command is used to retrieve information associated with a domain object.  In 
+       addition to the EPP command elements described in the 
+       <a class='info' href='#RFC5731'>EPP domain name mapping<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Domain Name Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5731], the command MUST contain an 
+       &lt;extension&gt; element.  The &lt;extension&gt; element MUST contain a child &lt;whoisInf:whoisInf&gt; 
+       element that contains the following child element:
+</p>
+<p></p>
+<blockquote class="text"><dl>
+<dt>&lt;whoisInf:flag&gt;</dt>
+<dd>element MUST contain a boolean value of "1" or "true" to indicate that 
+          additional whois information is desired in the response or a value of "0" or "false" to indicate that no 
+          additional whois information is desired in the response.
+</dd>
+</dl></blockquote>
+
+<p>Example &lt;info&gt; command with the 
+            Whois Info extension:
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+C:&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+C:&lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+C:  &lt;command&gt;
+C:    &lt;info&gt;
+C:      &lt;domain:info
+C:        xmlns:domain="urn:ietf:params:xml:ns:domain-1.0"&gt;
+C:        &lt;domain:name&gt;example.com&lt;/domain:name&gt;
+C:      &lt;/domain:info&gt;
+C:    &lt;/info&gt;
+C:    &lt;extension&gt;
+C:      &lt;whoisInf:whoisInf
+C:        xmlns:whoisInf="http://www.verisign.com/epp/whoisInf-1.0"&gt;
+C:        &lt;whoisInf:flag&gt;1&lt;/whoisInf:flag&gt;
+C:      &lt;/whoisInf:whoisInf&gt;
+C:    &lt;/extension&gt;
+C:    &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
+C:  &lt;/command&gt;
+C:&lt;/epp&gt;</pre></div>
+<p>When an &lt;info&gt; command has been processed successfully, the EPP &lt;infData&gt; element MUST  
+       contain child elements as described in the <a class='info' href='#RFC5731'>EPP domain name mapping<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Domain Name Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5731].   
+       In addition to the EPP response element described 
+       described in <a class='info' href='#RFC5731'>EPP domain name mapping<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Domain Name Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5731], 
+       the response MUST contain an &lt;extension&gt; element with a &lt;whoisInf:whoisInfData&gt;
+       child element if the &lt;whoisInf:whoisInf&gt; command extension was included with a &lt;whoisInf:flag&gt; 
+       value of "1" or "true".  The &lt;whoisInf:whoisInfData&gt; element contains the following child elements:
+</p>
+<p></p>
+<blockquote class="text"><dl>
+<dt>&lt;whoisInf:registrar&gt;</dt>
+<dd>element that contains the full name of the sponsoring Registrar.
+</dd>
+<dt>&lt;whoisInf:whoisServer&gt;</dt>
+<dd>OPTIONAL element element that contains the sponsoring Registrar's referral whois server name.
+</dd>
+<dt>&lt;whoisInf:url&gt;</dt>
+<dd>OPTIONAL element element that contains the sponsoring Registrar's referral URL.
+</dd>
+<dt>&lt;whoisInf:irisServer&gt;</dt>
+<dd>OPTIONAL element element that contains the sponsoring Registrar's referral IRIS server name.
+</dd>
+</dl></blockquote>
+
+<p>Example &lt;info&gt; response with the 
+            Whois Info extension:
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+S:&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+S:&lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+S:  &lt;response&gt;
+S:    &lt;result code="1000"&gt;
+S:      &lt;msg&gt;Command completed successfully&lt;/msg&gt;
+S:    &lt;/result&gt;
+S:    &lt;resData&gt;
+S:      &lt;domain:infData
+S:        xmlns:domain="urn:ietf:params:xml:ns:domain-1.0"&gt;
+S:        &lt;domain:name&gt;example.com&lt;/domain:name&gt;
+S:        &lt;domain:roid&gt;EXAMPLE1-VRSN&lt;/domain:roid&gt;
+S:        &lt;domain:status s="ok"/&gt;
+S:        &lt;domain:clID&gt;ClientX&lt;/domain:clID&gt;
+S:        &lt;domain:crID&gt;ClientY&lt;/domain:crID&gt;
+S:        &lt;domain:crDate&gt;2005-11-11T18:09:52.0354Z
+S:        &lt;/domain:crDate&gt;
+S:        &lt;domain:authInfo&gt;
+S:          &lt;domain:pw&gt;2fooBAR&lt;/domain:pw&gt;
+S:        &lt;/domain:authInfo&gt;
+S:      &lt;/domain:infData&gt;
+S:    &lt;/resData&gt;
+S:    &lt;extension&gt;
+S:      &lt;whoisInf:whoisInfData
+S:        xmlns:whoisInf="http://www.verisign.com/epp/whoisInf-1.0"&gt;
+S:        &lt;whoisInf:registrar&gt;Example Registrar Inc.
+S:        &lt;/whoisInf:registrar&gt;
+S:        &lt;whoisInf:whoisServer&gt;whois.example.com
+S:        &lt;/whoisInf:whoisServer&gt;
+S:        &lt;whoisInf:url&gt;http://www.example.com
+S:        &lt;/whoisInf:url&gt;
+S:        &lt;whoisInf:irisServer&gt;iris.example.com
+S:        &lt;/whoisInf:irisServer&gt;
+S:      &lt;/whoisInf:whoisInfData&gt;
+S:    &lt;/extension&gt;
+S:    &lt;trID&gt;
+S:      &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
+S:      &lt;svTRID&gt;54321-XYZ&lt;/svTRID&gt;
+S:    &lt;/trID&gt;
+S:  &lt;/response&gt;
+S:&lt;/epp&gt;</pre></div>
+<a name="transferQueryCommand"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.1.3"></a><h3>3.1.3.&nbsp;
+EPP &lt;transfer&gt; Command</h3>
+
+<p>This extension does not add any elements to the EPP &lt;transfer&gt; command 
+       or &lt;transfer&gt; response described in the 
+       <a class='info' href='#RFC5731'>EPP domain name mapping<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Domain Name Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5731].
+</p>
+<a name="transformCommands"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.2"></a><h3>3.2.&nbsp;
+EPP Transform Commands</h3>
+
+<p>EPP provides five commands to transform objects: &lt;create&gt; to create an instance of an object, 
+        &lt;delete&gt; to delete an instance of an object, &lt;renew&gt; to extend the validity period of an object,
+        &lt;transfer&gt; to manage object sponsorship changes, and &lt;update&gt; to change information associated 
+        with an object.
+</p>
+<a name="createCommand"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.2.1"></a><h3>3.2.1.&nbsp;
+EPP &lt;create&gt; Command</h3>
+
+<p>This extension does not add any elements to the EPP &lt;create&gt; command 
+       or &lt;create&gt; response described in the 
+       <a class='info' href='#RFC5731'>EPP domain name mapping<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Domain Name Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5731].
+</p>
+<a name="deleteCommand"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.2.2"></a><h3>3.2.2.&nbsp;
+EPP &lt;delete&gt; Command</h3>
+
+<p>This extension does not add any elements to the EPP &lt;delete&gt; command 
+       or &lt;delete&gt; response described in the 
+       <a class='info' href='#RFC5731'>EPP domain name mapping<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Domain Name Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5731].
+</p>
+<a name="renewCommand"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.2.3"></a><h3>3.2.3.&nbsp;
+EPP &lt;renew&gt; Command</h3>
+
+<p>This extension does not add any elements to the EPP &lt;renew&gt; command 
+       or &lt;renew&gt; response described in the 
+       <a class='info' href='#RFC5731'>EPP domain name mapping<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Domain Name Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5731].
+</p>
+<a name="transferCommand"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.2.4"></a><h3>3.2.4.&nbsp;
+EPP &lt;transfer&gt; Command</h3>
+
+<p>This extension does not add any elements to the EPP &lt;transfer&gt; command 
+       or &lt;transfer&gt; response described in the 
+       <a class='info' href='#RFC5731'>EPP domain name mapping<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Domain Name Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5731].
+</p>
+<a name="updateCommand"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.2.5"></a><h3>3.2.5.&nbsp;
+EPP &lt;update&gt; Command</h3>
+
+<p>This extension does not add any elements to the EPP &lt;update&gt; command 
+       or &lt;update&gt; response described in the 
+       <a class='info' href='#RFC5731'>EPP domain name mapping<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Domain Name Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5731].
+</p>
+<a name="syntax"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.4"></a><h3>4.&nbsp;
+Formal Syntax</h3>
+
+<p>One schema is presented here that is the Whois Info Extension
+      schema.
+</p>
+<p>The formal
+      syntax presented here is a complete schema representation of the object
+      mapping suitable for automated validation of EPP XML instances. The
+      BEGIN and END tags are not part of the schema; they are used to note the
+      beginning and ending of the schema for URI registration purposes.
+</p>
+<a name="anchor3"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.4.1"></a><h3>4.1.&nbsp;
+Whois Info Extension Schema</h3>
+<div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+BEGIN
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;schema targetNamespace=
+  "http://www.verisign.com/epp/whoisInf-1.0"
+  xmlns:whoisInf="http://www.verisign.com/epp/whoisInf-1.0"
+  xmlns:eppcom="urn:ietf:params:xml:ns:eppcom-1.0"
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="qualified"&gt;
+
+  &lt;import namespace="urn:ietf:params:xml:ns:eppcom-1.0"
+    schemaLocation="eppcom-1.0.xsd"/&gt;
+
+  &lt;annotation&gt;
+     &lt;documentation&gt;
+       Extensible Provisioning Protocol v1.0
+       extension schema for Whois Info
+     &lt;/documentation&gt;
+  &lt;/annotation&gt;
+
+&lt;!--
+Possible Whois Info extension root elements
+--&gt;
+  &lt;element name="whoisInf"
+    type="whoisInf:whoisInfType"/&gt;
+  &lt;element name="whoisInfData"
+    type="whoisInf:whoisInfDataType"/&gt;
+
+&lt;!--
+Child elements for the &lt;whoisInf&gt; extension which
+is used as an extension to an info command.
+--&gt;
+  &lt;complexType name="whoisInfType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="flag" type="boolean"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+
+&lt;!--
+Child elements for the &lt;whoisInfData&gt; extension which
+is used as an extension to the info response.
+--&gt;
+  &lt;complexType name="whoisInfDataType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="registrar" type="string"/&gt;
+      &lt;element name="whoisServer" type="eppcom:labelType"
+        minOccurs="0"/&gt;
+      &lt;element name="url" type="token"
+        minOccurs="0"/&gt;
+      &lt;element name="irisServer" type="eppcom:labelType"
+        minOccurs="0"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+
+&lt;/schema&gt;
+END</pre></div>
+<a name="anchor4"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.5"></a><h3>5.&nbsp;
+Change History</h3>
+
+<a name="version-00"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.5.1"></a><h3>5.1.&nbsp;
+Version 00</h3>
+
+<p></p>
+<ol class="text">
+<li>Initial version of Internet-Draft format of the 
+        Whois Info Extension, version 1.0.
+</li>
+</ol>
+
+<a name="Security"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.6"></a><h3>6.&nbsp;
+Security Considerations</h3>
+
+<p>The mapping extensions described in this document do not provide any
+      security services beyond those described by <a class='info' href='#RFC5730'>EPP<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP),&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5730] and protocol layers used by EPP. The security
+      considerations described in these other specifications apply to this
+      specification as well.
+</p>
+<a name="rfc.references1"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<h3>7.&nbsp;Normative References</h3>
+<table width="99%" border="0">
+<tr><td class="author-text" valign="top"><a name="RFC2119">[RFC2119]</a></td>
+<td class="author-text"><a href="mailto:sob@harvard.edu">Bradner, S.</a>, &ldquo;<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>,&rdquo; BCP&nbsp;14, RFC&nbsp;2119, March&nbsp;1997 (<a href="http://www.rfc-editor.org/rfc/rfc2119.txt">TXT</a>, <a href="http://xml.resource.org/public/rfc/html/rfc2119.html">HTML</a>, <a href="http://xml.resource.org/public/rfc/xml/rfc2119.xml">XML</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC3912">[RFC3912]</a></td>
+<td class="author-text">Daigle, L., &ldquo;<a href="http://tools.ietf.org/html/rfc3912">WHOIS Protocol Specification</a>,&rdquo; RFC&nbsp;3912, September&nbsp;2004 (<a href="http://www.rfc-editor.org/rfc/rfc3912.txt">TXT</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC5730">[RFC5730]</a></td>
+<td class="author-text">Hollenbeck, S., &ldquo;<a href="http://tools.ietf.org/html/rfc5730">Extensible Provisioning Protocol (EPP)</a>,&rdquo; STD&nbsp;69, RFC&nbsp;5730, August&nbsp;2009 (<a href="http://www.rfc-editor.org/rfc/rfc5730.txt">TXT</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC5731">[RFC5731]</a></td>
+<td class="author-text">Hollenbeck, S., &ldquo;<a href="http://tools.ietf.org/html/rfc5731">Extensible Provisioning Protocol (EPP) Domain Name Mapping</a>,&rdquo; STD&nbsp;69, RFC&nbsp;5731, August&nbsp;2009 (<a href="http://www.rfc-editor.org/rfc/rfc5731.txt">TXT</a>).</td></tr>
+</table>
+
+<a name="rfc.authors"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<h3>Authors' Addresses</h3>
+<table width="99%" border="0" cellpadding="0" cellspacing="0">
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">James Gould</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">VeriSign, Inc.</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">12061 Bluemont Way</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">Reston, VA  20190</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">US</td></tr>
+<tr><td class="author" align="right">Email:&nbsp;</td>
+<td class="author-text"><a href="mailto:jgould@verisign.com">jgould@verisign.com</a></td></tr>
+<tr><td class="author" align="right">URI:&nbsp;</td>
+<td class="author-text"><a href="http://www.verisigninc.com">http://www.verisigninc.com</a></td></tr>
+<tr cellpadding="3"><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">Srikanth Veeramachaneni</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">VeriSign, Inc.</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">12061 Bluemont Way</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">Reston, VA  20190</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">US</td></tr>
+<tr><td class="author" align="right">Email:&nbsp;</td>
+<td class="author-text"><a href="mailto:sveeramachaneni@verisign.com">sveeramachaneni@verisign.com</a></td></tr>
+<tr><td class="author" align="right">URI:&nbsp;</td>
+<td class="author-text"><a href="http://www.verisigninc.com">http://www.verisigninc.com</a></td></tr>
+</table>
+</body></html>

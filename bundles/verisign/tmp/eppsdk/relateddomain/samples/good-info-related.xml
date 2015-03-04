@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<epp xmlns="urn:ietf:params:xml:ns:epp-1.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="urn:ietf:params:xml:ns:epp-1.0
+    epp-1.0.xsd">
+	<command>
+		<info>
+			<domain:info 
+				xmlns:domain="urn:ietf:params:xml:ns:domain-1.0" 
+				xsi:schemaLocation="urn:ietf:params:xml:ns:domain-1.0 domain-1.0.xsd">
+				<domain:name>example.tld</domain:name>
+			</domain:info>
+		</info>
+		<extension>
+			<relDom:info 
+				xmlns:relDom="http://www.verisign.com/epp/relatedDomain-1.0"
+				type="related"
+				xsi:schemaLocation="http://www.verisign.com/epp/relatedDomain-1.0 relatedDomain-1.0.xsd"/>
+		</extension>
+		<clTRID>ABC-12345</clTRID>
+	</command>
+</epp>

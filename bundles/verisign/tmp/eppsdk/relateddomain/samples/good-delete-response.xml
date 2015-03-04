@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<epp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="urn:ietf:params:xml:ns:epp-1.0 epp-1.0.xsd" 
+	xmlns="urn:ietf:params:xml:ns:epp-1.0">
+  <response>
+    <result code="1001">
+      <msg>Command completed successfully; action pending</msg>
+    </result>
+    <extension>
+      <relDom:delData 
+      	xmlns:relDom="http://www.verisign.com/epp/relatedDomain-1.0"
+      	xsi:schemaLocation="http://www.verisign.com/epp/relatedDomain-1.0 relatedDomain-1.0.xsd">
+        <relDom:domain>
+          <relDom:name>domain1.com</relDom:name>
+          <relDom:result>deleted</relDom:result>
+        </relDom:domain>
+        <relDom:domain>
+          <relDom:name>domain2.com</relDom:name>
+          <relDom:result>pendingDelete</relDom:result>
+        </relDom:domain>
+      </relDom:delData>
+    </extension>
+    <trID>
+      <clTRID>ABC-12345</clTRID>
+      <svTRID>54321-XYZ</svTRID>
+    </trID>
+  </response>
+</epp>

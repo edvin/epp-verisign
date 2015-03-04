@@ -1,0 +1,448 @@
+
+
+
+VeriSign Inc. Proprietary Information                           J. Gould
+                                                                 M. Jain
+                                                          VeriSign, Inc.
+                                                             May 1, 2014
+
+
+   Low Balance Mapping for the Extensible Provisioning Protocol (EPP)
+
+Abstract
+
+   This document describes an Extensible Provisioning Protocol (EPP)
+   mapping for the Low Balance Poll Notification used when an account
+   reaches or goes below the credit threshold.
+
+Legal Disclaimer
+
+   COPYRIGHT NOTIFICATION
+
+   Copyright 2013 VeriSign, Inc. All rights reserved.  VERISIGN; the
+   Verisign logo; and other trademarks, service marks and Verisign
+   designs are registered or unregistered trademarks of VeriSign Inc.
+   and its subsidiaries in the United States and foreign countries.
+   Copyright laws and international treaties protect this document, and
+   any Verisign product to which it relates.
+
+   VERISIGN PROPRIETARY INFORMATION
+
+   This document is the property of VeriSign, Inc. and its subsidiaries
+   (together "Verisign") It may be used by recipient only for the
+   purpose for which it was transmitted and must be returned upon
+   request or when no longer needed by recipient.  It may not be copied
+   or communicated without the prior written consent of Verisign.
+
+   NOTICE AND CAUTION
+
+   Concerning U.S. Patent or Trademark Rights
+
+   Verisign and other trademarks, service marks and logos are registered
+   or unregistered trademarks of Verisign and its subsidiaries in the
+   United States and in foreign countries.  The inclusion in this
+   document, the associated on-line file or the associated software of
+   any information covered by any other patent, trademark or service
+   mark rights does not constitute nor imply a grant of or authority to
+   exercise, any right or privilege protected by such patent, trademark
+   or service mark.  All such rights and privileges are vested in the
+   patent, trademark or service mark owner and no other person may
+   exercise such rights without express permission, authority or license
+   secured from the patent, trademark or service mark owner.
+
+
+
+Gould & Jain                                                    [Page 1]
+
+                               low-balance                      May 2014
+
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . . . 3
+     1.1.  Conventions Used in This Document . . . . . . . . . . . . . 3
+   2.  Object Attributes . . . . . . . . . . . . . . . . . . . . . . . 3
+     2.1.  Currency Attribute Values . . . . . . . . . . . . . . . . . 3
+   3.  EPP Command Mapping . . . . . . . . . . . . . . . . . . . . . . 3
+     3.1.  EPP <poll> Command  . . . . . . . . . . . . . . . . . . . . 4
+   4.  Formal Syntax . . . . . . . . . . . . . . . . . . . . . . . . . 5
+     4.1.  Low Balance Poll Mapping Schema . . . . . . . . . . . . . . 5
+   5.  Change History  . . . . . . . . . . . . . . . . . . . . . . . . 7
+     5.1.  Version 00  . . . . . . . . . . . . . . . . . . . . . . . . 7
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . . . 7
+   7.  Normative References  . . . . . . . . . . . . . . . . . . . . . 7
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . . 7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gould & Jain                                                    [Page 2]
+
+                               low-balance                      May 2014
+
+
+1.  Introduction
+
+   This document describes an extension mapping for version 1.0 of the
+   Extensible Provisioning Protocol (EPP) [RFC5730].  This EPP extension
+   supports the poll message created by the server when an account
+   reaches or goes below the credit threshold.
+
+1.1.  Conventions Used in This Document
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in RFC 2119 [RFC2119].
+
+   XML is case sensitive.  Unless stated otherwise, XML specifications
+   and examples provided in this document MUST be interpreted in the
+   character case presented in order to develop a conforming
+   implementation.
+
+   In examples, "C:" represents lines sent by a protocol client and "S:"
+   represents lines returned by a protocol server.  Indentation and
+   white space in examples are provided only to illustrate element
+   relationships and are not a REQUIRED feature of this protocol.
+
+   "lowbalance-poll-1.0" is used as an abbreviation for
+   "http://www.verisign.com/epp/lowbalance-poll-1.0".  The XML namespace
+   prefix "lowbalance-poll" is used, but implementations MUST NOT depend
+   on it and instead employ a proper namespace-aware XML parser and
+   serializer to interpret and output the XML documents.
+
+
+2.  Object Attributes
+
+   The EPP Low Balance Poll has attributes and associated values that
+   may be viewed by the sponsoring client or server.  This section
+   describes each attribute type in detail.
+
+2.1.  Currency Attribute Values
+
+   All of the currency attributes including the creditLimit,
+   creditThreshold (FIXED), and availableCredit use the XML
+   normalizedString data type to represent the currency value in the
+   currency of the server.
+
+
+3.  EPP Command Mapping
+
+   A detailed description of the EPP syntax and semantics can be found
+   in the EPP core protocol specification [RFC5730].  The command
+
+
+
+Gould & Jain                                                    [Page 3]
+
+                               low-balance                      May 2014
+
+
+   mapping described here is specifically for use to notify of low
+   balance situations.
+
+3.1.  EPP <poll> Command
+
+   The EPP <poll> command and response is defined in section 2.9.2.3 of
+   [RFC5730].  The Low Balance Notification is included in the EPP
+   <poll> response of [RFC5730].
+
+   For the Low Balance Notification, poll messages apply whenever the
+   available credit for an account reaches or goes below the credit
+   threshold.  In the case of a Low Balance specific message, a
+   <lowbalance-poll:pollData> element will be included within the
+   <resData> element of the standard <poll> response.  The <lowbalance-
+   poll:pollData> element will include a reference to the Low Balance
+   namespace.  EPP data contained within the <lowbalance-poll:pollData>
+   element is formatted according to the lowbalance-poll schema.
+
+   Example <poll> command:
+
+   C:<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+   C:<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+   C:  <command>
+   C:  <poll op="req"/>
+   C:    <clTRID>ABC-12345</clTRID>
+   C:  </command>
+   C:</epp>
+
+   An Low Balance Poll Message consists of the <lowbalance-
+   poll:pollData> element with the following child elements:
+
+   <lowbalance-poll:registrarName>  The registrar / account full name.
+   <lowbalance-poll:creditLimit>  The credit limit for the account.
+   <lowbalance-poll:creditThreshold>  The lower limit credit threshold
+       for the account.  The "type" attribute defines the type of
+       threshold.  A "type" value of FIXED indicates that the threshold
+       is a fixed currency amount.  A "type" value of PERCENT indicates
+       that the threshold is calculated as the threshold value times the
+       credit limit, represented by the value of <lowbalance-
+       poll:creditLimit>.
+   <lowbalance-poll:availableCredit>  The account available credit that
+       is compared against the credit threshold value.
+
+
+
+
+
+
+
+
+
+Gould & Jain                                                    [Page 4]
+
+                               low-balance                      May 2014
+
+
+   Example <poll> response with the Low Balance Poll Message:
+
+   S:<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+   S:<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+   S:  <response>
+   S:    <result code="1301">
+   S:      <msg>Command completed successfully; ack to dequeue</msg>
+   S:    </result>
+   S:  <msgQ count="1" id="12345">
+   S:    <qDate>2013-03-25T18:20:07.0078Z</qDate>
+   S:    <msg>Low Account Balance</msg>
+   S:  </msgQ>
+   S:  <resData>
+   S:    <lowbalance-poll:pollData
+   S:      xmlns:lowbalance-poll=
+   S:      "http://www.verisign.com/epp/lowbalance-poll-1.0">
+   S:      <lowbalance-poll:registrarName>Test Registar
+   S:      </lowbalance-poll:registrarName>
+   S:      <lowbalance-poll:creditLimit>1000
+   S:      </lowbalance-poll:creditLimit>
+   S:      <lowbalance-poll:creditThreshold type="PERCENT">10
+   S:      </lowbalance-poll:creditThreshold>
+   S:      <lowbalance-poll:availableCredit>80
+   S:      </lowbalance-poll:availableCredit>
+   S:      </lowbalance-poll:pollData>
+   S:    </resData>
+   S:    <trID>
+   S:      <clTRID>ABC-12345</clTRID>
+   S:      <svTRID>54322-XYZ</svTRID>
+   S:    </trID>
+   S:  </response>
+   S:</epp>
+
+
+4.  Formal Syntax
+
+   One schema is presented here that is the Low Balance Poll Mapping
+   schema.
+
+   The formal syntax presented here is a complete schema representation
+   of the object mapping suitable for automated validation of EPP XML
+   instances.  The BEGIN and END tags are not part of the schema; they
+   are used to note the beginning and ending of the schema for URI
+   registration purposes.
+
+4.1.  Low Balance Poll Mapping Schema
+
+   BEGIN
+
+
+
+Gould & Jain                                                    [Page 5]
+
+                               low-balance                      May 2014
+
+
+   <?xml version="1.0" encoding="UTF-8"?>
+   <schema targetNamespace=
+     "http://www.verisign.com/epp/lowbalance-poll-1.0"
+     xmlns:lowbalance-poll=
+     "http://www.verisign.com/epp/lowbalance-poll-1.0"
+     xmlns:eppcom="urn:ietf:params:xml:ns:eppcom-1.0"
+     xmlns="http://www.w3.org/2001/XMLSchema"
+     elementFormDefault="qualified">
+
+     <!-- Import common element types.-->
+     <import namespace="urn:ietf:params:xml:ns:eppcom-1.0"
+       schemaLocation="eppcom-1.0.xsd"/>
+
+     <annotation>
+       <documentation>
+         Extensible Provisioning Protocol v1.0
+         VeriSign poll notification specification
+         for low balance notifications.
+       </documentation>
+     </annotation>
+
+     <!--Child elements found in EPP commands.-->
+     <element name="pollData"
+       type="lowbalance-poll:pollDataType"/>
+
+     <!--Child elements of the <notifyData>
+     element for the low balance.-->
+     <complexType name="pollDataType">
+       <sequence>
+         <element name="registrarName"
+           type="eppcom:labelType"/>
+         <element name="creditLimit"
+           type="normalizedString"/>
+         <element name="creditThreshold"
+           type="lowbalance-poll:thresholdType"/>
+         <element name="availableCredit"
+           type="normalizedString"/>
+       </sequence>
+     </complexType>
+
+     <complexType name="thresholdType">
+       <simpleContent>
+         <extension base="normalizedString">
+           <attribute name="type"
+             type="lowbalance-poll:thresholdValueType"
+             use="required"/>
+         </extension>
+       </simpleContent>
+
+
+
+Gould & Jain                                                    [Page 6]
+
+                               low-balance                      May 2014
+
+
+     </complexType>
+
+     <simpleType name="thresholdValueType">
+       <restriction base="token">
+         <enumeration value="FIXED"/>
+         <enumeration value="PERCENT"/>
+       </restriction>
+     </simpleType>
+
+   <!-- End of schema.-->
+   </schema>
+   END
+
+
+5.  Change History
+
+5.1.  Version 00
+
+   1.  Initial version of Internet-Draft format of the Low Balance Poll
+       Mapping, version 1.2.
+
+
+6.  Security Considerations
+
+   The mapping extensions described in this document do not provide any
+   security services beyond those described by EPP [RFC5730] and
+   protocol layers used by EPP.  The security considerations described
+   in these other specifications apply to this specification as well.
+
+
+7.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+   [RFC5730]  Hollenbeck, S., "Extensible Provisioning Protocol (EPP)",
+              STD 69, RFC 5730, August 2009.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gould & Jain                                                    [Page 7]
+
+                               low-balance                      May 2014
+
+
+Authors' Addresses
+
+   James Gould
+   VeriSign, Inc.
+   12061 Bluemont Way
+   Reston, VA  20190
+   US
+
+   Email: jgould@verisign.com
+   URI:   http://www.verisigninc.com
+
+
+   Mahendra Jain
+   VeriSign, Inc.
+   12061 Bluemont Way
+   Reston, VA  20190
+   US
+
+   Email: majain@verisign.com
+   URI:   http://www.verisigninc.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gould & Jain                                                    [Page 8]
+

@@ -1,0 +1,393 @@
+<!--
+Copyright (C) 2012 VeriSign, Inc.
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-0107  USA
+
+http://www.verisign.com/nds/naming/namestore/techdocs.html
+-->
+
+<project name="EPP SDK-LAUNCH" default="jar" basedir=".">
+
+	<import file="${basedir}/common-targets.xml"/>	
+
+	<!-- SDK home directory -->
+    <property name="sdk.home.dir" location=".."/>
+
+	<!-- Ensure environment variables are set to env prefixed properties -->
+	<property environment="env"/>
+
+	<!-- All properties can be overridden in build.properties -->
+    <property file="${basedir}/build.properties"/>
+
+	<!-- Temporary directory used for distribution -->
+    <property name="launch.tmp.dir" location="${launch.dir}/tmp"/>
+
+	<!-- compiler option properties -->
+    <property name="debug" value="on"/>
+    <property name="optimize" value="on"/>
+    <property name="deprecation" value="on"/>
+
+	<!-- classpath to use for compilation tasks -->
+	<path id="launch.compile.classpath">
+		<fileset dir="${launch.lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${launch.epp.lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<!-- classpath to use for compilation tasks -->
+	<path id="launch.test.classpath">
+		<fileset dir="${launch.epp.lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<path refid="launch.compile.classpath"/>
+	</path>
+
+  <!-- =================================================================== -->
+  <!-- Initialization target                                               -->
+  <!-- =================================================================== -->
+  <target 	name="init"
+			description="Initializes the build for rest of targets ">
+
+	<!-- set time stamp properties -->
+    <tstamp/>
+
+	<!-- Give build.version a default value of SNAPSHOT -->
+	<property name="build.version" value="SNAPSHOT"/>
+
+    <echo message="----------- ${ant.project.name} ${build.version} ------------"/>
+
+	<mkdir dir="${launch.results.dir}" />
+	<mkdir dir="${launch.build.dir}" />
+	<mkdir dir="${launch.epp.lib.dir}" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Builds the epp-gen.jar file               		                   -->
+  <!-- =================================================================== -->
+  <target 	name="jar-gen"
+  			description="Build the dependent epp-gen.jar file" >
+		<ant dir="${gen.dir}" target="jar" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Cleans the epp-gen files               		                       -->
+  <!-- =================================================================== -->
+  <target 	name="clean-gen"
+  			description="Clean the epp-gen files" >
+		<ant dir="${gen.dir}" target="clean" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Builds the epp-domain.jar file               		                   -->
+  <!-- =================================================================== -->
+  <target 	name="jar-domain"
+  			description="Build the dependent epp-domain.jar file" >
+		<ant dir="${domain.dir}" target="jar" />
+  </target>
+	
+  <!-- =================================================================== -->
+  <!-- Cleans the epp-domain files               		                       -->
+  <!-- =================================================================== -->
+  <target 	name="clean-domain"
+  			description="Clean the epp-domain files" >
+		<ant dir="${domain.dir}" target="clean" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Builds the epp-host.jar file               		                   -->
+  <!-- =================================================================== -->
+  <target 	name="jar-host"
+  			description="Build the dependent epp-host.jar file" >
+		<ant dir="${host.dir}" target="jar" />
+  </target>
+	
+  <!-- =================================================================== -->
+  <!-- Cleans the epp-domain files               		                       -->
+  <!-- =================================================================== -->
+  <target 	name="clean-host"
+  			description="Clean the epp-host files" >
+		<ant dir="${host.dir}" target="clean" />
+  </target>
+	
+	
+  <!-- =================================================================== -->
+  <!-- Compiles source files                                     		   -->
+  <!-- =================================================================== -->
+  <target 	name="compile" depends="init, jar-gen, jar-domain, jar-host"
+  			description="Compile EPP SDK-Launch source files" >
+
+    <echo message="${ant.project.name} ${build.version} Compile"/>
+    <javac srcdir="${launch.src.dir}"
+		   destdir="${launch.build.dir}"
+           debug="${debug}"
+           optimize="${optimize}"
+		   deprecation="${deprecation}"
+		   failonerror="true"
+	       target="1.6">
+
+		<classpath refid="launch.compile.classpath" />
+	</javac>
+
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Creates epp-launch.jar                                                -->
+  <!-- =================================================================== -->
+  <target 	name="jar" depends="compile"
+  			description="Generates EPP SDK-Launch .jar file (default)" >
+
+	<!-- Set default value of build.version to SNAPSHOT -->
+	<property name="build.version" value="SNAPSHOT"/>
+
+	<jar jarfile="${launch.epp.lib.dir}/epp-launch-${build.version}.jar" >
+			<manifest>
+					<attribute name="baseline" value="EPP-LAUNCH-SDK-${build.version}"/>
+			</manifest>
+		<fileset dir="${launch.build.dir}"
+			includes="com/**/*.class" />
+		<fileset dir="${launch.dir}"
+			includes="schemas/*.xsd" />
+	</jar>
+
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Creates epp-launch-src.jar                                                -->
+  <!-- =================================================================== -->
+  <target 	name="jar-src" depends="init"
+  			description="Generates EPP SDK-launch-src.jar file " >
+		
+		<mkdir dir="${launch.dist.dir}/jar-src" />
+	
+		<!-- Create source .jar distribution -->
+		<zip destfile="${launch.dist.dir}/jar-src/epp-launch-${build.version}-src.jar">			
+			<zipfileset dir="${launch.dir}/java" includes="com/**/*.java">				
+			</zipfileset>			
+		</zip>
+  </target>
+  
+  <!-- =================================================================== -->
+  <!-- Formats the source code using Jalopy                                -->
+  <!-- =================================================================== -->
+  <target name="format"
+		  description="Format the source code">
+		  		<taskdef name="jalopy"
+				 classname="de.hunsicker.jalopy.plugin.ant.AntPlugin">
+			<classpath>
+				<fileset dir="${launch.lib.dir}/jalopy">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+		</taskdef>
+		<jalopy fileformat="unix"
+				convention="${launch.lib.dir}/jalopy/sdk-convention.xml"
+				loglevel="info"
+				threads="2"
+				classpathref="launch.compile.classpath">
+				<fileset dir="${launch.src.dir}">
+					<include name="**/*.java"/>
+				</fileset>
+		</jalopy>
+
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Creates the HTML API documentation                                  -->
+  <!-- =================================================================== -->
+  <target 	name="doc"
+  			description="Generate EPP SDK-Launch HTML API documentation" >
+
+    <mkdir dir="${launch.doc.dir}/html"/>
+    <javadoc packagenames="com.verisign.epp.*"
+             sourcepath="${launch.src.dir}:${gen.src.dir}:${domain.src.dir}:${host.src.dir}"
+             destdir="${launch.doc.dir}/html"
+             author="true"
+             version="true"
+             use="true"
+             splitindex="true"
+			 breakiterator="true"
+             noindex="false"
+             windowtitle="${ant.project.name} API"
+             doctitle="${ant.project.name}"
+             bottom="Copyright &#169; VeriSign Inc. All Rights Reserved.">
+		<classpath refid="launch.compile.classpath" />
+	</javadoc>
+
+  </target>
+
+
+
+	<!-- =================================================================== -->
+	<!-- Ensure that build.version is set                                    -->
+	<!-- =================================================================== -->
+	<target name="check-build-version" unless="build.version">
+		<fail message="Must set build.version with -Dbuild.version=X"/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates SDK source distribution                                     -->
+	<!-- =================================================================== -->
+	<target name="dist-src" depends="check-build-version, init"
+				description = "Creates SDK source distribution (-Dbuild.version required)" >
+		<mkdir dir="${launch.dist.dir}" />
+
+		<ant dir="${gen.dir}" target="dist-src"/>
+		<ant dir="${domain.dir}" target="dist-src"/>
+		<ant dir="${host.dir}" target="dist-src"/>
+		
+		
+		<!-- Create source .zip distribution -->
+		<zip destfile="${launch.dist.dir}/epp-launch-${build.version}-src.zip">
+			<zipfileset dir="${launch.license.dir}" prefix="eppsdk/license"/>
+			<zipfileset dir="${launch.lib.dir}" prefix="eppsdk/lib">
+				<exclude name="epp/**"/>
+			</zipfileset>
+			<zipfileset dir="${launch.epp.lib.dir}" prefix="eppsdk/lib/epp">
+				<include name="${launch.epp.lib.dir}/epp-gen-${build.version}.jar"/>
+			</zipfileset>
+			<zipfileset dir="${launch.dir}" prefix="eppsdk/launch">
+				<exclude name="junit*"/>
+				<exclude name="*.log*"/>
+				<exclude name="*.err"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.doc"/>
+				<exclude name="doc/html/**"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+			</zipfileset>
+			<zipfileset src="${launch.dist.dir}/epp-gen-${build.version}-src.zip" 
+						includes="eppsdk/gen/**" excludes="eppsdk/gen/doc/*.pdf, eppsdk/gen/doc/*.README, eppsdk/gen/doc/*.INSTALL"/>
+			<zipfileset src="${launch.dist.dir}/epp-domain-${build.version}-src.zip" 
+						includes="eppsdk/domain/**" excludes="eppsdk/domain/doc/*.pdf, eppsdk/domain/doc/*.README, eppsdk/domain/doc/*.INSTALL"/>
+			<zipfileset src="${launch.dist.dir}/epp-host-${build.version}-src.zip" 
+						includes="eppsdk/host/**" excludes="eppsdk/host/doc/*.pdf, eppsdk/host/doc/*.README, eppsdk/host/doc/*.INSTALL"/>
+		</zip>
+
+		<!-- Create source .tar.gz distribution -->
+		<!-- unzip the zip distribution into tmp directory for create tar -->
+		<mkdir dir="${launch.tmp.dir}" />
+		<unzip src="${launch.dist.dir}/epp-launch-${build.version}-src.zip"
+			   dest="${launch.tmp.dir}"/>
+		<tar destfile="${launch.dist.dir}/epp-launch-${build.version}-src.tar.gz"
+			compression="gzip">
+			<tarfileset dir="${launch.tmp.dir}" mode="775">
+				<include name="eppsdk/**/*.sh"/>
+			</tarfileset>
+			<tarfileset dir="${launch.tmp.dir}">
+				<exclude name="eppsdk/**/*.sh"/>
+			</tarfileset>
+		</tar>
+		<delete dir="${launch.tmp.dir}" />
+		
+	</target>
+
+
+
+	<!-- =================================================================== -->
+	<!-- Creates SDK binary distribution                                     -->
+	<!-- =================================================================== -->
+	<target name="dist-bin" depends="check-build-version, jar, doc"
+				description = "Creates SDK binary distribution (-Dbuild.version required)" >
+		<mkdir dir="${launch.dist.dir}" />
+		<mkdir dir="${launch.tmp.dir}" />
+
+		<copy file="${launch.dir}/build-bin.xml" tofile="${launch.tmp.dir}/build.xml"/>
+
+		<!-- Create binary .zip distribution -->
+		<zip destfile="${launch.dist.dir}/epp-launch-${build.version}-bin.zip">
+			<zipfileset dir="${launch.license.dir}" prefix="eppsdk/license"/>
+			<zipfileset dir="${launch.lib.dir}" prefix="eppsdk/lib"/>
+			<zipfileset dir="${launch.tmp.dir}" includes="build.xml" prefix="eppsdk/launch"/>
+			<zipfileset dir="${launch.dir}" prefix="eppsdk/launch">
+				<exclude name="*.log"/>
+				<exclude name="*.err"/>
+				<exclude name="java/**"/>
+				<exclude name="schemas/**"/>
+				<exclude name="build.xml"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.doc"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+				<exclude name="tmp/**"/>
+			</zipfileset>
+		</zip>
+
+		<!-- Create binary .tar.gz distribution -->
+		<tar destfile="${launch.dist.dir}/epp-launch-${build.version}-bin.tar.gz"
+			compression="gzip">
+			<tarfileset dir="${launch.license.dir}" prefix="eppsdk/license"/>
+			<tarfileset dir="${launch.lib.dir}" prefix="eppsdk/lib"/>
+			<tarfileset dir="${launch.tmp.dir}" includes="build.xml" prefix="eppsdk/launch"/>
+			<tarfileset dir="${launch.dir}" mode="755" prefix="eppsdk/launch">
+				<exclude name="*.log"/>
+				<exclude name="*.err"/>
+				<exclude name="java/**"/>
+				<exclude name="schemas/**"/>
+				<exclude name="build.xml"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.doc"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+				<exclude name="tmp/**"/>
+			</tarfileset>
+		</tar>
+
+		<delete dir="${launch.tmp.dir}"/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates SDK distributions						                     -->
+	<!-- =================================================================== -->
+	<target name="dist" depends="dist-src, dist-bin"
+				description = "Creates SDK distributions (-Dbuild.version required)" >
+	</target>
+
+  <!-- =================================================================== -->
+  <!-- Clean targets                                                       -->
+  <!-- =================================================================== -->
+  <target 	name="clean" depends="init, clean-gen, clean-domain"
+			description="Clean EPP SDK-Launch compiled files" >
+
+		<!-- Clean build directory -->
+		<delete dir="${launch.build.dir}" quiet="true"/>
+
+		<!-- Clean the EPP lib directory -->
+		<delete dir="${launch.epp.lib.dir}" quiet="true"/>
+
+		<!-- Clean results directory -->
+		<delete dir="${launch.results.dir}" quiet="true"/>
+
+		<!-- Clean log files -->
+		<delete>
+			<fileset dir="${launch.dir}" includes="*.log, *.err"/>
+		</delete>
+
+		<!-- Clean generated documentation files -->
+		<delete dir="${launch.doc.dir}/html" quiet="true"/>
+
+		<!-- Clean distribution directory -->
+		<delete dir="${launch.dist.dir}" quiet="true"/>
+
+		<!-- Clean the tmp directory -->
+		<delete dir="${launch.tmp.dir}" quiet="true"/>
+
+  </target>
+
+</project>
+
+<!-- End of file -->

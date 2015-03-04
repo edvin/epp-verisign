@@ -1,0 +1,34 @@
+S:<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+  S:<epp xmlns="urn:ietf:params:xml:ns:epp-1.0"
+  S:     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  S:     xsi:schemaLocation="urn:ietf:params:xml:ns:epp-1.0
+  S:     epp-1.0.xsd">
+  S:  <response>
+  S:    <result code="1301">
+  S:      <msg>Command completed successfully; ack to dequeue</msg>
+  S:    </result>
+  S:    <msgQ count="5" id="12345">
+  S:      <qDate>2000-06-08T22:00:00.0Z</qDate>
+  S:      <msg>Pending restore notification.</msg>
+  S:    </msgQ>
+  S:    <resData>
+  S:      <rgp-poll:pollData xmlns:rgp-poll="http://www.verisign.com/epp/rgp-poll-1.0"
+  S:       xsi:schemaLocation="http://www.verisign.com/epp/rgp-poll-1.0
+  S:       rgp-poll-1.0.xsd">
+  S:        <rgp-poll:name>example.com</rgp-poll:name>
+  S:        <rgp-poll:rgpStatus s="pendingRestore"/>
+  S:        <rgp-poll:reqDate>2000-06-08T22:00:00.0Z</rgp-poll:reqDate>
+  S:        <rgp-poll:reportDueDate>2000-06-13T22:00:00.0Z</rgp-poll:reportDueDate>
+  S:      </rgp-poll:pollData>
+  S:    </resData>
+  S:    <trID>
+  S:      <clTRID>ABC-12345</clTRID>
+  S:      <svTRID>54321-XYZ</svTRID>
+  S:    </trID>
+  S:  </response>
+  S:</epp>
+
+
+
+
+

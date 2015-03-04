@@ -1,0 +1,392 @@
+
+
+
+VeriSign Inc. Proprietary Information                           J. Gould
+                                                          VeriSign, Inc.
+                                                       December 10, 2013
+
+
+    IDN Language Tag for the Extensible Provisioning Protocol (EPP)
+
+Abstract
+
+   This document describes an Extensible Provisioning Protocol (EPP)
+   extension mapping for specifying the language tag for
+   Internationalized Domain Name (IDN) registrations.
+
+Legal Disclaimer
+
+   COPYRIGHT NOTIFICATION
+
+   Copyright 2013 VeriSign, Inc. All rights reserved.  VERISIGN; the
+   Verisign logo; and other trademarks, service marks and Verisign
+   designs are registered or unregistered trademarks of VeriSign Inc.
+   and its subsidiaries in the United States and foreign countries.
+   Copyright laws and international treaties protect this document, and
+   any Verisign product to which it relates.
+
+   VERISIGN PROPRIETARY INFORMATION
+
+   This document is the property of VeriSign, Inc. and its subsidiaries
+   (together "Verisign") It may be used by recipient only for the
+   purpose for which it was transmitted and must be returned upon
+   request or when no longer needed by recipient.  It may not be copied
+   or communicated without the prior written consent of Verisign.
+
+   NOTICE AND CAUTION
+
+   Concerning U.S. Patent or Trademark Rights
+
+   Verisign and other trademarks, service marks and logos are registered
+   or unregistered trademarks of Verisign and its subsidiaries in the
+   United States and in foreign countries.  The inclusion in this
+   document, the associated on-line file or the associated software of
+   any information covered by any other patent, trademark or service
+   mark rights does not constitute nor imply a grant of or authority to
+   exercise, any right or privilege protected by such patent, trademark
+   or service mark.  All such rights and privileges are vested in the
+   patent, trademark or service mark owner and no other person may
+   exercise such rights without express permission, authority or license
+   secured from the patent, trademark or service mark owner.
+
+
+
+
+Gould                                                           [Page 1]
+
+                                idn-lang                   December 2013
+
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . . . 3
+     1.1.  Conventions Used in This Document . . . . . . . . . . . . . 3
+   2.  Object Attributes . . . . . . . . . . . . . . . . . . . . . . . 3
+     2.1.  Language Tag  . . . . . . . . . . . . . . . . . . . . . . . 3
+   3.  EPP Command Mapping . . . . . . . . . . . . . . . . . . . . . . 3
+     3.1.  EPP Query Commands  . . . . . . . . . . . . . . . . . . . . 4
+       3.1.1.  EPP <check> Command . . . . . . . . . . . . . . . . . . 4
+       3.1.2.  EPP <info> Command  . . . . . . . . . . . . . . . . . . 4
+       3.1.3.  EPP <transfer> Command  . . . . . . . . . . . . . . . . 4
+     3.2.  EPP Transform Commands  . . . . . . . . . . . . . . . . . . 4
+       3.2.1.  EPP <create> Command  . . . . . . . . . . . . . . . . . 4
+       3.2.2.  EPP <delete> Command  . . . . . . . . . . . . . . . . . 5
+       3.2.3.  EPP <renew> Command . . . . . . . . . . . . . . . . . . 5
+       3.2.4.  EPP <transfer> Command  . . . . . . . . . . . . . . . . 5
+       3.2.5.  EPP <update> Command  . . . . . . . . . . . . . . . . . 6
+   4.  Formal Syntax . . . . . . . . . . . . . . . . . . . . . . . . . 6
+     4.1.  IDN Language Tag Extension Schema . . . . . . . . . . . . . 6
+   5.  Change History  . . . . . . . . . . . . . . . . . . . . . . . . 6
+     5.1.  Version 00  . . . . . . . . . . . . . . . . . . . . . . . . 7
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . . . 7
+   7.  Normative References  . . . . . . . . . . . . . . . . . . . . . 7
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . . . 7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gould                                                           [Page 2]
+
+                                idn-lang                   December 2013
+
+
+1.  Introduction
+
+   This document describes an extension mapping for version 1.0 of the
+   Extensible Provisioning Protocol (EPP) [RFC5730].  This EPP extension
+   mapping enables a client to specify the language tag (Section 2.1)
+   for an Internationalized Domain Name (IDN) registration.
+
+1.1.  Conventions Used in This Document
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in RFC 2119 [RFC2119].
+
+   XML is case sensitive.  Unless stated otherwise, XML specifications
+   and examples provided in this document MUST be interpreted in the
+   character case presented in order to develop a conforming
+   implementation.
+
+   In examples, "C:" represents lines sent by a protocol client and "S:"
+   represents lines returned by a protocol server.  Indentation and
+   white space in examples are provided only to illustrate element
+   relationships and are not a REQUIRED feature of this protocol.
+
+   "idnLang-1.0" is used as an abbreviation for
+   "http://www.verisign.com/epp/idnLang-1.0".  The XML namespace prefix
+   "idnLang" is used, but implementations MUST NOT depend on it and
+   instead employ a proper namespace-aware XML parser and serializer to
+   interpret and output the XML documents.
+
+
+2.  Object Attributes
+
+   This extension adds additional elements to the EPP domain name
+   mapping [RFC5731].  Only those new elements are described here.
+
+2.1.  Language Tag
+
+   A valid language tag MUST be passed for all Internationalized Domain
+   Name (IDN) registrations.  The valid langauge tag format is defined
+   by the XML-Schema language element.  The set of valid langauge values
+   is up to server policy.
+
+
+3.  EPP Command Mapping
+
+   A detailed description of the EPP syntax and semantics can be found
+   in the EPP core protocol specification [RFC5730].  The command
+   mappings described here are specifically for use in IDN registrations
+
+
+
+Gould                                                           [Page 3]
+
+                                idn-lang                   December 2013
+
+
+   using a language tag (Section 2.1) via EPP.
+
+3.1.  EPP Query Commands
+
+   EPP provides three commands to retrieve object information: <check>
+   to determine if an object is known to the server, <info> to retrieve
+   detailed information associated with an object, and <transfer> to
+   retrieve object transfer status information.
+
+3.1.1.  EPP <check> Command
+
+   This extension does not add any elements to the EPP <check> command
+   or <check> response described in the EPP domain name mapping
+   [RFC5731].
+
+3.1.2.  EPP <info> Command
+
+   This extension does not add any elements to the EPP <info> command or
+   <info> response described in the EPP domain name mapping [RFC5731].
+
+3.1.3.  EPP <transfer> Command
+
+   This extension does not add any elements to the EPP <transfer>
+   command or <transfer> response described in the EPP domain name
+   mapping [RFC5731].
+
+3.2.  EPP Transform Commands
+
+   EPP provides five commands to transform objects: <create> to create
+   an instance of an object, <delete> to delete an instance of an
+   object, <renew> to extend the validity period of an object,
+   <transfer> to manage object sponsorship changes, and <update> to
+   change information associated with an object.
+
+3.2.1.  EPP <create> Command
+
+   This extension defines additional elements to extend the EPP <create>
+   command described in EPP domain name mapping [RFC5731].
+
+   The EPP <create> command provides a transform operation that allows a
+   client to create a domain object.  In addition to the EPP command
+   elements described in EPP domain name mapping [RFC5731], the command
+   MUST contain the <extension> element.  The <extension> element MUST
+   contain a child <idnLang:tag> element that contains the value of the
+   language tag.
+
+
+
+
+
+
+Gould                                                           [Page 4]
+
+                                idn-lang                   December 2013
+
+
+   Example <create> command with the IDN Language Tag extension:
+
+   C:<?xml version="1.0" encoding="UTF-8"?>
+   C:<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+   C:  <command>
+   C:    <create>
+   C:      <domain:create
+   C:        xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
+   C:        <domain:name>example.com</domain:name>
+   C:        <domain:authInfo>
+   C:          <domain:pw>2fooBAR</domain:pw>
+   C:        </domain:authInfo>
+   C:      </domain:create>
+   C:    </create>
+   C:    <extension>
+   C:      <idnLang:tag
+   C:        xmlns:idnLang=
+   C:        "http://www.verisign.com/epp/idnLang-1.0">
+   C:        ENG
+   C:      </idnLang:tag>
+   C:    </extension>
+   C:    <clTRID>ABC-12345</clTRID>
+   C:  </command>
+   C: </epp>
+
+   When a <create> command has been processed successfully, the EPP
+   <creData> element MUST contain child elements as described in EPP
+   domain name mapping [RFC5731].
+
+3.2.2.  EPP <delete> Command
+
+   This extension does not add any elements to the EPP <delete> command
+   or <delete> response described in the EPP domain name mapping
+   [RFC5731].
+
+3.2.3.  EPP <renew> Command
+
+   This extension does not add any elements to the EPP <renew> command
+   or <renew> response described in the EPP domain name mapping
+   [RFC5731].
+
+3.2.4.  EPP <transfer> Command
+
+   This extension does not add any elements to the EPP <transfer>
+   command or <transfer> response described in the EPP domain name
+   mapping [RFC5731].
+
+
+
+
+
+Gould                                                           [Page 5]
+
+                                idn-lang                   December 2013
+
+
+3.2.5.  EPP <update> Command
+
+   This extension does not add any elements to the EPP <update> command
+   or <update> response described in the EPP domain name mapping
+   [RFC5731].
+
+
+4.  Formal Syntax
+
+   One schema is presented here that is the EPP IDN Language Tag
+   Extension schema.
+
+   The formal syntax presented here is a complete schema representation
+   of the object mapping suitable for automated validation of EPP XML
+   instances.  The BEGIN and END tags are not part of the schema; they
+   are used to note the beginning and ending of the schema for URI
+   registration purposes.
+
+4.1.  IDN Language Tag Extension Schema
+
+   BEGIN
+   <?xml version="1.0" encoding="UTF-8"?>
+   <schema targetNamespace="http://www.verisign.com/epp/idnLang-1.0"
+     xmlns:idnLang="http://www.verisign.com/epp/idnLang-1.0"
+     xmlns="http://www.w3.org/2001/XMLSchema"
+     elementFormDefault="qualified">
+
+     <annotation>
+       <documentation>
+         Extensible Provisioning Protocol v1.0 domain name
+         extension schema for IDN Lang Tag.
+       </documentation>
+     </annotation>
+
+     <!--
+       Child elements found in EPP commands.
+      -->
+     <element name="tag" type="language"/>
+
+   <!-- End of schema. -->
+   </schema>
+   END
+
+
+5.  Change History
+
+
+
+
+
+
+Gould                                                           [Page 6]
+
+                                idn-lang                   December 2013
+
+
+5.1.  Version 00
+
+   1.  Initial version of Internet-Draft format of the IDN Language Tag
+       Extension, version 1.1.
+
+
+6.  Security Considerations
+
+   The mapping extensions described in this document do not provide any
+   security services beyond those described by EPP [RFC5730] and
+   protocol layers used by EPP.  The security considerations described
+   in these other specifications apply to this specification as well.
+
+
+7.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+   [RFC5730]  Hollenbeck, S., "Extensible Provisioning Protocol (EPP)",
+              STD 69, RFC 5730, August 2009.
+
+   [RFC5731]  Hollenbeck, S., "Extensible Provisioning Protocol (EPP)
+              Domain Name Mapping", STD 69, RFC 5731, August 2009.
+
+
+Author's Address
+
+   James Gould
+   VeriSign, Inc.
+   12061 Bluemont Way
+   Reston, VA  20190
+   US
+
+   Email: jgould@verisign.com
+   URI:   http://www.verisigninc.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gould                                                           [Page 7]
+

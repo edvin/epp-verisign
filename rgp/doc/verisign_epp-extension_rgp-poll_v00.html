@@ -1,0 +1,493 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en"><head><title>VeriSign Inc. Proprietary Information: RGP Poll Mapping for the Extensible Provisioning Protocol (EPP)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="description" content="RGP Poll Mapping for the Extensible Provisioning Protocol (EPP)">
+<meta name="generator" content="xml2rfc v1.36 (http://xml.resource.org/)">
+<style type='text/css'><!--
+        body {
+                font-family: verdana, charcoal, helvetica, arial, sans-serif;
+                font-size: small; color: #000; background-color: #FFF;
+                margin: 2em;
+        }
+        h1, h2, h3, h4, h5, h6 {
+                font-family: helvetica, monaco, "MS Sans Serif", arial, sans-serif;
+                font-weight: bold; font-style: normal;
+        }
+        h1 { color: #900; background-color: transparent; text-align: right; }
+        h3 { color: #333; background-color: transparent; }
+
+        td.RFCbug {
+                font-size: x-small; text-decoration: none;
+                width: 30px; height: 30px; padding-top: 2px;
+                text-align: justify; vertical-align: middle;
+                background-color: #000;
+        }
+        td.RFCbug span.RFC {
+                font-family: monaco, charcoal, geneva, "MS Sans Serif", helvetica, verdana, sans-serif;
+                font-weight: bold; color: #666;
+        }
+        td.RFCbug span.hotText {
+                font-family: charcoal, monaco, geneva, "MS Sans Serif", helvetica, verdana, sans-serif;
+                font-weight: normal; text-align: center; color: #FFF;
+        }
+
+        table.TOCbug { width: 30px; height: 15px; }
+        td.TOCbug {
+                text-align: center; width: 30px; height: 15px;
+                color: #FFF; background-color: #900;
+        }
+        td.TOCbug a {
+                font-family: monaco, charcoal, geneva, "MS Sans Serif", helvetica, sans-serif;
+                font-weight: bold; font-size: x-small; text-decoration: none;
+                color: #FFF; background-color: transparent;
+        }
+
+        td.header {
+                font-family: arial, helvetica, sans-serif; font-size: x-small;
+                vertical-align: top; width: 33%;
+                color: #FFF; background-color: #666;
+        }
+        td.author { font-weight: bold; font-size: x-small; margin-left: 4em; }
+        td.author-text { font-size: x-small; }
+
+        /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+        a.info {
+                /* This is the key. */
+                position: relative;
+                z-index: 24;
+                text-decoration: none;
+        }
+        a.info:hover {
+                z-index: 25;
+                color: #FFF; background-color: #900;
+        }
+        a.info span { display: none; }
+        a.info:hover span.info {
+                /* The span will display just on :hover state. */
+                display: block;
+                position: absolute;
+                font-size: smaller;
+                top: 2em; left: -5em; width: 15em;
+                padding: 2px; border: 1px solid #333;
+                color: #900; background-color: #EEE;
+                text-align: left;
+        }
+
+        a { font-weight: bold; }
+        a:link    { color: #900; background-color: transparent; }
+        a:visited { color: #633; background-color: transparent; }
+        a:active  { color: #633; background-color: transparent; }
+
+        p { margin-left: 2em; margin-right: 2em; }
+        p.copyright { font-size: x-small; }
+        p.toc { font-size: small; font-weight: bold; margin-left: 3em; }
+        table.toc { margin: 0 0 0 3em; padding: 0; border: 0; vertical-align: text-top; }
+        td.toc { font-size: small; font-weight: bold; vertical-align: text-top; }
+
+        ol.text { margin-left: 2em; margin-right: 2em; }
+        ul.text { margin-left: 2em; margin-right: 2em; }
+        li      { margin-left: 3em; }
+
+        /* RFC-2629 <spanx>s and <artwork>s. */
+        em     { font-style: italic; }
+        strong { font-weight: bold; }
+        dfn    { font-weight: bold; font-style: normal; }
+        cite   { font-weight: normal; font-style: normal; }
+        tt     { color: #036; }
+        tt, pre, pre dfn, pre em, pre cite, pre span {
+                font-family: "Courier New", Courier, monospace; font-size: small;
+        }
+        pre {
+                text-align: left; padding: 4px;
+                color: #000; background-color: #CCC;
+        }
+        pre dfn  { color: #900; }
+        pre em   { color: #66F; background-color: #FFC; font-weight: normal; }
+        pre .key { color: #33C; font-weight: bold; }
+        pre .id  { color: #900; }
+        pre .str { color: #000; background-color: #CFF; }
+        pre .val { color: #066; }
+        pre .rep { color: #909; }
+        pre .oth { color: #000; background-color: #FCF; }
+        pre .err { background-color: #FCC; }
+
+        /* RFC-2629 <texttable>s. */
+        table.all, table.full, table.headers, table.none {
+                font-size: small; text-align: center; border-width: 2px;
+                vertical-align: top; border-collapse: collapse;
+        }
+        table.all, table.full { border-style: solid; border-color: black; }
+        table.headers, table.none { border-style: none; }
+        th {
+                font-weight: bold; border-color: black;
+                border-width: 2px 2px 3px 2px;
+        }
+        table.all th, table.full th { border-style: solid; }
+        table.headers th { border-style: none none solid none; }
+        table.none th { border-style: none; }
+        table.all td {
+                border-style: solid; border-color: #333;
+                border-width: 1px 2px;
+        }
+        table.full td, table.headers td, table.none td { border-style: none; }
+
+        hr { height: 1px; }
+        hr.insert {
+                width: 80%; border-style: none; border-width: 0;
+                color: #CCC; background-color: #CCC;
+        }
+--></style>
+</head>
+<body>
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<table summary="layout" width="66%" border="0" cellpadding="0" cellspacing="0"><tr><td><table summary="layout" width="100%" border="0" cellpadding="2" cellspacing="1">
+<tr><td class="header">VeriSign Inc. Proprietary Information</td><td class="header">J. Gould</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">VeriSign, Inc.</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">December 10, 2013</td></tr>
+</table></td></tr></table>
+<h1><br />RGP Poll Mapping for the Extensible Provisioning Protocol (EPP)</h1>
+
+<h3>Abstract</h3>
+
+<p>This document describes an Extensible Provisioning Protocol (EPP)
+      mapping for the Registry Grace Period (RGP) Poll Notification when 
+      a restore report has not been submitted for a restore request in the 
+      Domain Registry Grace Period Mapping (RFC 3915).
+</p>
+<h3>Legal Disclaimer</h3>
+
+<p>COPYRIGHT NOTIFICATION
+</p>
+<p>Copyright 2013 VeriSign, Inc. All rights reserved. VERISIGN; 
+      the Verisign logo; and other trademarks, service marks and Verisign designs are registered or 
+      unregistered trademarks of VeriSign Inc. and its subsidiaries in the United States and foreign countries. 
+      Copyright laws and international treaties protect this document, and any Verisign product to which it relates.
+</p>
+<p>VERISIGN PROPRIETARY INFORMATION
+</p>
+<p>This document is the property of VeriSign, Inc. and its subsidiaries (together "Verisign") It may be used by 
+      recipient only for the purpose for which it was transmitted and must be returned upon request or when no longer 
+      needed by recipient. It may not be copied or communicated without the prior written consent of Verisign.
+</p>
+<p>NOTICE AND CAUTION
+</p>
+<p>Concerning U.S. Patent or Trademark Rights
+</p>
+<p>Verisign and other trademarks, service marks and logos are registered or unregistered trademarks of 
+      Verisign and its subsidiaries in the United States and in foreign countries. The inclusion in this 
+      document, the associated on-line file or the associated software of any information covered by any 
+      other patent, trademark or service mark rights does not constitute nor imply a grant of or authority 
+      to exercise, any right or privilege protected by such patent, trademark or service mark. All such 
+      rights and privileges are vested in the patent, trademark or service mark owner and no other person 
+      may exercise such rights without express permission, authority or license secured from the patent, 
+      trademark or service mark owner.
+</p><a name="toc"></a><br /><hr />
+<h3>Table of Contents</h3>
+<p class="toc">
+<a href="#anchor1">1.</a>&nbsp;
+Introduction<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor2">1.1.</a>&nbsp;
+Conventions Used in This Document<br />
+<a href="#attrs">2.</a>&nbsp;
+Object Attributes<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#rgp-status">2.1.</a>&nbsp;
+Language Tag<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#dates-times">2.2.</a>&nbsp;
+Dates and Times<br />
+<a href="#commands">3.</a>&nbsp;
+EPP Command Mapping<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#pollCommand">3.1.</a>&nbsp;
+EPP &lt;poll&gt; Command<br />
+<a href="#syntax">4.</a>&nbsp;
+Formal Syntax<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor3">4.1.</a>&nbsp;
+RGP Poll Mapping Schema<br />
+<a href="#anchor4">5.</a>&nbsp;
+Change History<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#version-00">5.1.</a>&nbsp;
+Version 00<br />
+<a href="#Security">6.</a>&nbsp;
+Security Considerations<br />
+<a href="#rfc.references1">7.</a>&nbsp;
+Normative References<br />
+<a href="#rfc.authors">&#167;</a>&nbsp;
+Author's Address<br />
+</p>
+<br clear="all" />
+
+<a name="anchor1"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.1"></a><h3>1.&nbsp;
+Introduction</h3>
+
+<p>This document describes an extension mapping for version 1.0 of the
+      <a class='info' href='#RFC5730'>Extensible Provisioning Protocol (EPP)<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP),&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5730].
+      This EPP extension supports the poll message created by the server 
+      when a restore report has not been submitted for a restore request in 
+      the <a class='info' href='#RFC3915'>Domain Registry Grace Period (RGP) Mapping<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Domain Registry Grace Period Mapping for the Extensible Provisioning Protocol (EPP),&rdquo; September&nbsp;2004.</span><span>)</span></a> [RFC3915].
+</p>
+<a name="anchor2"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.1.1"></a><h3>1.1.&nbsp;
+Conventions Used in This Document</h3>
+
+<p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+        "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+        document are to be interpreted as described in <a class='info' href='#RFC2119'>RFC 2119<span> (</span><span class='info'>Bradner, S., &ldquo;Key words for use in RFCs to Indicate Requirement Levels,&rdquo; March&nbsp;1997.</span><span>)</span></a> [RFC2119].
+</p>
+<p>XML is case sensitive. Unless stated otherwise, XML specifications
+        and examples provided in this document MUST be interpreted in the
+        character case presented in order to develop a conforming
+        implementation.
+</p>
+<p>In examples, "C:" represents lines sent by a protocol client and "S:" represents lines returned by a protocol server.  
+        Indentation and white space in examples are provided only to illustrate element relationships 
+        and are not a REQUIRED feature of this protocol.        
+        
+</p>
+<p>"rgp-poll-1.0" is used as an abbreviation for
+        "http://www.verisign.com/epp/rgp-poll-1.0". The XML namespace prefix "rgp-poll"
+        is used, but implementations MUST NOT depend on it and instead employ
+        a proper namespace-aware XML parser and serializer to interpret and
+        output the XML documents.
+</p>
+<a name="attrs"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.2"></a><h3>2.&nbsp;
+Object Attributes</h3>
+
+<p>The EPP RGP Poll has attributes and associated values that may be viewed by the 
+      sponsoring client or server.  This section describes each attribute type in detail.
+</p>
+<a name="rgp-status"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.2.1"></a><h3>2.1.&nbsp;
+Language Tag</h3>
+
+<p>The RGP status attribute includes the non-grace period statuses defined in 
+        the <a class='info' href='#RFC3915'>Domain Registry Grace Period (RGP) Mapping<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Domain Registry Grace Period Mapping for the Extensible Provisioning Protocol (EPP),&rdquo; September&nbsp;2004.</span><span>)</span></a> [RFC3915].  
+        Specifically, the redemptionPeriod, pendingRestore, and pendingDelete statuses MUST be used.
+</p>
+<a name="dates-times"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.2.2"></a><h3>2.2.&nbsp;
+Dates and Times</h3>
+
+<p>Date and time attribute values MUST be represented in Universal Coordinated Time  
+        (UTC) using the Gregorian calendar.  The extended date-time form using upper case "T" 
+        and "Z" characters defined in <a href='http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/'>XML Schema Part 2</a> 
+         MUST be used to represent date-time values, as 
+        XML Schema does not support truncated date-time forms or lower case "T" and "Z" characters.
+</p>
+<a name="commands"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3"></a><h3>3.&nbsp;
+EPP Command Mapping</h3>
+
+<p>A detailed description of the EPP syntax and semantics can be found
+      in the EPP core protocol specification <a class='info' href='#RFC5730'>[RFC5730]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP),&rdquo; August&nbsp;2009.</span><span>)</span></a>.  The command 
+      mapping described here is specifically for use with the 
+      <a class='info' href='#RFC3915'>Domain Registry Grace Period (RGP) Mapping<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Domain Registry Grace Period Mapping for the Extensible Provisioning Protocol (EPP),&rdquo; September&nbsp;2004.</span><span>)</span></a> [RFC3915].
+</p>
+<a name="pollCommand"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.1"></a><h3>3.1.&nbsp;
+EPP &lt;poll&gt; Command</h3>
+
+<p>The EPP &lt;poll&gt; command and response is defined in section 2.9.2.3 of <a class='info' href='#RFC5730'>[RFC5730]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP),&rdquo; August&nbsp;2009.</span><span>)</span></a>.  The RGP 
+        Poll Notification is included in the EPP &lt;poll&gt; response of <a class='info' href='#RFC5730'>[RFC5730]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP),&rdquo; August&nbsp;2009.</span><span>)</span></a>.
+</p>
+<p>For the RGP Poll Notification, poll messages apply whenever an <a class='info' href='#RFC3915'>[RFC3915]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Domain Registry Grace Period Mapping for the Extensible Provisioning Protocol (EPP),&rdquo; September&nbsp;2004.</span><span>)</span></a> RGP restore request  
+       command is successfully completed and the RGP restore report command has not been received.  
+       The RGP Poll message includes the domain name,  
+       the restore request date, the restore report due date, and the current RGP status of 
+       the domain as defined in section 3.1 of <a class='info' href='#RFC3915'>[RFC3915]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Domain Registry Grace Period Mapping for the Extensible Provisioning Protocol (EPP),&rdquo; September&nbsp;2004.</span><span>)</span></a>.  
+       In the case of a RGP specific message, a &lt;rgp-poll:pollData&gt; element will be included 
+       within the &lt;resData&gt; element of the standard &lt;poll&gt; response. The &lt;rgp-poll:pollData&gt; 
+       element will include a reference to the rgp-poll namespace.  EPP data 
+       contained within the &lt;rgp-poll:pollData&gt; element is formatted according to the rgp-poll 
+       schema.
+</p>
+<p>Example &lt;poll&gt; command:
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+C:&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+C:&lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+C:  &lt;command&gt;
+C:  &lt;poll op="req"/&gt;
+C:    &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
+C:  &lt;/command&gt;
+C:&lt;/epp&gt;</pre></div>
+<p>An RGP Poll Message consists of the &lt;rgp-poll:pollData&gt; element with the following 
+       child elements:
+</p>
+<p></p>
+<blockquote class="text"><dl>
+<dt>&lt;rgp-poll:name&gt;</dt>
+<dd>The domain name that is a candidate for restoration.
+</dd>
+<dt>&lt;rgp-poll:rgpStatus&gt;</dt>
+<dd>The RGP status, using the "s" attribute value of the element, of the domain name as defined in <a class='info' href='#RFC3915'>[RFC3915]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Domain Registry Grace Period Mapping for the Extensible Provisioning Protocol (EPP),&rdquo; September&nbsp;2004.</span><span>)</span></a>, 
+          exclusive of the grace period statuses.
+</dd>
+<dt>&lt;rgp-poll:reqDate&gt;</dt>
+<dd>The date and time the server received the restore request.
+</dd>
+<dt>&lt;rgp-poll:reportDueDate&gt;</dt>
+<dd>The date and time the restore report MUST be received by the server to restore the domain name.
+</dd>
+</dl></blockquote>
+
+<p>Example &lt;poll&gt; response with the RGP Poll Message:
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+S:&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+S:&lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+S:  &lt;response&gt;
+S:    &lt;result code="1301"&gt;
+S:      &lt;msg&gt;Command completed successfully; ack to dequeue&lt;/msg&gt;
+S:    &lt;/result&gt;
+S:    &lt;msgQ count="5" id="12345"&gt;
+S:      &lt;qDate&gt;2013-05-03T20:06:17.0002Z&lt;/qDate&gt;
+S:      &lt;msg&gt;Restore Request Pending&lt;/msg&gt;
+S:    &lt;/msgQ&gt;
+S:    &lt;resData&gt;
+S:      &lt;rgp-poll:pollData
+S:        xmlns:rgp-poll="http://www.verisign.com/epp/rgp-poll-1.0"&gt;
+S:        &lt;rgp-poll:name&gt;foobar.com&lt;/rgp-poll:name&gt;
+S:        &lt;rgp-poll:rgpStatus s="pendingDelete"/&gt;
+S:        &lt;rgp-poll:reqDate&gt;2013-05-03T20:06:17.0002Z
+S:        &lt;/rgp-poll:reqDate&gt;
+S:        &lt;rgp-poll:reportDueDate&gt;2013-05-08T20:06:17.0002Z
+S:        &lt;/rgp-poll:reportDueDate&gt;
+S:      &lt;/rgp-poll:pollData&gt;
+S:    &lt;/resData&gt;
+S:    &lt;trID&gt;
+S:      &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
+S:      &lt;svTRID&gt;54322-XYZ&lt;/svTRID&gt;
+S:    &lt;/trID&gt;
+S:  &lt;/response&gt;
+S:&lt;/epp&gt;</pre></div>
+<a name="syntax"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.4"></a><h3>4.&nbsp;
+Formal Syntax</h3>
+
+<p>One schema is presented here that is the RGP Poll Mapping
+      schema.
+</p>
+<p>The formal
+      syntax presented here is a complete schema representation of the object
+      mapping suitable for automated validation of EPP XML instances. The
+      BEGIN and END tags are not part of the schema; they are used to note the
+      beginning and ending of the schema for URI registration purposes.
+</p>
+<a name="anchor3"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.4.1"></a><h3>4.1.&nbsp;
+RGP Poll Mapping Schema</h3>
+<div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+BEGIN
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;schema targetNamespace="http://www.verisign.com/epp/rgp-poll-1.0"
+  xmlns:rgp-poll="http://www.verisign.com/epp/rgp-poll-1.0"
+  xmlns:eppcom="urn:ietf:params:xml:ns:eppcom-1.0"
+  xmlns:rgp="urn:ietf:params:xml:ns:rgp-1.0"
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="qualified"&gt;
+  &lt;!--
+  Import common element types.
+  --&gt;
+  &lt;import namespace="urn:ietf:params:xml:ns:eppcom-1.0"
+    schemaLocation="eppcom-1.0.xsd"/&gt;
+  &lt;import namespace="urn:ietf:params:xml:ns:rgp-1.0"
+    schemaLocation="rgp-1.0.xsd"/&gt;
+
+  &lt;annotation&gt;
+    &lt;documentation&gt;
+      Extensible Provisioning Protocol v1.0
+      VeriSign poll notification specification for
+      registry grace period
+      poll notifications.
+    &lt;/documentation&gt;
+  &lt;/annotation&gt;
+
+  &lt;!--
+  Child elements found in EPP commands.
+  --&gt;
+  &lt;element name="pollData" type="rgp-poll:pollDataType"/&gt;
+
+  &lt;!--
+  Child elements of the &lt;notifyData&gt; element for the
+  redemption grace period.
+  --&gt;
+  &lt;complexType name="pollDataType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="name" type="eppcom:labelType"/&gt;
+      &lt;element name="rgpStatus" type="rgp:statusType"/&gt;
+      &lt;element name="reqDate" type="dateTime"/&gt;
+      &lt;element name="reportDueDate" type="dateTime"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;!--
+  End of schema.
+  --&gt;
+&lt;/schema&gt;
+END</pre></div>
+<a name="anchor4"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.5"></a><h3>5.&nbsp;
+Change History</h3>
+
+<a name="version-00"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.5.1"></a><h3>5.1.&nbsp;
+Version 00</h3>
+
+<p></p>
+<ol class="text">
+<li>Initial version of Internet-Draft format of the 
+        RGP Poll Mapping, version 1.2.
+</li>
+</ol>
+
+<a name="Security"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.6"></a><h3>6.&nbsp;
+Security Considerations</h3>
+
+<p>The mapping extensions described in this document do not provide any
+      security services beyond those described by <a class='info' href='#RFC5730'>EPP<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP),&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5730] and protocol layers used by EPP. The security
+      considerations described in these other specifications apply to this
+      specification as well.
+</p>
+<a name="rfc.references1"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<h3>7.&nbsp;Normative References</h3>
+<table width="99%" border="0">
+<tr><td class="author-text" valign="top"><a name="RFC2119">[RFC2119]</a></td>
+<td class="author-text"><a href="mailto:sob@harvard.edu">Bradner, S.</a>, &ldquo;<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>,&rdquo; BCP&nbsp;14, RFC&nbsp;2119, March&nbsp;1997 (<a href="http://www.rfc-editor.org/rfc/rfc2119.txt">TXT</a>, <a href="http://xml.resource.org/public/rfc/html/rfc2119.html">HTML</a>, <a href="http://xml.resource.org/public/rfc/xml/rfc2119.xml">XML</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC3915">[RFC3915]</a></td>
+<td class="author-text">Hollenbeck, S., &ldquo;<a href="http://tools.ietf.org/html/rfc3915">Domain Registry Grace Period Mapping for the Extensible Provisioning Protocol (EPP)</a>,&rdquo; RFC&nbsp;3915, September&nbsp;2004 (<a href="http://www.rfc-editor.org/rfc/rfc3915.txt">TXT</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC5730">[RFC5730]</a></td>
+<td class="author-text">Hollenbeck, S., &ldquo;<a href="http://tools.ietf.org/html/rfc5730">Extensible Provisioning Protocol (EPP)</a>,&rdquo; STD&nbsp;69, RFC&nbsp;5730, August&nbsp;2009 (<a href="http://www.rfc-editor.org/rfc/rfc5730.txt">TXT</a>).</td></tr>
+</table>
+
+<a name="rfc.authors"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<h3>Author's Address</h3>
+<table width="99%" border="0" cellpadding="0" cellspacing="0">
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">James Gould</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">VeriSign, Inc.</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">12061 Bluemont Way</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">Reston, VA  20190</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">US</td></tr>
+<tr><td class="author" align="right">Email:&nbsp;</td>
+<td class="author-text"><a href="mailto:jgould@verisign.com">jgould@verisign.com</a></td></tr>
+<tr><td class="author" align="right">URI:&nbsp;</td>
+<td class="author-text"><a href="http://www.verisigninc.com">http://www.verisigninc.com</a></td></tr>
+</table>
+</body></html>

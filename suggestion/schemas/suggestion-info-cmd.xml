@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<epp xmlns="urn:ietf:params:xml:ns:epp-1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:ietf:params:xml:ns:epp-1.0 epp-1.0.xsd">
+	<command>
+		<info>
+			<suggestion:info
+				xmlns:suggestion="http://www.verisign-grs.com/epp/suggestion-1.1"
+				xsi:schemaLocation="http://www.verisign-grs.com/epp/suggestion-1.1
+				suggestion-1.1.xsd">
+				<suggestion:key>soccerteam.com</suggestion:key>
+				<suggestion:language>ENG</suggestion:language>
+				<suggestion:filter
+					contentfilter="false"
+					customfilter="false"
+					forsale="low"
+					maxlength="30"
+					maxresults="20"
+					usehyphens="true"
+					usenumbers="true"
+					useidns="false"
+					view="grid">
+					<suggestion:action name="basic" weight="medium"/>
+					<suggestion:action name="related" weight="high"/>
+					<suggestion:action name="similar" weight="off"/>
+					<suggestion:action name="topical" weight="high"/>
+					<suggestion:tld>COM</suggestion:tld>
+					<suggestion:tld>Net</suggestion:tld>
+					<suggestion:tld>XN--3PXU8K</suggestion:tld>
+					<suggestion:geo>
+						<suggestion:coordinates lat="389544" lng="-773463"/>
+					</suggestion:geo>
+				</suggestion:filter>
+			</suggestion:info>
+		</info>
+		<clTRID>51364-CLI</clTRID>
+	</command>
+</epp>

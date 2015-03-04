@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.verisign.com/epp/whowas-1.0"
+	xmlns:whowas="http://www.verisign.com/epp/whowas-1.0"
+	xmlns:epp="urn:ietf:params:xml:ns:epp-1.0"
+	xmlns:eppcom="urn:ietf:params:xml:ns:eppcom-1.0"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+
+	<import namespace="urn:ietf:params:xml:ns:eppcom-1.0"/>
+	<import namespace="urn:ietf:params:xml:ns:epp-1.0"/>
+
+	<annotation>
+		<documentation>
+			Extensible Provisioning Protocol v1.0 WhoWas schema
+		</documentation>
+	</annotation>
+
+	<element name="info" type="whowas:infoType"/>
+	<element name="infData" type="whowas:infDataType"/>
+	
+<!--
+Child elements of the <info> command.
+-->
+	<complexType name="infoType">
+		<sequence>
+			<element name="type" type="eppcom:minTokenType"/>
+			<choice>
+				<element name="name" type="eppcom:labelType" />
+				<element name="roid" type="eppcom:roidType" />
+			</choice>
+		</sequence>
+    </complexType>
+
+<!--
+Child elements of the <infData> command.
+-->
+	<complexType name="infDataType">
+		<sequence>
+			<element name="type" type="eppcom:minTokenType"/>
+			<choice>
+				<element name="name" type="eppcom:labelType" />
+				<element name="roid" type="eppcom:roidType" />
+			</choice>
+			<element name="history" type="whowas:historyType" />
+		</sequence>
+	</complexType>
+
+  	<complexType name="historyType">
+  		<sequence>
+			<element name="rec" type="whowas:recType"  minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="recType">
+		<sequence>
+			<element name="date" type="dateTime" />
+  			<element name="name" type="eppcom:labelType" />
+  			<element name="newName" type="eppcom:labelType" minOccurs="0"/>
+			<element name="roid" type="eppcom:roidType" />
+  			<element name="op" type="eppcom:minTokenType" />
+  			<element name="clID" type="eppcom:clIDType" />
+  			<element name="clName" type="eppcom:labelType"/>
+  		</sequence>
+    </complexType>
+<!--
+End of schema.
+-->
+</schema>

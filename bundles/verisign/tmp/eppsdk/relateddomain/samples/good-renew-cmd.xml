@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<epp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="urn:ietf:params:xml:ns:epp-1.0 epp-1.0.xsd" 
+	xmlns="urn:ietf:params:xml:ns:epp-1.0">
+  <command>
+    <renew>
+      <domain:renew 
+      	xmlns:domain="urn:ietf:params:xml:ns:domain-1.0" 
+      	xsi:schemaLocation="urn:ietf:params:xml:ns:domain-1.0 domain-1.0.xsd">
+        <domain:name>example1.tld</domain:name>
+        <domain:curExpDate>2013-07-10</domain:curExpDate>
+        <domain:period unit="y">5</domain:period>
+      </domain:renew>
+    </renew>
+    <extension>
+      <relDom:renew 
+      	xmlns:relDom="http://www.verisign.com/epp/relatedDomain-1.0"
+      	xsi:schemaLocation="http://www.verisign.com/epp/relatedDomain-1.0 relatedDomain-1.0.xsd">
+        <relDom:domain>
+          <relDom:name>example2.tld</relDom:name>
+          <relDom:curExpDate>2013-07-10</relDom:curExpDate>
+          <relDom:period unit="y">5</relDom:period>
+        </relDom:domain>
+        <relDom:domain>
+          <relDom:name>example3.tld</relDom:name>
+          <relDom:curExpDate>2013-07-10</relDom:curExpDate>
+          <relDom:period unit="y">5</relDom:period>
+        </relDom:domain>
+      </relDom:renew>
+    </extension>
+    <clTRID>ABC-12345</clTRID>
+  </command>
+</epp>

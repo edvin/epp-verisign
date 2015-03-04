@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<epp
+  xmlns="urn:ietf:params:xml:ns:epp-1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="urn:ietf:params:xml:ns:epp-1.0 epp-1.0.xsd"
+>
+	<response>
+    	<result code="1000">
+      		<msg>Command completed successfully</msg>
+	    </result>
+		<resData>
+			<whowas:infData xmlns:whowas="http://www.verisign.com/epp/whowas-1.0" 
+				xsi:schemaLocation="http://www.verisign.com/epp/whowas-1.0 whowas-1.0.xsd "
+			>
+				<whowas:type>domain</whowas:type>
+			    <whowas:name>abc.com</whowas:name>
+			    <whowas:history>
+			      	<whowas:rec>
+				        <whowas:date>2001-12-31T12:00:00</whowas:date>
+				        <whowas:name>abc.com</whowas:name>
+				        <whowas:roid>EXAMPLE1-REP</whowas:roid>
+				        <whowas:op>CREATE</whowas:op>
+				        <whowas:clID>ClientX</whowas:clID>
+				        <whowas:clName></whowas:clName>
+			      	</whowas:rec>			      
+			    </whowas:history>
+			</whowas:infData>
+		</resData>
+		<trID>
+      		<clTRID>ABC-12345-XYZ</clTRID>
+      		<svTRID>492533639-1267047500333-17493700909</svTRID>
+    	</trID>
+	</response>
+</epp>

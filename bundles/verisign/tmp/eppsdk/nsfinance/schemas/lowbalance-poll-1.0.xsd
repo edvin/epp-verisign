@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+   <schema targetNamespace="http://www.verisign.com/epp/lowbalance-poll-1.0"
+           xmlns:lowbalance-poll="http://www.verisign.com/epp/lowbalance-poll-1.0"
+           xmlns:eppcom="urn:ietf:params:xml:ns:eppcom-1.0"
+           xmlns="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+	
+	<!-- Import common element types.-->
+  	<import namespace="urn:ietf:params:xml:ns:eppcom-1.0"
+          schemaLocation="eppcom-1.0.xsd"/>
+  	
+
+	<annotation>
+		<documentation>
+			Extensible Provisioning Protocol v1.0
+			VeriSign poll notification specification for low balance notifications.
+		</documentation>
+	</annotation>
+
+	<!--Child elements found in EPP commands.-->
+	<element name="pollData" type="lowbalance-poll:pollDataType"/>
+
+	<!--Child elements of the <notifyData> element for the low balance.-->
+    <complexType name="pollDataType">
+		<sequence>
+			<element name="registrarName" type="eppcom:labelType"/>
+			<element name="creditLimit" type="normalizedString"/>
+			<element name="creditThreshold" type="lowbalance-poll:thresholdType"/>			
+			<element name="availableCredit" type="normalizedString"/>			         
+		</sequence>
+    </complexType>
+		
+	<!--complexType name="thresholdType">							
+		<attribute name="type" type="lowbalance-poll:thresholdValueType" use="required"/>
+	</complexType-->	
+                          
+    <complexType name="thresholdType">
+		<simpleContent>
+			<extension base="normalizedString">
+				<attribute name="type" type="lowbalance-poll:thresholdValueType" use="required"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+	
+             
+	<simpleType name="thresholdValueType">
+		<restriction base="token">
+			<enumeration value="FIXED"/>
+			<enumeration value="PERCENT"/>
+		</restriction>
+	</simpleType>
+
+   
+   <!-- End of schema.-->   
+</schema>

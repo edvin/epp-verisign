@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns:registry="http://www.verisign.com/epp/registry-1.0" 
+  xmlns:epp="urn:ietf:params:xml:ns:epp-1.0" 
+  xmlns:eppcom="urn:ietf:params:xml:ns:eppcom-1.0" 
+  xmlns="http://www.w3.org/2001/XMLSchema" 
+  targetNamespace="http://www.verisign.com/epp/registry-1.0" 
+  elementFormDefault="qualified">
+  <!--
+  Import common element types.
+  -->
+  <import namespace="urn:ietf:params:xml:ns:eppcom-1.0"/>
+  <import namespace="urn:ietf:params:xml:ns:epp-1.0"/>
+  
+  <annotation>
+    <documentation>
+      Extensible Provisioning Protocol v1.0
+       registry provisioning schema.
+     </documentation>
+  </annotation>
+  <!--
+  Child elements found in EPP commands.
+  -->
+  <element name="check" type="registry:mNameType"/>
+  <element name="create" type="registry:createType"/>
+  <element name="delete" type="registry:sNameType"/>
+  <element name="info" type="registry:infoType"/>
+  <element name="update" type="registry:updateType"/>
+  <!--
+    Child elements of the <check> command.
+  -->
+  <complexType name="mNameType">
+    <sequence>
+      <element name="name" type="eppcom:labelType" 
+      maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  <!--
+    Child elements of the <delete> command.
+  -->
+  <complexType name="sNameType">
+    <sequence>
+      <element name="name" type="eppcom:labelType"/>
+    </sequence>
+  </complexType>
+  <!--
+    Child elements of the <create> command.
+  -->
+  <complexType name="createType">
+    <sequence>
+      <element name="zone" type="registry:zoneType"/>
+    </sequence>
+  </complexType>
+  <complexType name="updateType">
+    <sequence>
+      <element name="zone" type="registry:zoneType"/>
+    </sequence>
+  </complexType>
+  <!--
+    Child elements of the <info> command.
+  -->
+  <complexType name="infoType">
+    <sequence>
+      <choice>
+        <element name="all">
+          <complexType/>
+        </element>
+        <element name="name" type="eppcom:labelType"/>
+      </choice>
+    </sequence>
+  </complexType>
+
+  <!--
+    Child response elements.
+  -->
+  <element name="chkData" type="registry:chkDataType"/>
+  <element name="creData" type="registry:creDataType"/>
+  <element name="infData" type="registry:infDataType"/>
+
+  <!--
+    <create> response elements.
+  -->
+  <complexType name="creDataType">
+    <sequence>
+      <element name="name" type="eppcom:labelType"/>
+      <element name="crDate" type="dateTime"/>
+    </sequence>
+  </complexType>
+  <!--
+    <check> response elements.
+  -->
+  <complexType name="chkDataType">
+    <sequence>
+      <element name="cd" type="registry:checkType" 
+      maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  <complexType name="checkType">
+    <sequence>
+      <element name="name" type="registry:checkNameType"/>
+      <element name="reason" type="eppcom:reasonType" 
+      minOccurs="0"/>
+    </sequence>
+  </complexType>
+  <complexType name="checkNameType">
+    <simpleContent>
+      <extension base="eppcom:labelType">
+        <attribute name="avail" type="boolean" 
+        use="required"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <!--
+    <info> response elements.
+  -->
+  <complexType name="infDataType">
+    <choice>
+      <element name="zoneList" type="registry:zoneListType"/>
+      <element name="zone" type="registry:zoneType"/>
+    </choice>
+  </complexType>
+  <complexType name="zoneListType">
+    <sequence>
+      <element name="zone" type="registry:zoneSummaryType" 
+      minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  <complexType name="zoneSummaryType">
+    <sequence>
+      <element name="name" type="string"/>
+      <element name="crDate" type="dateTime"/>
+      <element name="upDate" type="dateTime" 
+      minOccurs="0"/>
+    </sequence>
+  </complexType>
+  <complexType name="zoneType">
+    <sequence>
+      <element name="name" type="eppcom:labelType"/>
+      <element name="group" type="token" 
+      minOccurs="0"/>
+      <element name="subProduct" type="token" 
+      minOccurs="0"/>
+      <element name="related" type="registry:relatedType" 
+      minOccurs="0"/>
+      <element name="phase" type="registry:phaseType" 
+      minOccurs="0" maxOccurs="unbounded"/>
+      <element name="services" type="registry:servicesType" 
+      minOccurs="0"/>
+      <element name="slaInfo" type="registry:slaInfoType" 
+      minOccurs="0"/>
+      <element name="crID" type="eppcom:clIDType" 
+      minOccurs="0"/>
+      <element name="crDate" type="dateTime"/>
+      <element name="upID" type="eppcom:clIDType" 
+      minOccurs="0"/>
+      <element name="upDate" type="dateTime" 
+      minOccurs="0"/>
+      <element name="domain" type="registry:domainType"/>
+      <element name="host" type="registry:hostType"/>
+      <element name="contact" type="registry:contactType"
+      minOccurs="0"/>
+    </sequence>
+  </complexType>
+  <complexType name="slaInfoType">
+    <sequence>
+      <element name="sla" type="registry:slaType" 
+      maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  <complexType name="slaType">
+    <simpleContent>
+      <extension base="decimal">
+        <attribute name="type" type="string" 
+        use="required"/>
+        <attribute name="subtype" type="string" 
+        use="optional"/>
+        <attribute name="command" type="string" 
+        use="optional"/>
+        <attribute name="unit" type="string" 
+        use="optional"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="fieldsType">
+    <sequence>
+      <element name="field" type="token" 
+         maxOccurs="unbounded"/>
+    </sequence>
+    <attribute name="type" use="required">
+      <simpleType>
+        <restriction base="token">
+          <enumeration value="shared"/>
+          <enumeration value="sync"/>
+        </restriction>
+      </simpleType>
+    </attribute>
+  </complexType>  
+  <complexType name="zoneMemberType">
+    <simpleContent>
+      <extension base="eppcom:labelType">
+        <attribute name="type" use="required">
+          <simpleType>
+            <restriction base="token">
+              <enumeration value="primary"/>
+              <enumeration value="primaryBasedOnCrDate"/>
+              <enumeration value="alternate"/>
+              <enumeration value="equal"/>
+            </restriction>
+          </simpleType>
+        </attribute>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="relatedType">
+    <sequence>
+      <element name="fields" type="registry:fieldsType" 
+        minOccurs="0"/>
+      <element name="zoneMember" type="registry:zoneMemberType" 
+      maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  <complexType name="servicesType">
+    <sequence>
+      <element name="objURI" type="registry:uriType" 
+      maxOccurs="unbounded"/>
+      <element name="svcExtension" 
+      type="registry:svcExtensionType" 
+      minOccurs="0"/>
+    </sequence>
+  </complexType>
+  <complexType name="svcExtensionType">
+    <sequence>
+      <element name="extURI" type="registry:uriType" 
+      minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  <complexType name="phaseType">
+    <sequence>
+      <element name="startDate" type="dateTime"/>
+      <element name="endDate" type="dateTime" 
+      minOccurs="0"/>
+    </sequence>
+    <attribute name="type" use="required">
+      <simpleType>
+        <restriction base="token">
+          <enumeration value="pre-delegation"/>
+          <enumeration value="pre-launch"/>
+          <enumeration value="sunrise"/>
+          <enumeration value="landrush"/>
+          <enumeration value="claims"/>
+          <enumeration value="open"/>
+          <enumeration value="custom"/>
+        </restriction>
+      </simpleType>
+    </attribute>
+    <attribute name="mode" default="fcfs">
+      <simpleType>
+        <restriction base="token">
+          <enumeration value="fcfs"/>
+          <enumeration value="pending-registration"/>
+          <enumeration value="pending-application"/>
+        </restriction>
+      </simpleType>
+    </attribute>
+    <attribute name="name" use="optional" type="token"/>
+  </complexType>
+  <complexType name="uriType">
+    <simpleContent>
+      <extension base="anyURI">
+        <attribute name="required" type="boolean" use="required"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="reservedNamesType">
+    <choice>
+      <element name="reservedName" type="normalizedString" 
+      minOccurs="0" maxOccurs="unbounded"/>
+      <element name="reservedNameURI" type="anyURI" 
+      minOccurs="0"/>
+    </choice>
+  </complexType>
+  <complexType name="domainNameType">
+    <sequence>
+      <element name="minLength" type="unsignedShort" 
+      minOccurs="0"/>
+      <element name="maxLength" type="unsignedShort" 
+      minOccurs="0"/>
+      <element name="alphaNumStart" type="boolean" 
+      minOccurs="0" default="false"/>
+      <element name="alphaNumEnd" type="boolean" 
+      minOccurs="0" default="false"/>
+      <element name="onlyDnsChars" type="boolean" 
+      minOccurs="0" default="true"/>
+      <element name="regex" type="registry:regexType" 
+      minOccurs="0" maxOccurs="unbounded"/>
+      <element name="reservedNames" 
+      type="registry:reservedNamesType" 
+      minOccurs="0"/>
+    </sequence>
+    <attribute name="level" use="required">
+      <simpleType>
+        <restriction base="unsignedShort">
+          <minInclusive value="2"/>
+        </restriction>
+      </simpleType>
+    </attribute>
+  </complexType>
+  <complexType name="regexType">
+    <sequence>
+      <element name="expression" type="string"/>
+      <element name="explanation" minOccurs="0">
+        <complexType>
+          <simpleContent>
+            <extension base="normalizedString">
+              <attribute name="lang" type="language" 
+              default="en"/>
+            </extension>
+          </simpleContent>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+  <simpleType name="variantStrategyType">
+    <restriction base="token">
+      <enumeration value="blocked"/>
+      <enumeration value="restricted"/>
+      <enumeration value="open"/>
+    </restriction>
+  </simpleType>
+  <complexType name="languageType">
+    <sequence>
+      <element name="table" type="anyURI" 
+      minOccurs="0"/>
+      <element name="variantStrategy" 
+      type="registry:variantStrategyType"
+      minOccurs="0"/>
+    </sequence>
+    <attribute name="code" type="language" use="required"/>
+  </complexType>
+  <complexType name="idnType">
+    <sequence>
+      <element name="idnVersion" type="token"
+      minOccurs="0"/>
+      <element name="idnaVersion" type="token"/>
+      <element name="unicodeVersion" type="token"/>
+      <element name="encoding" type="token" 
+      minOccurs="0" default="Punycode"/>
+      <element name="commingleAllowed" type="boolean" 
+      minOccurs="0" default="false"/>
+      <element name="language" type="registry:languageType"
+      minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  <complexType name="dContactType">
+    <complexContent>
+      <extension base="registry:minMaxType">
+        <attribute name="type" use="required">
+          <simpleType>
+            <restriction base="token">
+              <enumeration value="admin"/>
+              <enumeration value="billing"/>
+              <enumeration value="tech"/>
+            </restriction>
+          </simpleType>
+        </attribute>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="minMaxType">
+    <sequence>
+      <element name="min" type="unsignedShort"/>
+      <element name="max" type="unsignedShort" 
+      minOccurs="0"/>
+    </sequence>
+  </complexType>
+  <complexType name="minMaxPeriod">
+    <sequence>
+      <element name="min" type="registry:periodType"/>
+      <element name="max" type="registry:periodType"/>
+      <element name="default" type="registry:periodType"/>
+    </sequence>
+  </complexType>
+  <complexType name="dPeriodType">
+    <choice>
+      <element name="length" type="registry:minMaxPeriod"/>
+      <element name="serverDecided">
+        <complexType/>
+      </element>
+    </choice>
+    <attribute name="command" type="token" 
+    use="required"/>
+  </complexType>
+  <complexType name="gPeriodType">
+    <simpleContent>
+      <extension base="registry:periodType">
+        <attribute name="command" type="token" 
+        use="required"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <complexType name="periodType">
+    <simpleContent>
+      <extension base="unsignedShort">
+        <attribute name="unit" type="registry:pUnitType" 
+        use="required"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+  <simpleType name="pUnitType">
+    <restriction base="token">
+      <enumeration value="y"/>
+      <enumeration value="m"/>
+      <enumeration value="d"/>
+      <enumeration value="h"/>
+    </restriction>
+  </simpleType>
+  <complexType name="rgpType">
+    <sequence>
+      <element name="redemptionPeriod" 
+      type="registry:periodType"/>
+      <element name="pendingRestore" 
+      type="registry:periodType"/>
+      <element name="pendingDelete" 
+      type="registry:periodType"/>
+    </sequence>
+  </complexType>
+  <complexType name="keyInterfaceType">
+    <sequence>
+      <element name="min" type="unsignedShort"/>
+      <element name="max" type="unsignedShort"/>
+      <element name="alg" type="token" minOccurs="0" 
+      maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  <complexType name="dsInterfaceType">
+    <complexContent>
+      <extension base="registry:keyInterfaceType">
+        <sequence>
+          <element name="digestType" type="token" 
+          minOccurs="0" 
+          maxOccurs="unbounded"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="maxSigLifeType">
+    <sequence>
+      <element name="clientDefined" type="boolean" 
+      minOccurs="0" default="false"/>
+      <element name="default" type="int" 
+      minOccurs="0"/>
+      <element name="min" type="int"
+      minOccurs="0"/>
+      <element name="max" type="int"
+      minOccurs="0"/>
+    </sequence>
+  </complexType>
+  <complexType name="dnssecType">
+    <sequence>
+      <choice>
+        <element name="dsDataInterface" 
+        type="registry:dsInterfaceType"/>
+        <element name="keyDataInterface" 
+        type="registry:keyInterfaceType"/>
+      </choice>
+      <element name="maxSigLife" 
+      type="registry:maxSigLifeType"/>
+      <element name="urgent" type="boolean"
+      minOccurs="0" default="false"/>
+    </sequence>
+  </complexType>
+  <complexType name="supportedStatusType">
+    <sequence>
+      <element name="status" type="token" minOccurs="1" 
+      maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+                        
+  <complexType name="keyValuesType">
+    <sequence>
+      <element name="value" maxOccurs="unbounded">
+        <complexType>
+          <simpleContent>
+            <extension base="normalizedString">
+              <attribute name="key" type="token" 
+              use="required"/>
+            </extension>
+          </simpleContent>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="domainType">
+    <sequence>
+      <element name="domainName" type="registry:domainNameType" 
+      maxOccurs="unbounded"/>
+      <element name="idn" type="registry:idnType" 
+      minOccurs="0"/>
+      <element name="premiumSupport" type="boolean"
+      minOccurs="0" default="false"/>
+      <element name="contactsSupported" type="boolean"
+      minOccurs="0" default="true"/>
+      <element name="contact" type="registry:dContactType" 
+      minOccurs="0" maxOccurs="3"/>
+      <element name="ns" type="registry:minMaxType"/>
+      <element name="childHost" type="registry:minMaxType"/>
+      <element name="period" type="registry:dPeriodType" 
+      minOccurs="0" maxOccurs="unbounded"/>
+      <element name="transferHoldPeriod" type="registry:periodType"/>
+      <element name="gracePeriod" type="registry:gPeriodType" 
+      minOccurs="0" maxOccurs="unbounded"/>
+      <element name="rgp" type="registry:rgpType"
+      minOccurs="0"/>
+      <element name="dnssec" type="registry:dnssecType"
+      minOccurs="0"/>
+      <element name="maxCheckDomain" type="unsignedShort"/>
+      <element name="supportedStatus" type="registry:supportedStatusType" 
+      minOccurs="0"/>
+      <element name="authInfoRegex" type="registry:regexType" 
+      minOccurs="0"/>
+      <element name="customData" type="registry:keyValuesType" 
+      minOccurs="0"/>
+    </sequence>
+  </complexType>
+  <simpleType name="intHostSharePolicyType">
+    <restriction base="token">
+      <enumeration value="perZone"/>
+      <enumeration value="perSystem"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="extHostSharePolicyType">
+    <restriction base="token">
+      <enumeration value="perRegistrar"/>
+      <enumeration value="perZone"/>
+      <enumeration value="perSystem"/>
+    </restriction>
+  </simpleType>
+  <complexType name="intHostPolicyType">
+    <sequence>
+      <element name="minIP" type="unsignedShort"/>
+      <element name="maxIP" type="unsignedShort"/>
+      <element name="sharePolicy" 
+         type="registry:intHostSharePolicyType" minOccurs="0"/>
+    </sequence>
+  </complexType>
+  <complexType name="extHostPolicyType">
+    <sequence>
+      <element name="minIP" type="unsignedShort"/>
+      <element name="maxIP" type="unsignedShort"/>
+      <element name="sharePolicy" 
+         type="registry:extHostSharePolicyType" minOccurs="0"/>
+    </sequence>
+  </complexType>
+  <complexType name="hostType">
+    <sequence>
+      <element name="internal" type="registry:intHostPolicyType"/>
+      <element name="external" type="registry:extHostPolicyType"/>
+      <element name="nameRegex" type="registry:regexType" 
+      minOccurs="0" maxOccurs="unbounded"/>
+      <element name="maxCheckHost" type="unsignedShort"/>
+      <element name="supportedStatus" type="registry:supportedStatusType" 
+      minOccurs="0"/>
+      <element name="customData" type="registry:keyValuesType" 
+      minOccurs="0"/>
+    </sequence>
+  </complexType>
+  <complexType name="minMaxLength">
+    <sequence>
+      <element name="minLength" type="unsignedShort"/>
+      <element name="maxLength" type="unsignedShort"/>
+    </sequence>
+  </complexType>
+  <simpleType name="contactSharePolicyType">
+    <restriction base="token">
+      <enumeration value="perZone"/>
+      <enumeration value="perSystem"/>
+    </restriction>
+  </simpleType> 
+  <complexType name="streetType">
+    <complexContent>
+      <extension base="registry:minMaxLength">
+        <sequence>
+          <element name="minEntry" type="unsignedShort"/>
+          <element name="maxEntry" type="unsignedShort"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="contactAddressType">
+    <sequence>
+      <element name="street" type="registry:streetType"/>
+      <element name="city" type="registry:minMaxLength"/>
+      <element name="sp" type="registry:minMaxLength"/>
+      <element name="pc" type="registry:minMaxLength"/>
+    </sequence>
+  </complexType>
+  <complexType name="postalType">
+    <sequence>
+      <element name="name" type="registry:minMaxLength"/>
+      <element name="org" type="registry:minMaxLength"/>
+      <element name="address" type="registry:contactAddressType"/>
+      <element name="voiceRequired" type="boolean" 
+      minOccurs="0" default="false"/>
+      <element name="voiceExt" type="registry:minMaxLength"
+      minOccurs="0"/>
+      <element name="faxExt" type="registry:minMaxLength"
+      minOccurs="0"/>      
+      <element name="emailRegex" type="registry:regexType"
+      minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+  <complexType name="contactType">
+    <sequence>
+      <element name="contactIdRegex" type="registry:regexType" 
+          minOccurs="0"/>    
+      <element name="sharePolicy" 
+          type="registry:contactSharePolicyType" minOccurs="0"/>
+      <element name="intSupport" type="boolean"/>
+      <element name="locSupport" type="boolean"/>
+      <element name="postalInfo" type="registry:postalType"/>
+      <element name="maxCheckContact" type="unsignedShort"/>
+      <element name="authInfoRegex" type="registry:regexType" 
+      minOccurs="0"/>
+      <element name="clientDisclosureSupported" type="boolean" 
+      minOccurs="0" default="false"/>
+      <element name="supportedStatus" type="registry:supportedStatusType" 
+      minOccurs="0"/>
+      <element name="transferHoldPeriod" type="registry:periodType"
+      minOccurs="0"/>
+      <element name="customData" type="registry:keyValuesType" 
+      minOccurs="0"/>
+    </sequence>
+  </complexType>
+</schema>

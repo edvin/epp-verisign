@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+   <schema targetNamespace="http://www.verisign.com/epp/rgp-poll-1.0"
+           xmlns:rgp-poll="http://www.verisign.com/epp/rgp-poll-1.0"
+           xmlns:eppcom="urn:ietf:params:xml:ns:eppcom-1.0"
+           xmlns:rgp="urn:ietf:params:xml:ns:rgp-1.0"
+           xmlns="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+<!--
+Import common element types.
+-->
+  	<import namespace="urn:ietf:params:xml:ns:eppcom-1.0"
+          schemaLocation="eppcom-1.0.xsd"/>
+  	<import namespace="urn:ietf:params:xml:ns:rgp-1.0"
+          schemaLocation="rgp-1.0.xsd"/>
+
+     <annotation>
+       <documentation>
+         Extensible Provisioning Protocol v1.0
+         VeriSign poll notification specification for registry grace period
+         poll notifications.
+       </documentation>
+     </annotation>
+
+   <!--
+   Child elements found in EPP commands.
+   -->
+     <element name="pollData" type="rgp-poll:pollDataType"/>
+
+   <!--
+   Child elements of the <notifyData> element for the
+   redemption grace period.
+   -->
+     <complexType name="pollDataType">
+       <sequence>
+         <element name="name" type="eppcom:labelType"/>
+         <element name="rgpStatus" type="rgp:statusType"/>
+         <element name="reqDate" type="dateTime"/>
+         <element name="reportDueDate" type="dateTime"/>
+       </sequence>
+     </complexType>
+   <!--
+   End of schema.
+   -->
+   </schema>

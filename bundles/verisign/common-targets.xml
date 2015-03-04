@@ -1,0 +1,435 @@
+<!--
+#############################################################
+# Copyright (C) 2004 VeriSign, Inc.
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# 
+# http://www.verisign.com/nds/naming/namestore/techdocs.html
+#############################################################
+-->
+<project name="EPP SDK-NameStore Common Targets" default="test" basedir=".">
+
+
+  <!-- =================================================================== -->
+  <!-- Run All Tests 				 	                                   -->
+  <!-- =================================================================== -->
+  <target 	name="test" depends="test-codec, test-client-server"
+  			description="Runs all tests (CODEC and TCP)" >
+
+ </target>
+ 
+  <!-- =================================================================== -->
+  <!-- Codec Unit Test					 	                               -->
+  <!-- =================================================================== -->
+  <target	 name="test-codec" depends="jar" unless="verisign.test.codec.disable"
+  			description="Runs CODEC unit tests" >
+
+	<junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+		<formatter type="plain" usefile="true" />
+		<classpath refid="verisign.test.classpath" />
+		
+		<!-- gen -->
+		<test name="com.verisign.epp.codec.gen.EPPCodecTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+			
+		<!-- domain -->
+		<test name="com.verisign.epp.codec.domain.EPPDomainTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+		
+		<!-- secdns 1.0 -->
+		<test name="com.verisign.epp.codec.secdnsext.v10.EPPSecDNSExtTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+		
+		<!-- secdns 1.1 -->
+		<test name="com.verisign.epp.codec.secdnsext.v11.EPPSecDNSExtTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+		
+		<!-- host -->
+		<test name="com.verisign.epp.codec.host.EPPHostTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+			
+		<!-- namestoreext -->
+		<test name="com.verisign.epp.codec.namestoreext.EPPNamestoreExtTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+
+		<!-- Premium Domain -->
+		<test name="com.verisign.epp.codec.premiumdomain.EPPPremiumDomainTst"
+			fork="yes" todir="${verisign.results.dir}"/>		
+		
+		<!-- nsfinance -->
+		<test name="com.verisign.epp.codec.lowbalancepoll.EPPLowBalanceTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+			
+		<!-- Suggestions -->
+		 <test name="com.verisign.epp.codec.suggestion.EPPSuggestionTst"
+			fork="yes" todir="${verisign.results.dir}"/>		
+			
+		<!-- rgg -->
+		<test name="com.verisign.epp.codec.rgpext.EPPRgpExtTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+		
+		<!-- sync -->
+		<test name="com.verisign.epp.codec.syncext.EPPSyncExtTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+		
+		<!-- idn -->
+		<test name="com.verisign.epp.codec.idnext.EPPIdnExtTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+
+		<!-- whois -->
+		<test name="com.verisign.epp.codec.whois.EPPWhoisTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+		
+		<!-- contact -->
+		<test name="com.verisign.epp.codec.contact.EPPContactTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+		
+		<!-- jobsContact -->
+		<test name="com.verisign.epp.codec.jobscontact.EPPJobsContactTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+
+ 		<!-- WhoWas -->
+ 		 <test name="com.verisign.epp.codec.whowas.EPPWhoWasTst"
+ 			fork="yes" todir="${verisign.results.dir}"/>
+		
+		<!-- coa -->
+        <test name="com.verisign.epp.codec.coaext.EPPCoaExtTst"
+            fork="yes" todir="${verisign.results.dir}"/>
+
+        <!-- registry -->
+        <test name="com.verisign.epp.codec.registry.EPPRegistryTst"
+            fork="yes" todir="${verisign.results.dir}"/>
+		
+		<!-- emailfwd -->
+		<test name="com.verisign.epp.codec.emailFwd.EPPEmailFwdTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+
+		<!-- persreg -->
+		<test name="com.verisign.epp.codec.persreg.EPPPersRegTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+		
+		<!-- defreg -->
+		<test name="com.verisign.epp.codec.defReg.EPPDefRegTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+		
+		<!-- namewatch -->
+		<test name="com.verisign.epp.codec.nameWatch.EPPNameWatchTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+		
+		<!-- launch -->
+		<test name="com.verisign.epp.codec.launch.EPPLaunchTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+		
+		<!-- relateddomain -->
+		<test name="com.verisign.epp.codec.relateddomainext.EPPRelatedDomainExtTst"
+			fork="yes" todir="${verisign.results.dir}"/>
+		
+		
+	</junit>
+
+  </target>
+
+
+  <!-- =================================================================== -->
+  <!-- Run full client/server test                                         -->
+  <!-- =================================================================== -->
+  <target	 name="test-client-server" depends="jar" 
+			unless="verisign.test.client-server.disable"
+  			description="Runs full client server test over TCP" >
+
+	<parallel> 
+		<daemons>
+			<property name="EPP.ConfigFile" value="epp.config"/>
+			<echo message="Starting server with ConfigFile = ${EPP.ConfigFile}"/>
+			<java classname="com.verisign.epp.serverstub.Server" fork="true">
+				<arg value="${EPP.ConfigFile}"/>
+				<classpath refid="verisign.test.classpath" />
+			</java> 
+		</daemons>
+		<sequential>
+			<sleep seconds="2"/>
+			<property name="EPP.ConfigFile" value="epp.config"/>
+			<property name="EPP.SessionClass" value="com.verisign.epp.interfaces.EPPSession"/>
+			<junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+
+				<sysproperty key="EPP.ConfigFile" value="${EPP.ConfigFile}"/>
+				<sysproperty key="EPP.SessionClass" value="${EPP.SessionClass}"/>
+				
+				<formatter type="plain" usefile="true" />
+				<classpath refid="verisign.test.classpath" />
+						
+				<!-- gen -->
+				<test name="com.verisign.epp.interfaces.EPPSessionTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+				<test name="com.verisign.epp.pool.EPPSessionPoolTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+				<test name="com.verisign.epp.pool.EPPSystemSessionPoolTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+			
+				<!-- NSDomainTst -->
+				<test name="com.verisign.epp.namestore.interfaces.NSDomainTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+				
+				<!-- dnssec 1.0 EPPSecDNSDomainTst -->
+				<test name="com.verisign.epp.interfaces.secdnsext.v10.EPPSecDNSDomainTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+
+				<!-- dnssec 1.1 EPPSecDNSDomainTst -->
+				<test name="com.verisign.epp.interfaces.secdnsext.v11.EPPSecDNSDomainTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+				
+				<!-- NSHostTst -->
+				<test name="com.verisign.epp.namestore.interfaces.NSHostTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+				
+				<!-- NSPollTst -->
+				<test name="com.verisign.epp.namestore.interfaces.NSPollTst"
+					fork="yes" todir="${verisign.results.dir}"/>				
+					
+				<!-- domain with namestoreext -->
+				<test name="com.verisign.epp.interfaces.EPPNamestoreExtDomainTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+				
+				<!-- host with namestoreext -->
+				<test name="com.verisign.epp.interfaces.EPPNamestoreExtHostTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+
+				<!-- NSContactTst -->
+				<test name="com.verisign.epp.namestore.interfaces.NSContactTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+				
+				<!-- contact -->
+				<test name="com.verisign.epp.interfaces.EPPContactTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+
+				<!-- jobsContact -->
+				<test name="com.verisign.epp.interfaces.EPPJobsContactTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+	
+				<!-- Premium Domain -->
+				<test name="com.verisign.epp.interfaces.EPPPremiumDomainTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+				
+				<!-- nsfinance -->
+				<test name="com.verisign.epp.interfaces.EPPLowBalanceDomainTst"
+						fork="yes" todir="${verisign.results.dir}"/>
+				
+				<!-- Suggestions -->
+				<test name="com.verisign.epp.interfaces.EPPSuggestionTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+				
+				<!-- rgg -->
+				<test name="com.verisign.epp.interfaces.EPPRgpDomainTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+				
+				<!-- sync -->
+				<test name="com.verisign.epp.interfaces.EPPSyncDomainTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+							
+				<!-- idn -->
+				<test name="com.verisign.epp.interfaces.EPPIdnDomainTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+	
+				<!-- whois -->
+				<test name="com.verisign.epp.interfaces.EPPWhoisDomainTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+
+ 				<!-- WhoWas -->
+ 				<test name="com.verisign.epp.interfaces.EPPWhoWasTst"
+ 					fork="yes" todir="${verisign.results.dir}"/>
+						
+                <!-- coa -->
+                <test name="com.verisign.epp.interfaces.EPPCoaDomainTst"
+                    fork="yes" todir="${verisign.results.dir}"/>
+
+                <!-- registry -->
+                <test name="com.verisign.epp.interfaces.EPPRegistryTst"
+                    fork="yes" todir="${verisign.results.dir}"/>
+				
+				<!-- emailfwd -->
+				<test name="com.verisign.epp.interfaces.EPPEmailFwdTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+
+				<!-- persreg -->
+				<test name="com.verisign.epp.interfaces.EPPPersRegTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+												
+				<!-- defreg -->
+				<test name="com.verisign.epp.interfaces.EPPDefRegTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+				
+				<!-- namewatch -->
+				<test name="com.verisign.epp.interfaces.EPPNameWatchTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+				
+				<!-- launch -->
+				<test name="com.verisign.epp.interfaces.EPPLaunchTst"
+					fork="yes" todir="${verisign.results.dir}"/>	
+ 
+				<!-- relateddomain -->
+				<test name="com.verisign.epp.interfaces.EPPRelatedDomainTst"
+					fork="yes" todir="${verisign.results.dir}"/>	
+				
+			</junit>
+		</sequential>
+	</parallel>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Run full client test                                                -->
+  <!-- =================================================================== -->
+  <target	 name="test-client" depends="jar" unless="verisign.test.client.disable"
+  			description="Runs tests over TCP against TCP server stub" >
+
+		<!-- Default values for epp config file and epp session class -->
+		<property name="EPP.ConfigFile" value="epp.config"/>
+		<property name="EPP.SessionClass" value="com.verisign.epp.interfaces.EPPSession"/>
+		<echo message="Startup client with ConfigFile = ${EPP.ConfigFile}, SessionClass = ${EPP.SessionClass}"/>
+		
+		<junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+		
+			<sysproperty key="EPP.ConfigFile" value="${EPP.ConfigFile}"/>
+			<sysproperty key="EPP.SessionClass" value="${EPP.SessionClass}"/>
+
+			<formatter type="plain" usefile="true" />
+			<classpath refid="verisign.test.classpath" />
+	
+			<!-- gen -->
+			<test name="com.verisign.epp.interfaces.EPPSessionTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+			<test name="com.verisign.epp.pool.EPPSessionPoolTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+			<test name="com.verisign.epp.pool.EPPSystemSessionPoolTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+			
+			<!-- Suggestions -->
+			<test name="com.verisign.epp.interfaces.EPPSuggestionTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+				
+			<!-- NSDomainTst -->
+			<test name="com.verisign.epp.namestore.interfaces.NSDomainTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+			
+			<!-- dnssec 1.0 EPPSecDNSDomainTst -->
+			<test name="com.verisign.epp.interfaces.secdnsext.v10.EPPSecDNSDomainTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+
+			<!-- dnssec 1.1 EPPSecDNSDomainTst -->
+			<test name="com.verisign.epp.interfaces.secdnsext.v11.EPPSecDNSDomainTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+			
+			<!-- NSHostTst -->
+			<test name="com.verisign.epp.namestore.interfaces.NSHostTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+		
+			<!-- NSPollTst -->
+			<test name="com.verisign.epp.namestore.interfaces.NSPollTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+										
+			<!-- domain & host with namestoreext -->	
+			<test name="com.verisign.epp.interfaces.EPPNamestoreExtDomainTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+			<test name="com.verisign.epp.interfaces.EPPNamestoreExtHostTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+			
+
+			<!-- rgp -->
+			<test name="com.verisign.epp.interfaces.EPPRgpDomainTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+			
+			<!-- sync -->
+			<test name="com.verisign.epp.interfaces.EPPSyncDomainTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+			
+			<!-- nsfinance 
+			<test name="com.verisign.epp.interfaces.EPPLowBalanceDomainTst"
+					fork="yes" todir="${verisign.results.dir}"/>
+			-->
+			
+			<!-- idn -->
+			<test name="com.verisign.epp.interfaces.EPPIdnDomainTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+			
+			<!-- whois -->
+			<test name="com.verisign.epp.interfaces.EPPWhoisDomainTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+		
+			<!-- contact -->
+			<test name="com.verisign.epp.interfaces.EPPContactTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+			
+			<!-- jobsContact -->
+			<test name="com.verisign.epp.interfaces.EPPJobsContactTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+							
+			<!-- Premium Domain -->
+			<test name="com.verisign.epp.interfaces.EPPPremiumDomainTst"
+				fork="yes" todir="${verisign.results.dir}"/>	
+			
+ 			<!-- WhoWas -->
+			<test name="com.verisign.epp.interfaces.EPPWhoWasTst"
+ 				fork="yes" todir="${verisign.results.dir}"/>
+	     
+            <!-- coa -->
+            <test name="com.verisign.epp.interfaces.EPPCoaDomainTst"
+                fork="yes" todir="${verisign.results.dir}"/>
+
+            <!-- registry -->
+            <test name="com.verisign.epp.interfaces.EPPRegistryTst"
+                fork="yes" todir="${verisign.results.dir}"/>
+			
+			<!-- emailfwd -->
+			<test name="com.verisign.epp.interfaces.EPPEmailFwdTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+
+			<!-- persreg -->
+			<test name="com.verisign.epp.interfaces.EPPPersRegTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+			
+			<!-- defreg -->
+			<test name="com.verisign.epp.interfaces.EPPDefRegTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+			
+			<!-- namewatch -->
+			<test name="com.verisign.epp.interfaces.EPPNameWatchTst"
+				fork="yes" todir="${verisign.results.dir}"/>	
+						
+			<!-- launch -->
+			<test name="com.verisign.epp.interfaces.EPPLaunchTst"
+				fork="yes" todir="${verisign.results.dir}"/>
+			
+			<!-- relateddomain -->
+			<test name="com.verisign.epp.interfaces.EPPRelatedDomainTst"
+				fork="yes" todir="${verisign.results.dir}"/>	
+
+		</junit>
+  </target>
+  
+  <!-- =================================================================== -->
+  <!-- Start the server stub                                               -->
+  <!-- =================================================================== -->
+  <target	 name="start-server" depends="jar"
+  			description="Starts the TCP server stub" >
+
+	<property name="EPP.ConfigFile" value="epp.config"/>
+	<echo message="Starting server with ConfigFile = ${EPP.ConfigFile}"/>
+ 	
+		<java classname="com.verisign.epp.serverstub.Server" fork="true">			
+			<arg value="${EPP.ConfigFile}"/>
+			<classpath refid="verisign.test.classpath" />
+		</java> 
+  </target>
+   
+</project>

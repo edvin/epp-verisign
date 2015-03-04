@@ -1,0 +1,803 @@
+<!--
+Copyright (C) 2004 VeriSign, Inc.
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser NameStoreeral Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser NameStoreeral Public License for more details.
+
+You should have received a copy of the GNU Lesser NameStoreeral Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-0107  USA
+
+http://www.verisign.com/nds/naming/namestore/techdocs.html
+-->
+<project name="EPP SDK-Verisign" default="jar" basedir=".">
+	
+	<import file="${basedir}/common-targets.xml"/>	
+
+	<property name="build.version" value="SNAPSHOT"/>
+	
+	<!-- SDK home directory -->
+    <property name="sdk.home.dir" location="../.."/>
+
+	<!-- Ensure environment variables are set to env prefixed properties -->
+	<property environment="env"/>
+
+	<!-- All properties can be overridden in build.properties -->
+    <property file="${basedir}/build.properties"/>
+
+	<!-- Temporary directory used for distribution -->
+    <property name="verisign.tmp.dir" location="${verisign.dir}/tmp"/>
+	
+	<!-- compiler option properties -->
+    <property name="debug" value="on"/>
+    <property name="optimize" value="on"/>
+    <property name="deprecation" value="on"/>
+
+	<!-- source path for javadoc generation -->
+	<path id="verisign.src.path">
+		<pathelement location="${gen.src.dir}" />
+		<pathelement location="${domain.src.dir}" />
+		<pathelement location="${host.src.dir}" />
+		<pathelement location="${namestoreext.src.dir}" />
+		<pathelement location="${rgp.src.dir}" />
+		<pathelement location="${sync.src.dir}" />
+		<pathelement location="${nsfinance.src.dir}" />
+		<pathelement location="${idn.src.dir}" />
+		<pathelement location="${whois.src.dir}" />
+		<pathelement location="${suggestions.src.dir}" />
+		<pathelement location="${verisign.src.dir}" />
+		<pathelement location="${contact.src.dir}" />
+		<pathelement location="${jobscontact.src.dir}" />
+		<pathelement location="${secdns.src.dir}" />
+		<pathelement location="${premiumdomain.src.dir}" />
+		<pathelement location="${whowas.src.dir}" />
+		<pathelement location="${coa.src.dir}" />
+        <pathelement location="${registry.src.dir}" />
+		<pathelement location="${emailfwd.src.dir}" />
+		<pathelement location="${defreg.src.dir}" />
+		<pathelement location="${namewatch.src.dir}" />
+		<pathelement location="${persreg.src.dir}" />
+		<pathelement location="${launch.src.dir}" />
+		<pathelement location="${relateddomain.src.dir}" />
+		
+	</path>
+
+	<!-- classpath to use for compilation tasks -->
+	<path id="verisign.compile.classpath">
+		<fileset dir="${verisign.lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+			<fileset dir="${verisign.epp.lib.dir}">
+				<include name="epp-gen.jar"/>
+				<include name="epp-domain.jar"/>
+				<include name="epp-host.jar"/>
+				<include name="epp-namestoreext.jar"/>
+				<include name="epp-rgp.jar"/>
+				<include name="epp-sync.jar"/>
+				<include name="epp-nsfinance.jar"/>
+				<include name="epp-idn.jar"/>
+				<include name="epp-whois.jar"/>
+				<include name="epp-suggestion.jar"/>
+				<include name="epp-contact.jar"/>
+				<include name="epp-jobsContact.jar"/>
+				<include name="epp-secdns.jar"/>
+				<include name="epp-premiumdomain.jar"/>
+				<include name="epp-whowas.jar"/>
+				<include name="epp-coa.jar"/>
+                <include name="epp-registry.jar"/>
+				<include name="epp-emailfwd.jar"/>
+				<include name="epp-defreg.jar"/>
+				<include name="epp-namewatch.jar"/>
+				<include name="epp-persreg.jar"/>
+				<include name="epp-launch-${build.version}.jar"/>
+				<include name="epp-relateddomain.jar"/>
+			</fileset>		
+	</path>
+		
+
+	<!-- classpath to use for compilation tasks -->
+	<path id="verisign.test.classpath">
+		<pathelement location="${basedir}/tmp"/>
+		<fileset dir="${verisign.epp.lib.dir}">
+			<include name="epp-verisign-${build.version}.jar"/>
+		</fileset>
+		<fileset dir="${verisign.lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+
+  <!-- =================================================================== -->
+  <!-- Initialization target                                               -->
+  <!-- =================================================================== -->
+  <target 	name="init"
+			description="Initializes the build for rest of targets ">
+
+	<!-- set time stamp properties -->
+    <tstamp/>
+	
+	<!-- Give build.version a default value of SNAPSHOT -->
+	<property name="build.version" value="SNAPSHOT"/>
+
+    <echo message="----------- ${ant.project.name} ${build.version} ------------"/>
+
+	<!-- Is JSSE installed?  This is an optional dependency for the SDK -->
+	<available classname="javax.net.ssl.SSLSocket" property="ssl.present"/>
+
+	<mkdir dir="${verisign.results.dir}" />
+	<mkdir dir="${verisign.build.dir}" />
+  	<mkdir dir="${verisign.epp.lib.dir}" />
+  </target>
+
+
+  <!-- =================================================================== -->
+  <!-- Compiles source files                                     		   -->
+  <!-- =================================================================== -->
+  <target 	name="compile" depends="init"
+  			description="Compiles the source files" >
+
+    <echo message="${ant.project.name} ${build.version} Compile"/>
+	
+	<ant dir="${gen.dir}" target="jar"/>
+	<ant dir="${domain.dir}" target="jar"/>
+	<ant dir="${host.dir}" target="jar"/>
+	<ant dir="${namestoreext.dir}" target="jar"/>
+	<ant dir="${rgp.dir}" target="jar"/>
+	<ant dir="${sync.dir}" target="jar"/>
+	<ant dir="${nsfinance.dir}" target="jar"/>
+	<ant dir="${idn.dir}" target="jar"/>
+	<ant dir="${whois.dir}" target="jar"/>
+ 	<ant dir="${suggestions.dir}" target="jar"/>
+   	<ant dir="${contact.dir}" target="jar"/>
+  	<ant dir="${jobscontact.dir}" target="jar"/>
+  	<ant dir="${secdns.dir}" target="jar"/>
+  	<ant dir="${premiumdomain.dir}" target="jar"/>
+	<ant dir="${whowas.dir}" target="jar"/>
+    <ant dir="${coa.dir}" target="jar"/>
+    <ant dir="${registry.dir}" target="jar"/>
+    <ant dir="${emailfwd.dir}" target="jar"/>
+    <ant dir="${defreg.dir}" target="jar"/>
+    <ant dir="${namewatch.dir}" target="jar"/>
+    <ant dir="${persreg.dir}" target="jar"/>	
+    <ant dir="${launch.dir}" target="jar"/>	
+    <ant dir="${relateddomain.dir}" target="jar"/>	
+	
+    <javac srcdir="${verisign.src.dir}"
+		   destdir="${verisign.build.dir}"
+           debug="${debug}"
+           optimize="${optimize}"
+		   deprecation="${deprecation}"
+		   failonerror="true"
+           target="1.6"
+		   >
+		<classpath refid="verisign.compile.classpath" />
+	</javac>
+  	
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Creates epp-verisign.jar                                                -->
+  <!-- =================================================================== -->
+  <target 	name="jar" depends="init, compile"
+  			description="Creates the jar file (epp-verisign.jar)" >
+			
+	<!-- Set default value of build.version to SNAPSHOT -->
+	<property name="build.version" value="SNAPSHOT"/>
+
+	<!-- Merge all component jar's into bundled jar -->
+	<jar jarfile="${verisign.epp.lib.dir}/epp-verisign-${build.version}.jar" >
+		<manifest>
+				<attribute name="baseline" value="EPP-VeriSign-SDK-${build.version}"/>
+		</manifest>
+		
+		<fileset dir="${verisign.build.dir}"
+			includes="com/**/*.class" />
+		
+		<!-- General/Common -->
+		<fileset dir="${gen.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${gen.dir}"
+			includes="schemas/*.xsd" />
+			
+		<!-- Domain Product -->
+		<fileset dir="${domain.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${domain.dir}"
+			includes="schemas/*.xsd" />
+			
+		<!-- Host Product -->
+		<fileset dir="${host.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${host.dir}"
+			includes="schemas/*.xsd" />
+	
+		<!-- Contact Product -->
+		<fileset dir="${contact.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${contact.dir}"
+			includes="schemas/*.xsd" />
+		
+		<!-- NameStore Extension -->
+		<fileset dir="${namestoreext.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${namestoreext.dir}"
+			includes="schemas/*.xsd" />
+		
+		<!-- RGP Extension -->
+		<fileset dir="${rgp.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${rgp.dir}"
+			includes="schemas/*.xsd" />
+    
+		<!-- Sync Extension -->
+		<fileset dir="${sync.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${sync.dir}"
+			includes="schemas/*.xsd" />
+		
+		<!-- NSFinance Extension -->
+		<fileset dir="${nsfinance.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${nsfinance.dir}"
+			includes="schemas/*.xsd" />
+		
+		<!-- Suggestions Product -->
+		<fileset dir="${suggestions.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${suggestions.dir}"
+			includes="schemas/*.xsd" />
+
+		<!-- IDN Extension -->
+		<fileset dir="${idn.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${idn.dir}"
+			includes="schemas/*.xsd" />
+		
+		<!-- Whois Extension -->
+		<fileset dir="${whois.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${whois.dir}"
+			includes="schemas/*.xsd" />
+
+		<!-- JobsContact Extension -->
+		<fileset dir="${jobscontact.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${jobscontact.dir}"
+			includes="schemas/*.xsd" />
+		
+		<!-- Secdns Extension -->
+		<fileset dir="${secdns.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${secdns.dir}"
+			includes="schemas/*.xsd" />
+
+		<!-- Premium Domain Extension -->
+		<fileset dir="${premiumdomain.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${premiumdomain.dir}"
+			includes="schemas/*.xsd" />
+		
+		<!-- WhoWas Product -->
+		<fileset dir="${whowas.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${whowas.dir}"
+			includes="schemas/*.xsd" />
+
+		<!-- COA Extension -->
+		<fileset dir="${coa.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${coa.dir}"
+			includes="schemas/*.xsd" />
+		
+		<!-- Registry Product -->
+		<fileset dir="${registry.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${registry.dir}"
+			includes="schemas/*.xsd" />
+
+		<!-- EmailFwd Product -->
+		<fileset dir="${emailfwd.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${emailfwd.dir}"
+			includes="schemas/*.xsd" />
+
+		<!-- PersReg Extension -->
+		<fileset dir="${persreg.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${persreg.dir}"
+			includes="schemas/*.xsd" />
+		
+		<!-- DefReg Product -->
+		<fileset dir="${defreg.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${defreg.dir}"
+			includes="schemas/*.xsd" />
+
+		<!-- NameWatch Product -->
+		<fileset dir="${namewatch.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${namewatch.dir}"
+			includes="schemas/*.xsd" />		
+		
+		<!-- Launch Extension -->
+		<fileset dir="${launch.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${launch.dir}"
+			includes="schemas/*.xsd" />
+		
+		<!-- RelatedDomain Extension -->
+		<fileset dir="${relateddomain.dir}/build"
+			includes="com/**/*.class" />
+		<fileset dir="${relateddomain.dir}"
+			includes="schemas/*.xsd" />
+	</jar>
+
+  </target>
+  
+  <!-- =================================================================== -->
+  <!-- Generate epp-verisign-src.jar                              		   -->
+  <!-- =================================================================== -->
+  <target 	name="jar-src" depends="init"
+  			description="Build the source jar file" >
+
+	<ant dir="${gen.dir}" target="jar-src"/>
+	<ant dir="${domain.dir}" target="jar-src"/>
+	<ant dir="${host.dir}" target="jar-src"/>
+	<ant dir="${namestoreext.dir}" target="jar-src"/>
+	<ant dir="${rgp.dir}" target="jar-src"/>
+	<ant dir="${sync.dir}" target="jar-src"/>
+	<ant dir="${nsfinance.dir}" target="jar-src"/>
+	<ant dir="${idn.dir}" target="jar-src"/>
+	<ant dir="${whois.dir}" target="jar-src"/>
+ 	<ant dir="${suggestions.dir}" target="jar-src"/>
+   	<ant dir="${contact.dir}" target="jar-src"/>
+  	<ant dir="${jobscontact.dir}" target="jar-src"/>
+  	<ant dir="${secdns.dir}" target="jar-src"/>
+	<ant dir="${premiumdomain.dir}" target="jar-src"/>
+	<ant dir="${whowas.dir}" target="jar-src"/>
+	<ant dir="${coa.dir}" target="jar-src"/>
+    <ant dir="${registry.dir}" target="jar-src"/>
+    <ant dir="${emailfwd.dir}" target="jar-src"/>
+    <ant dir="${defreg.dir}" target="jar-src"/>
+    <ant dir="${namewatch.dir}" target="jar-src"/>
+    <ant dir="${persreg.dir}" target="jar-src"/>	
+    <ant dir="${launch.dir}" target="jar-src"/>	
+    <ant dir="${relateddomain.dir}" target="jar-src"/>	
+  	
+	<!-- Create source.jar distribution -->
+	<zip destfile="${verisign.dist.dir}/jar-src/epp-verisign-${build.version}-src.jar">
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-gen-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-domain-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-host-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-namestoreext-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-rgp-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-sync-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-nsfinance-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-idn-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-whois-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-suggestion-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-contact-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-jobsContact-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-secdns-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-premiumdomain-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-whowas-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-coa-${build.version}-src.jar" />
+        <zipfileset src="${verisign.dist.dir}/jar-src/epp-registry-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-emailfwd-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-defreg-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-namewatch-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-persreg-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-launch-${build.version}-src.jar" />
+		<zipfileset src="${verisign.dist.dir}/jar-src/epp-relateddomain-${build.version}-src.jar" />
+		<fileset dir="${verisign.dir}/java" includes="com/**/*.java" />
+	</zip>
+    
+  </target>
+  
+
+  <!-- =================================================================== -->
+  <!-- Formats the source code using Jalopy                                -->
+  <!-- =================================================================== -->
+  <target name="format" 
+		  description="Formats the source code">
+		  
+	<ant dir="${gen.dir}" target="format"/>
+	<ant dir="${domain.dir}" target="format"/>
+	<ant dir="${host.dir}" target="format"/>
+	<ant dir="${namestoreext.dir}" target="format"/>
+	<ant dir="${rgp.dir}" target="format"/>
+	<ant dir="${sync.dir}" target="format"/>
+	<ant dir="${nsfinance.dir}" target="format"/>
+	<ant dir="${idn.dir}" target="format"/>
+	<ant dir="${whois.dir}" target="format"/>
+	<ant dir="${suggestions.dir}" target="format"/>
+	<ant dir="${contact.dir}" target="format"/>
+	<ant dir="${jobscontact.dir}" target="format"/>
+  	<ant dir="${secdns.dir}" target="format"/>
+	<ant dir="${premiumdomain.dir}" target="format"/>
+	<ant dir="${whowas.dir}" target="format"/>
+  	<ant dir="${coa.dir}" target="format"/>
+    <ant dir="${registry.dir}" target="format"/>
+  	<ant dir="${emailfwd.dir}" target="format"/>
+  	<ant dir="${defreg.dir}" target="format"/>
+  	<ant dir="${namewatch.dir}" target="format"/>
+  	<ant dir="${persreg.dir}" target="format"/>	
+  	<ant dir="${launch.dir}" target="format"/>	
+  	<ant dir="${relateddomain.dir}" target="format"/>	
+
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Creates the HTML API documentation                                  -->
+  <!-- =================================================================== -->
+  <target 	name="doc" depends="jar"
+  			description="Creates the HTML API documentation" >
+
+    <mkdir dir="${verisign.doc.dir}/html"/>
+    <javadoc packagenames="com.verisign.epp.*"
+             sourcepathref="verisign.src.path"
+             destdir="${verisign.doc.dir}/html"
+             author="true"
+             version="true"
+             use="true"
+             splitindex="true"
+             noindex="false"
+			 breakiterator="true"
+             windowtitle="${ant.project.name} API"
+             doctitle="${ant.project.name}"
+             bottom="Copyright &#169; VeriSign Inc. All Rights Reserved.">
+		<classpath refid="verisign.test.classpath" />
+	</javadoc>
+
+  </target>
+
+
+
+	<!-- =================================================================== -->
+	<!-- Ensure that build.version is set                                    -->
+	<!-- =================================================================== -->
+	<target name="check-build-version" unless="build.version">
+		<fail message="Must set build.version with -Dbuild.version=X"/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates SDK source distribution                                     -->
+	<!-- =================================================================== -->
+	<target name="dist-src" depends="check-build-version"
+				description = "Creates the source distribution (-Dbuild.version required)" >
+		<mkdir dir="${verisign.dist.dir}" />
+	
+		<ant dir="${gen.dir}" target="dist-src"/>
+		<ant dir="${domain.dir}" target="dist-src"/>
+		<ant dir="${host.dir}" target="dist-src"/>
+		<ant dir="${namestoreext.dir}" target="dist-src"/>
+		<ant dir="${rgp.dir}" target="dist-src"/>
+		<ant dir="${sync.dir}" target="dist-src"/>
+		<ant dir="${nsfinance.dir}" target="dist-src"/>
+		<ant dir="${idn.dir}" target="dist-src"/>
+		<ant dir="${whois.dir}" target="dist-src"/>
+		<ant dir="${suggestions.dir}" target="dist-src"/>
+		<ant dir="${contact.dir}" target="dist-src"/>
+		<ant dir="${jobscontact.dir}" target="dist-src"/>
+		<ant dir="${secdns.dir}" target="dist-src"/>
+		<ant dir="${premiumdomain.dir}" target="dist-src"/>
+		<ant dir="${whowas.dir}" target="dist-src"/>
+		<ant dir="${coa.dir}" target="dist-src"/>
+        <ant dir="${registry.dir}" target="dist-src"/>
+		<ant dir="${emailfwd.dir}" target="dist-src"/>
+		<ant dir="${defreg.dir}" target="dist-src"/>
+		<ant dir="${namewatch.dir}" target="dist-src"/>
+		<ant dir="${persreg.dir}" target="dist-src"/>
+		<ant dir="${launch.dir}" target="dist-src"/>
+		<ant dir="${relateddomain.dir}" target="dist-src"/>
+		
+		<echo message="----------- ${ant.project.name} ${build.version} Source Dist ------------"/>
+	
+		
+		<!-- Create source .zip distribution -->
+		<zip destfile="${verisign.dist.dir}/epp-verisign-${build.version}-src-exts.zip">
+			<zipfileset src="${verisign.dist.dir}/epp-gen-${build.version}-src.zip" 
+						includes="eppsdk/gen/**" excludes="eppsdk/gen/doc/*.pdf, eppsdk/gen/doc/*.README, eppsdk/gen/doc/*.INSTALL"/>
+			<zipfileset src="${verisign.dist.dir}/epp-domain-${build.version}-src.zip" 
+						includes="eppsdk/domain/**" excludes="eppsdk/domain/doc/*.pdf, eppsdk/domain/doc/*.README, eppsdk/domain/doc/*.INSTALL"/>
+			<zipfileset src="${verisign.dist.dir}/epp-host-${build.version}-src.zip" 
+						includes="eppsdk/host/**" excludes="eppsdk/host/doc/*.pdf, eppsdk/host/doc/*.README, eppsdk/host/doc/*.INSTALL"/>
+			<zipfileset src="${verisign.dist.dir}/epp-namestoreext-${build.version}-src.zip" 
+						includes="eppsdk/namestoreext/**" excludes="eppsdk/namestoreext/doc/*.README, eppsdk/namestoreext/doc/*.INSTALL"/>
+			<zipfileset src="${verisign.dist.dir}/epp-rgp-${build.version}-src.zip" 
+						includes="eppsdk/rgp/**"/>
+			<zipfileset src="${verisign.dist.dir}/epp-sync-${build.version}-src.zip" 
+						includes="eppsdk/sync/**"/>
+			<zipfileset src="${verisign.dist.dir}/epp-nsfinance-${build.version}-src.zip" 
+						includes="eppsdk/nsfinance/**"/>
+			<zipfileset src="${verisign.dist.dir}/epp-idn-${build.version}-src.zip" 
+						includes="eppsdk/idn/**"/>
+			<zipfileset src="${verisign.dist.dir}/epp-whois-${build.version}-src.zip" 
+						includes="eppsdk/whois/**"/>
+			<zipfileset src="${verisign.dist.dir}/epp-suggestion-${build.version}-src.zip" 
+						includes="eppsdk/suggestion/**"/>
+			<zipfileset src="${verisign.dist.dir}/epp-contact-${build.version}-src.zip" 
+						includes="eppsdk/contact/**"/>
+			<zipfileset src="${verisign.dist.dir}/epp-jobsContact-${build.version}-src.zip" 
+						includes="eppsdk/jobsContact/**"/>
+			<zipfileset src="${verisign.dist.dir}/epp-secdns-${build.version}-src.zip" 
+						includes="eppsdk/secdns/**"/>
+			<zipfileset src="${verisign.dist.dir}/epp-premiumdomain-${build.version}-src.zip" 
+						includes="eppsdk/premiumdomain/**"/>
+			<zipfileset src="${verisign.dist.dir}/epp-whowas-${build.version}-src.zip"
+						includes="eppsdk/whowas/**"/>
+			<zipfileset src="${verisign.dist.dir}/epp-coa-${build.version}-src.zip" 
+			            includes="eppsdk/coa/**"/>
+            <zipfileset src="${verisign.dist.dir}/epp-registry-${build.version}-src.zip"
+                        includes="eppsdk/registry/**"/>
+           <zipfileset src="${verisign.dist.dir}/epp-emailfwd-${build.version}-src.zip"
+                        includes="eppsdk/emailfwd/**"/>
+           <zipfileset src="${verisign.dist.dir}/epp-defreg-${build.version}-src.zip"
+                        includes="eppsdk/defreg/**"/>
+           <zipfileset src="${verisign.dist.dir}/epp-namewatch-${build.version}-src.zip"
+                        includes="eppsdk/namewatch/**"/>
+           <zipfileset src="${verisign.dist.dir}/epp-persreg-${build.version}-src.zip"
+                        includes="eppsdk/persreg/**"/>
+           <zipfileset src="${verisign.dist.dir}/epp-launch-${build.version}-src.zip"
+	                    includes="eppsdk/launch/**"/>
+	       <zipfileset src="${verisign.dist.dir}/epp-relateddomain-${build.version}-src.zip"
+		                    includes="eppsdk/relateddomain/**"/>
+		</zip>
+		
+		<mkdir dir="${verisign.tmp.dir}" />
+		<unzip src="${verisign.dist.dir}/epp-verisign-${build.version}-src-exts.zip"
+			   dest="${verisign.tmp.dir}"/>
+		
+		
+		<!-- Create source .zip distribution -->
+		<zip destfile="${verisign.dist.dir}/epp-verisign-${build.version}-src.zip">
+			<zipfileset dir="${verisign.license.dir}" prefix="epp-verisign-${build.version}/license"/>
+			<zipfileset dir="${verisign.lib.dir}" prefix="epp-verisign-${build.version}/lib">
+				<exclude name="epp/**"/>
+			</zipfileset>
+			<zipfileset dir="${verisign.dir}" prefix="epp-verisign-${build.version}/bundles/verisign">
+				<exclude name="junit*"/>
+				<exclude name="*.log*"/>
+				<exclude name="*.err"/>
+				<exclude name="doc/html/**"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+				<exclude name="doc/*.doc"/>
+			</zipfileset>
+		
+			<zipfileset dir="${verisign.tmp.dir}/eppsdk" prefix="epp-verisign-${build.version}"/>			
+		</zip>
+		
+		<delete dir="${verisign.tmp.dir}/eppsdk"/>
+		<delete file="${verisign.dist.dir}/epp-verisign-${build.version}-src-exts.zip"/>
+		
+		<!-- Create source .tar.gz distribution -->
+		<!-- unzip the zip distribution into tmp directory for create tar -->
+		<mkdir dir="${verisign.tmp.dir}" />
+		<unzip src="${verisign.dist.dir}/epp-verisign-${build.version}-src.zip"
+			   dest="${verisign.tmp.dir}"/>
+		<tar destfile="${verisign.dist.dir}/epp-verisign-${build.version}-src.tar.gz"
+			compression="gzip">
+			<tarfileset dir="${verisign.tmp.dir}" mode="775">
+				<include name="epp-verisign-${build.version}/**/*.sh"/>
+			</tarfileset>
+			<tarfileset dir="${verisign.tmp.dir}">
+				<exclude name="epp-verisign-${build.version}/**/*.sh"/>
+			</tarfileset>
+		</tar>
+		<delete dir="${verisign.tmp.dir}" />
+		
+	</target>
+		
+
+
+	<!-- =================================================================== -->
+	<!-- Creates SDK binary distribution                                     -->
+	<!-- =================================================================== -->
+	<target name="dist-bin" depends="check-build-version, doc"
+				description = "Creates the binary distribution (-Dbuild.version required)" >
+		<mkdir dir="${verisign.dist.dir}" />
+		<mkdir dir="${verisign.tmp.dir}" />
+		
+		<echo message="----------- ${ant.project.name} ${build.version} Binary Dist ------------"/>
+		
+		<copy file="${verisign.dir}/build-bin.xml" tofile="${verisign.tmp.dir}/build.xml"/>
+	
+		<!-- Give build.version a default value of SNAPSHOT -->
+		<property name="build.version" value="SNAPSHOT"/>
+		
+		<!-- Create binary .zip distribution -->
+		<zip destfile="${verisign.dist.dir}/epp-verisign-${build.version}-bin.zip">
+			<zipfileset dir="${verisign.license.dir}" prefix="epp-verisign-${build.version}/license"/>
+			<zipfileset dir="${verisign.lib.dir}" prefix="epp-verisign-${build.version}/lib">
+				<exclude name="epp/**"/>
+				<exclude name="jalopy/**"/>
+			</zipfileset>
+			<zipfileset dir="${verisign.epp.lib.dir}" prefix="epp-verisign-${build.version}/lib/epp">
+				<include name="epp-verisign-${build.version}.jar"/>
+			</zipfileset>			
+			<zipfileset dir="${verisign.tmp.dir}" includes="build.xml" prefix="epp-verisign-${build.version}/bundles/verisign"/>
+			<zipfileset dir="${verisign.dir}" prefix="epp-verisign-${build.version}/bundles/verisign">
+				<exclude name="*.log"/>
+				<exclude name="*.err"/>
+				<exclude name="build.xml"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="results/**"/>
+				<exclude name="tmp/**"/>
+				<exclude name="doc/*.doc"/>
+			</zipfileset>
+			
+			<!-- Add mapping and extension specifications -->
+			<zipfileset dir="${gen.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+				<include name="*.txt"/>
+			</zipfileset>			
+			<zipfileset dir="${domain.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+				<include name="epp-domain.txt"/>
+			</zipfileset>			
+			<zipfileset dir="${host.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+				<include name="epp-host.txt"/>
+			</zipfileset>			
+			<zipfileset dir="${namestoreext.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+				<include name="*.txt"/>
+				<include name="*.html"/>
+			</zipfileset>			
+			<zipfileset dir="${rgp.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+				<include name="*.txt"/>
+				<include name="*.html"/>
+			</zipfileset>			
+			<zipfileset dir="${sync.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+				<include name="*.txt"/>
+			</zipfileset>			
+			<zipfileset dir="${nsfinance.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+				<include name="*.txt"/>
+				<include name="*.html"/>
+			</zipfileset>			
+			<zipfileset dir="${idn.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+				<include name="*.txt"/>
+				<include name="*.html"/>
+			</zipfileset>			
+			<zipfileset dir="${whois.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+				<include name="*.txt"/>
+				<include name="*.html"/>
+			</zipfileset>			
+			<zipfileset dir="${suggestions.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+				<include name="*.pdf"/>
+			</zipfileset>
+			<zipfileset dir="${contact.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+				<include name="*.txt"/>
+			</zipfileset>			
+			<zipfileset dir="${jobscontact.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+				<include name="*.pdf"/>
+			</zipfileset>	
+			<zipfileset dir="${secdns.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+				<include name="*.txt"/>
+			</zipfileset>
+			<zipfileset dir="${premiumdomain.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+				<include name="*.txt"/>
+				<include name="*.html"/>
+			</zipfileset>
+ 			<zipfileset dir="${whowas.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+ 				<include name="*.pdf"/>
+			</zipfileset>
+            <zipfileset dir="${coa.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+				<include name="*.txt"/>
+				<include name="*.html"/>
+            </zipfileset>
+            <zipfileset dir="${registry.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+				<include name="*.txt"/>
+				<include name="*.html"/>
+            </zipfileset>	
+            <zipfileset dir="${emailfwd.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+                <include name="*.pdf"/>
+           </zipfileset>	 	
+           <zipfileset dir="${defreg.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+                 <include name="*.pdf"/>
+           	</zipfileset>	
+            <zipfileset dir="${namewatch.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+                <include name="*.pdf"/>
+            </zipfileset>	
+            <zipfileset dir="${persreg.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+                <include name="*.pdf"/>
+            </zipfileset>
+            <zipfileset dir="${launch.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+                <include name="*.txt"/>
+            </zipfileset>
+            <zipfileset dir="${relateddomain.doc.dir}" prefix="epp-verisign-${build.version}/bundles/verisign/doc">
+				<include name="*.txt"/>
+				<include name="*.html"/>
+            </zipfileset>
+		</zip>
+		<delete dir="${verisign.tmp.dir}"/>
+
+		<!-- Create source .tar.gz distribution -->
+		<!-- unzip the zip distribution into tmp directory for create tar -->
+		<mkdir dir="${verisign.tmp.dir}" />
+		<unzip src="${verisign.dist.dir}/epp-verisign-${build.version}-bin.zip"
+			   dest="${verisign.tmp.dir}"/>
+		<tar destfile="${verisign.dist.dir}/epp-verisign-${build.version}-bin.tar.gz"
+			compression="gzip">
+			<tarfileset dir="${verisign.tmp.dir}" mode="775">
+				<include name="epp-verisign-${build.version}/**/*.sh"/>
+			</tarfileset>
+			<tarfileset dir="${verisign.tmp.dir}">
+				<exclude name="epp-verisign-${build.version}/**/*.sh"/>
+			</tarfileset>
+		</tar>
+		<delete dir="${verisign.tmp.dir}" />
+
+
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates SDK distributions						                     -->
+	<!-- =================================================================== -->
+	<target name="dist" depends="dist-src, dist-bin"
+				description = "Creates the distributions (-Dbuild.version required)" >
+	</target>
+
+  <!-- =================================================================== -->
+  <!-- Clean targets                                                       -->
+  <!-- =================================================================== -->
+  <target 	name="clean" depends="init"
+			description="Cleans the built files and directories" >
+			
+		<!-- Clean build directory -->
+		<delete dir="${verisign.build.dir}" quiet="true"/>
+
+  		<!-- Clean dependent project build directories -->
+		<ant dir="${gen.dir}" target="clean"/>
+		<ant dir="${domain.dir}" target="clean"/>
+		<ant dir="${host.dir}" target="clean"/>
+		<ant dir="${namestoreext.dir}" target="clean"/>
+		<ant dir="${rgp.dir}" target="clean"/>
+		<ant dir="${sync.dir}" target="clean"/>
+		<ant dir="${nsfinance.dir}" target="clean"/>
+		<ant dir="${idn.dir}" target="clean"/>
+		<ant dir="${whois.dir}" target="clean"/>
+		<ant dir="${suggestions.dir}" target="clean"/>
+  		<ant dir="${contact.dir}" target="clean"/>
+		<ant dir="${jobscontact.dir}" target="clean"/>
+  	    <ant dir="${secdns.dir}" target="clean"/>
+		<ant dir="${premiumdomain.dir}" target="clean"/>
+		<ant dir="${whowas.dir}" target="clean"/>
+        <ant dir="${coa.dir}" target="clean"/>
+        <ant dir="${registry.dir}" target="clean"/>
+  	 	<ant dir="${emailfwd.dir}" target="clean"/>
+  	 	<ant dir="${defreg.dir}" target="clean"/>
+  	 	<ant dir="${namewatch.dir}" target="clean"/>
+  	  	<ant dir="${persreg.dir}" target="clean"/>
+	  	<ant dir="${launch.dir}" target="clean"/>
+  		<ant dir="${relateddomain.dir}" target="clean"/>
+		
+		<!-- Clean the EPP lib directory -->
+		<delete dir="${verisign.epp.lib.dir}" quiet="true"/>
+
+		<!-- Clean results directory -->
+		<delete dir="${verisign.results.dir}" quiet="true"/>
+
+		<!-- Clean log files -->
+		<delete>
+			<fileset dir="${verisign.dir}" includes="*.log, *.err"/>
+		</delete>
+
+		<!-- Clean generated documentation files -->
+		<delete dir="${verisign.doc.dir}/html" quiet="true"/>
+
+		<!-- Clean distribution directory -->
+		<delete dir="${verisign.dist.dir}" quiet="true"/>
+
+		<!-- Clean the tmp directory -->
+		<delete dir="${verisign.tmp.dir}" quiet="true"/>
+		
+  </target>
+
+</project>
+
+<!-- End of file -->

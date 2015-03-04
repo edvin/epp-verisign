@@ -1,0 +1,240 @@
+#############################################################################
+#
+#    The information in this document is proprietary
+#    to VeriSign and the VeriSign Registry Business.
+#    It may not be used, reproduced or disclosed without
+#    the written approval of the General Manager of
+#    VeriSign Global Registry Services.
+#
+#    PRIVILEDGED AND CONFIDENTIAL
+#    VERISIGN PROPRIETARY INFORMATION
+#    REGISTRY SENSITIVE INFORMATION
+#
+#    Copyright (c) 2005 VeriSign, Inc.  All rights reserved.
+#
+##############################################################################
+
+Basic Installation
+==================
+The EPP Contact SDK is provided in Java.  The minimum requirement is 
+JDK 1.4.  See the sections below for specific configuration instructions.  The 
+EPP Contact SDK includes the EPP Gen SDK files along with the files 
+associated with EPP Contact Mapping.  
+
+The distribution is pre-built in the lib directory.  The pre-built 
+EPP Contact library is lib/epp/epp-contact.jar and the dependent 
+EPP Gen library is lib/epp/epp-gen.jar.
+		
+Test code files with a Tst.java postfix are used to test the SDK 
+and used as sample code.  Ant 1.7.1 is included in the SDK under 
+the lib/ant directory
+and is used to build the SDK, running the Server Stub, and 
+running the client tests.  Running either a build.sh for UNIX or 
+build.bat for Windows will launch the included Ant 1.7.1.  The 
+version of Ant can be overridden by defining the ANT_HOME environment 
+variable.  The JAVA_HOME environment variable must be set.  The 
+Ant targets included with each build.xml include the following:
+
+	clean               Clean compiled files
+	compile             Compile source files
+	dist                Creates the distributions (-Dbuild.version required)
+	dist-bin            Creates the binary distribution 
+                            (-Dbuild.version required)
+	dist-src            Creates the source distribution 
+                            (-Dbuild.version required)
+	doc                 Creates the HTML API documentation
+ 	jar                 Generates JAR file
+ 	start-server        Starts the TCP server stub
+ 	test                Runs all tests (CODEC and TCP)
+ 	test-client         Runs tests over TCP against TCP server stub
+ 	test-client-server  Runs full client server test over TCP
+ 	test-codec          Runs CODEC unit tests
+   
+Each directory contains the following files:
+
+    build.xml 	     - Ant 1.7.1 build description file. 	
+    common-targets.xml - Common targets for the source and binary distributions	
+    build.sh         - UNIX build script using Ant 1.7.1 and build.xml.  
+                     The same tasks defined in build.xml can be used as 
+                     arguments to build.sh
+    build.bat        - Windows build script using Ant 1.7.1 and build.xml.  
+                     The same tasks defined in build.xml can be used as 
+                     arguments to build.bat
+    build.properties - Ant properties that include directory path properties
+    epp.config       - Configuration file used by the EPP Server Stub
+                     and the test programs.  See the comments for 
+                     each configuration parameter in epp.config for 
+                     more detail.
+    logconfig.xml    - Log4J configuration file
+
+
+Adding Contact to SDK Bundle (NameStore)
+=========================================
+Each EPP SDK mapping or extension can be packaged seperately or as part of 
+an SDK bundle like NameStore/SRS or DotName.  The Contact SDK can be 
+integrated into a bundle by doing the followin:
+
+	1. Extract the source distribution into the 
+	   same directory as the bundle source distribution.  
+	   For example, the following will 
+	   add the Contact SDK to the Namestore SDK bundle:
+	       % tar xvfz epp-namestore-3.2.0.2-src.tar.gz 
+	       % tar xvfz epp-contact-1.0.0.0-src.tar.gz 
+	   Both the bundle SDK and the Contact SDK will extract files under 
+	   the eppsdk directory.  To note, common components like 
+	   the gen directory will be overwritten by the last extract, 
+	   so ensure that the common components are compatible.  
+	 2.If the source distribution, build both the Contact SDK and 
+	   the bundle SDK, which will 
+	   create the SDK .jar files under eppsdk/lib/epp.  For example,
+	   the following will build the Contact SDK and the 
+	   NameStore SDK bundle:
+	       % cd eppsdk/bundles/namestore
+	       % build.sh jar
+	       % cd ../../contact
+	       % build.sh jar
+	 3. Add com.verisign.epp.codec.contact.EPPContactMapFactory to the EPP.MapFactories 
+	    of the SDK bundle.  For example, the NameStore 3.2.0.2 SDK bundle 
+	    eppsdk/bundles/namestore/epp.config file should have the EPP.MapFactories 
+	    setting as:
+	       EPP.MapFactories = \
+	           com.verisign.epp.codec.rccdomain.EPPDomainMapFactory \
+	           com.verisign.epp.codec.rcccontact.EPPContactMapFactory \ 
+	           com.verisign.epp.codec.rcchost.EPPHostMapFactory \ 
+	           com.verisign.epp.codec.rccjob.EPPJobMapFactory \
+	           com.verisign.epp.codec.domain.EPPDomainMapFactory \ 
+	           com.verisign.epp.codec.host.EPPHostMapFactory \ 
+	           com.verisign.epp.codec.lowbalancepoll.EPPLowBalancePollMapFactory \
+	           com.verisign.epp.codec.rgppoll.EPPRgpPollMapFactory \
+	           com.verisign.epp.codec.cls.bid.EPPClsBidMapFactory \
+	           com.verisign.epp.codec.cls.item.EPPClsItemMapFactory \
+	           com.verisign.epp.codec.contact.EPPContactMapFactory
+	 4. Add com.verisign.epp.serverstub.ContactHandler to the EPP.ServerEventHandlers 
+	    of the SDK bundle.  For example, the NameStore 3.2.0.2 SDK bundle 
+	    eppsdk/bundles/namestore/epp.config file should have the 
+	    EPP.ServerEventHandlers setting as:
+			EPP.ServerEventHandlers = \
+				com.verisign.epp.serverstub.GenHandler \
+				com.verisign.epp.serverstub.RccDomainHandler \
+				com.verisign.epp.serverstub.RccContactHandler \
+				com.verisign.epp.serverstub.RccHostHandler \
+				com.verisign.epp.serverstub.RccJobHandler \
+				com.verisign.epp.serverstub.NSDomainHandler \
+				com.verisign.epp.serverstub.NamestoreExtHostHandler \
+				com.verisign.epp.serverstub.GenHandler \
+				com.verisign.epp.serverstub.BidStubHandler \
+				com.verisign.epp.serverstub.ItemStubHandler \
+				com.verisign.epp.serverstub.ContactHandler
+	 4. Add com.verisign.epp.serverstub.ContactPollHandler to the EPP.PollHandlers 
+	    of the SDK bundle.  For example, the NameStore 3.2.0.2 SDK bundle 
+	    eppsdk/bundles/namestore/epp.config file should have the 
+	    EPP.PollHandlers setting as:
+			EPP.PollHandlers= \
+				com.verisign.epp.serverstub.NSPollHandler \
+				com.verisign.epp.serverstub.DomainPollHandler \
+				com.verisign.epp.serverstub.RccDomainPollHandler \
+				com.verisign.epp.serverstub.RgpDomainPollHandler \
+				com.verisign.epp.serverstub.LowBalancePollHandler \
+				com.verisign.epp.serverstub.ClsPollHandler \
+				com.verisign.epp.serverstub.ContactPollHandler
+	 5. Update the SDK bundle test.classpath to include the Contact SDK .jar file.
+	    For example, to add a reference to epp-contact.jar in the NameStore SDK 
+	    bundle, add <include name="epp-contact.jar"/> to the namestore.test.classpath
+	    path defined in eppsdk/bundle/namestore/build.xml.  The full 
+	    NameStore SDK bundle namestore.test.classpath setting would look like:
+	    
+		    	<!-- classpath to use for compilation tasks -->
+			<path id="namestore.test.classpath">
+				<fileset dir="${namestore.epp.lib.dir}">
+					<include name="epp-namestore.jar"/>
+					<include name="epp-contact.jar"/>
+				</fileset>
+				<fileset dir="${namestore.lib.dir}">
+					<include name="*.jar"/>
+				</fileset>
+				<fileset dir="${namestore.web.lib.dir}">
+					<include name="*.jar"/>
+				</fileset>
+			</path>
+	6. Add com.verisign.epp.codec.contact.EPPContactTst to the test-codec 
+	   target of the SDK bundle.  For example, to include the contact Codec 
+	   test to the NameStore SDK bundle, add the following to the junit task 
+	   of the test-codec target in eppsdk/bundles/namestore/common-targets.xml:
+	   
+		<!-- contact -->
+		<test name="com.verisign.epp.codec.contact.EPPContactTst"
+			fork="yes" todir="${namestore.results.dir}"/>
+	6. Add com.verisign.epp.interfaces.EPPContactTst to the test-client-server
+	   and test-client targets of the SDK bundle. For example, to include 
+	   the contact Codec test to the NameStore SDK bundle, add the 
+	   following to the junit task 
+	   of the test-client-server and test-client targets in 
+	   eppsdk/bundles/namestore/common-targets.xml:
+	   
+		<!-- contact -->
+		<test name="com.verisign.epp.interfaces.EPPContactTst"
+			fork="yes" todir="${namestore.results.dir}"/>
+	7. Optionally add an ant task to the compile target of SDK bundle to 
+	   ensure that the bundle build also includes a build of the 
+	   Contact SDK.  For example, to add executing the jar target 
+	   of the Contact build to the NameStore source distribution 
+	   build.xml, add the following to the compile target of the 
+	   eppsdk/bundles/namestore/build.xml file:
+	   
+		<ant dir="${sdk.home.dir}/contact" target="jar"/>
+	 8. Run the tests to test that the contact changes were 
+	    correctly made.  For example, do the following to 
+	    run all of the NameStore SDK bundle tests:
+	    
+	    	% cd eppsdk/bundles/namestore
+	    	% build.[sh|bat] test
+			   
+	    
+Running non-SSL Mode
+==============================
+
+To build and run the EPP SDK sample programs (default configuration), do the following:
+    
+    cd contact 
+    build.sh test-client-server
+
+non-SSL is the default configuration for the SDK.  The start-server target can 
+be used to start the Stub Server for running an independent client test.
+
+
+Running SSL Mode
+==============================
+
+contact/epp.config must be changed to run in SSL mode.  Comment
+out the following lines in contact/epp.config:
+
+EPP.ClientSocketName = com.verisign.epp.transport.client.EPPPlainClientSocket
+EPP.ServerSocketName = com.verisign.epp.transport.server.EPPPlainServer
+
+Un-comment the following lines in sample/epp.config:
+
+EPP.ClientSocketName = com.verisign.epp.transport.client.EPPSSLClientSocket
+EPP.ServerSocketName = com.verisign.epp.transport.server.EPPSSLServer
+
+Follow the same instructions as "Running non-SSL Mode" 
+after making the above configuration changes. 
+
+SSL Certificate Configuration
+==============================
+The EPP SDK includes a self-signed certificate 
+in the eppsdk/lib/keystore/testkeys 
+file which is referenced for both the client code and the Server Stub.  For 
+interfacing with a OT&E or Production Server, an official keystore needs 
+to be referenced.  The following epp.config properties should be modified:
+
+EPP.SSLKeyFileName         - Path to the keystore file
+EPP.SSLPassPhrase          - Keystore passphrase
+EPP.SSLKeyPassPhrase       - Optional private key passphrase.  
+                             If undefined, it defaults to the  
+                             EPP.SSLPassPhrase value
+EPP.SSLTrustStoreFileName  - Optional path to trust keystore.  
+                             If undefined the JDK trust 
+                             keystore will be used
+EPP.SSLTrustStorePassPhrase- Optional trust keystore passphrase  
+	
+  

@@ -1,0 +1,87 @@
+Verisign EPP SDK Change Log
+===================
+
+Changes in version 1.4.0.0 (05.01.2014)
+-----------------------------------
+* Switched to be dependent on Java 6 instead of Java 5.  The launch extension already was dependent on Java 6 and with the new dependency on the use of JAXB, the entire SDK is being moved to be dependent on Java 6. (James F. Gould)
+* Fixed a bug with encoding the XSD dateTime type in EPPUtil by using 4 digit precision for the seconds.  The fix was to use a default of 3 digit precision (milliseconds) on the encode and to use JAXB DatatypeConverter.parseDateTime for parsing the dataTime value.  Access methods were added (getTimeInstantFormat(): String and setTimeInstantFormat(String)) to enable changing the encoding format if needed.  (James F. Gould) 
+
+Changes in version 1.3.0.0 (12.03.2013)
+-----------------------------------
+* Updated to the 25nov13 test SMD's (SMD's without whitespace) and test SMD Revocation List.  The SMD Revocation List was converted from UTF-8 to ASCII. (James F. Gould)
+* Updated to support draft-tan-epp-launchphase-12 by updating the launch-1.0.xsd, updating the draft-tan-epp-launchphase.txt in the doc directory, and updating the code and tests to support the new validatorID optional attribute. (James F. Gould)
+
+Changes in version 1.2.0.0 (09.16.2013)
+-----------------------------------
+* Fixed the XML namespace handling in the com.verisign.epp.codec.registry.EPPRegistryRegEx class and some of the client classes to com.verisign.epp.codec.registry.EPPRegistryRegEx. (James F. Gould)
+* Changed com.verisign.epp.codec.signedMark.EPPSignedMark to handle XML parsing exception. This is specially required while parsing the XML obtained from the encoded SMD. (Vijay Garothaya)  
+
+Changes in version 1.1.0.4 (09.11.2013)
+-----------------------------------
+* Changed com.verisign.epp.namestore.interfaces.NSDomain to extend com.verisign.epp.namestore.interfaces.EPPRelatedDomain instead of com.verisign.epp.namestore.interfaces.EPPDomain, since EPPRelatedDomain extends EPPDomain and adds important additional methods needed in NSDomain. (James F. Gould)  
+* Broaden the tld type in NameSuggestion to support unicode values. (Vincent Raemy)
+* Updated the related domain extension to use generics throughout and added some additional convenience methods to simplify the API. (James F. Gould)
+* Added new "restricted" status for NameSuggestion. (Vincent Raemy)  
+* Added a new "uTld" attribute in grid for NameSuggestion. (Vincent Raemy)
+
+Changes in version 1.1.0.3 (09.04.2013)
+-----------------------------------
+* Added Domain Info Form and the Related Info Form to the info command of the Related Domain Extension, version 1.2.   Added support for the two forms to com.verisign.epp.codec.relateddomainext.EPPRelatedDomainExtInfo as well as com.verisign.epp.interfaces.EPPRelatedDomain. (James F. Gould)  
+* Added the EPPSignedMark(EPPEncodedSignedMark) constructor to convert an encodedSignedMark to a signedMark. (James F. Gould)
+* Addressed issue with using the sample SMD's with the signedMark and the default XML parser setting of normalizing the XML.  In the event of using a signedMark, the XML is parsed a second time with the parser normalization disabled for the signedMark to pass validation.  This included setting a "PACKET" SessionData attribute in the EPPXMLAssembler for use in the LaunchDomainHandler.doDomainCreate method to re-parse the packet. (James F. Gould). 
+
+
+
+Changes in version 1.1.0.2 (08.16.2013)
+-----------------------------------
+* Added a call to parser.setFeature(EPPSchemaCachingParser.NORMALIZE_DATA, false) in EPPSignedMark.parseAndGetDocElement(byte[]) and changed the default for the NORMALIZE_DATA feature to true in EPPSchemaCachingParser, since changing it to false does not trim the "token" type XML elements.  (James F. Gould). 
+
+
+Changes in version 1.1.0.1 (08.15.2013)
+-----------------------------------
+* Changed the EPPUtil TIME_INSTANT_FORMAT constant back to use four digit time precision to be consistent with the format used previously.  (James F. Gould). 
+
+Changes in version 1.1.0.0 (08.14.2013)
+-----------------------------------
+* Created constructor to directly decode the SMD InputStream in com.verisign.epp.codec.signedMark.EPPEncodedSignedMark. (James F. Gould)
+* Split com.verisign.epp.codec.signedMark.EPPSignedMark into com.verisign.epp.codec.signedMark.EPPSignedMark and com.verisign.epp.codec.signedMark.EPPEncodedSignedMark to isolate the base64 encoding and to address issues with retaining any extra whitespace contained in the signed mark to address the validation issue with the ICANN sample SMD's. (Vijay Garothaya)
+* Updated the com.verisign.epp.codec.launch.EPPLaunchTst tests to include validation of all of the ICANN sample Signed Mark Data (SMD) files.  Added the ICANN sample SMD files to the distribution to support the tests. (James F. Gould)
+* The certs.crl file was split into the eppsdk.crl and the tmch-pilot.crl.  The eppsdk.crl includes the CRL for the signed marks signed by the EPP SDK and the tmch-pilot.crl includes the CRL provided by ICANN for testing. (James F. Gould)
+* Added the test ICANN CA certificate to signedMarkTrust.jks to support validating the ICANN sample Signed Mark Data (SMD). (James F. Gould)
+* Added SMD revocation list validation to the LaunchDomainHandler class. (James F. Gould)
+* Added the ICANN test SMD revocation list (smd-test-revocation.csv) to the distribution to support the testing of the ICANN sample Signed Mark Data (SMD). (James F. Gould)
+* Created the com.verisign.epp.codec.signedMark.SMDRevocationList and com.verisign.epp.codec.signedMark.RevokedSMD classes to decode the SMD revocation list and to include the SMDRevocationList.isRevoked(EPPSignedMark) : boolean method to determine if a signed mark is revoked. (James F. Gould)
+
+
+Changes in version 1.0.0.5 (07.14.2013)
+-----------------------------------
+* Added multiple domain command (create, update, delete, renew, transfer) support to Related Domain Extension. (James F. Gould)
+
+
+Changes in version 1.0.0.4 (07.08.2013)
+-----------------------------------
+* Updated the EPP Registry Mapping to version 1.5 and updated the code to match. (James F. Gould)
+
+
+Changes in version 1.0.0.3 (06.03.2013)
+-----------------------------------
+* Integrated the related domain extension into the bundle. (James F. Gould)  
+
+Changes in version 1.0.0.2 (05.17.2013)
+-----------------------------------
+* Updated to include draft-tan-epp-launchphase-11 that moved the <launch:chkData> under the <extension> element, which resulted in removing the EPPLaunchCheckResp.java, removing the EPPLaunchMapFactory, and adding EPPLaunchChkData.java. (James F. Gould)  
+* Updated the registry mapping to include additional attributes. (James F. Gould)
+
+
+Changes in version 1.0.0.1 (05.07.2013)
+-----------------------------------
+* Updated to include draft-tan-epp-launchphase-10 and draft-lozano-tmch-smd-02, called 10/02.  (James F. Gould)
+* Updated the dependent jar files. (James F. Gould)
+* Added support for a Transformer pool based on the Parser pool properties based on the expense of instantiating a Transformer instance. (James F. Gould)
+
+Changes in version 1.0.0.0 (04.16.2013)
+-----------------------------------
+* Updated Registry mapping to replace the claims1 and claims2 phases with the claims phase. (James F. Gould)
+* Updated Registry mapping to support sharePolicy for internal hosts and contacts. (James F. Gould)
+* Upgraded Launch extension to match draft-tan-epp-launchphase-09. (James F. Gould)
+* Integrated the Name Store/SRS Bundle 3.15.0.5 EPP SDK, the NAME Bundle 1.5.0.1 EPP SDK, and the Launch 2.0.1.0 EPP SDK into a single EPP SDK distribution.  (James F. Gould)

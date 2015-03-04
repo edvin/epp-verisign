@@ -1,0 +1,366 @@
+<!--
+Copyright (C) 2004 VeriSign, Inc.
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-0107  USA
+
+http://www.verisign.com/nds/naming/namestore/techdocs.html
+-->
+
+<project name="EPP SDK-DefReg" default="jar" basedir=".">
+
+	<import file="${basedir}/common-targets.xml"/>	
+
+	<!-- SDK home directory -->
+    <property name="sdk.home.dir" location=".."/>
+
+	<!-- Ensure environment variables are set to env prefixed properties -->
+	<property environment="env"/>
+
+	<!-- All properties can be overridden in build.properties -->
+    <property file="${basedir}/build.properties"/>
+
+    <property name="defreg.gen.dir" value="${sdk.home.dir}/gen"/>
+	<property name="defreg.idn.dir" value="${sdk.home.dir}/idn"/>
+    <property name="defreg.gen.src.dir" value="${defreg.gen.dir}/java"/>
+	<property name="defreg.idn.src.dir" value="${defreg.idn.dir}/java"/>
+
+	<!-- Temporary directory used for distribution -->
+    <property name="defreg.tmp.dir" location="${defreg.dir}/tmp"/>
+	
+	<!-- compiler option properties -->
+    <property name="debug" value="on"/>
+    <property name="optimize" value="on"/>
+    <property name="deprecation" value="on"/>
+
+	<!-- classpath to use for compilation tasks -->
+	<path id="defreg.compile.classpath">
+		<fileset dir="${defreg.lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${defreg.epp.lib.dir}">
+			<include name="epp-gen.jar"/>
+			<include name="epp-idn.jar"/>
+		</fileset>		
+	</path>
+
+	<!-- classpath to use for compilation tasks -->
+	<path id="defreg.test.classpath">
+		<fileset dir="${defreg.epp.lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<path refid="defreg.compile.classpath"/>
+	</path>
+
+
+  <!-- =================================================================== -->
+  <!-- Initialization target                                               -->
+  <!-- =================================================================== -->
+  <target 	name="init"
+			description="Initializes the build for rest of targets ">
+
+	<!-- set time stamp properties -->
+    <tstamp/>
+	
+	<!-- Give build.version a default value of SNAPSHOT -->
+	<property name="build.version" value="SNAPSHOT"/>
+
+    <echo message="----------- ${ant.project.name} ${build.version} ------------"/>
+
+	<mkdir dir="${defreg.results.dir}" />
+	<mkdir dir="${defreg.build.dir}" />
+	<mkdir dir="${defreg.epp.lib.dir}" />
+
+
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Builds the epp-gen.jar file               		                   -->
+  <!-- =================================================================== -->
+  <target 	name="jar-gen"
+  			description="Build the dependent epp-gen.jar file" >
+		<ant dir="${defreg.gen.dir}" target="jar" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Cleans the epp-gen files               		                       -->
+  <!-- =================================================================== -->
+  <target 	name="clean-gen"
+  			description="Clean the epp-gen files" >
+		<ant dir="${defreg.gen.dir}" target="clean" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Builds the epp-idn.jar file               		                   -->
+  <!-- =================================================================== -->
+  <target 	name="jar-idn"
+  			description="Build the dependent epp-idn.jar file" >
+		<ant dir="${defreg.idn.dir}" target="jar" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Cleans the epp-idn files               		                       -->
+  <!-- =================================================================== -->
+  <target 	name="clean-idn"
+  			description="Clean the epp-idn files" >
+		<ant dir="${defreg.idn.dir}" target="clean" />
+  </target>
+
+
+  <!-- =================================================================== -->
+  <!-- Compiles source files                                     		   -->
+  <!-- =================================================================== -->
+  <target 	name="compile" depends="init, jar-gen, jar-idn"
+  			description="Compile EPP SDK-DefReg source files" >
+
+    <echo message="${ant.project.name} ${build.version} Compile"/>
+    <javac srcdir="${defreg.src.dir}"
+		   destdir="${defreg.build.dir}"
+           debug="${debug}"
+           optimize="${optimize}"
+		   deprecation="${deprecation}"
+		   failonerror="true"
+ 	       target="1.6"
+		   >
+		<classpath refid="defreg.compile.classpath" />
+	</javac>
+
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Creates epp-defreg.jar                                                -->
+  <!-- =================================================================== -->
+  <target 	name="jar" depends="compile"
+  			description="Generates EPP SDK-DefReg .jar file (default)" >
+			
+	<!-- Set default value of build.version to SNAPSHOT -->
+	<property name="build.version" value="SNAPSHOT"/>
+
+	<jar jarfile="${defreg.epp.lib.dir}/epp-defreg.jar" >
+			<manifest>
+					<attribute name="baseline" value="EPP-CONTACT-SDK-${build.version}"/>
+			</manifest>
+		<fileset dir="${defreg.build.dir}"
+			includes="com/**/*.class" />
+		<fileset dir="${defreg.dir}"
+			includes="schemas/*.xsd" />
+	</jar>
+
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Formats the source code using Jalopy                                -->
+  <!-- =================================================================== -->
+  <target name="format" 
+		  description="Format the source code">
+		  		<taskdef name="jalopy"
+				 classname="de.hunsicker.jalopy.plugin.ant.AntPlugin">
+			<classpath>
+				<fileset dir="${defreg.lib.dir}/jalopy">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+		</taskdef>
+		<jalopy fileformat="unix"
+				convention="${defreg.lib.dir}/jalopy/sdk-convention.xml"
+				loglevel="info"
+				threads="2"
+				classpathref="defreg.compile.classpath">
+				<fileset dir="${defreg.src.dir}">
+					<include name="**/*.java"/>
+					<exclude name="**/types/*.java"/>
+				</fileset>
+		</jalopy>
+
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Creates the HTML API documentation                                  -->
+  <!-- =================================================================== -->
+  <target 	name="doc"
+  			description="Generate EPP SDK-DefReg HTML API documentation" >
+
+    <mkdir dir="${defreg.doc.dir}/html"/>
+    <javadoc packagenames="com.verisign.epp.*"
+             sourcepath="${defreg.src.dir}:${defreg.gen.src.dir}:${defreg.idn.src.dir}"
+             destdir="${defreg.doc.dir}/html"
+             author="true"
+             version="true"
+             use="true"
+			 breakiterator="true"			 
+             splitindex="true"
+             noindex="false"
+             windowtitle="${ant.project.name} API"
+             doctitle="${ant.project.name}"
+             bottom="Copyright &#169; VeriSign Inc. All Rights Reserved.">
+		<classpath refid="defreg.compile.classpath" />
+	</javadoc>
+
+  </target>
+
+
+
+	<!-- =================================================================== -->
+	<!-- Ensure that build.version is set                                    -->
+	<!-- =================================================================== -->
+	<target name="check-build-version" unless="build.version">
+		<fail message="Must set build.version with -Dbuild.version=X"/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates SDK source distribution                                     -->
+	<!-- =================================================================== -->
+	<target name="dist-src" depends="check-build-version, init"
+				description = "Creates SDK source distribution (-Dbuild.version required)" >
+		<mkdir dir="${defreg.dist.dir}" />
+	
+		<!-- Create source .zip distribution -->
+		<zip destfile="${defreg.dist.dir}/epp-defreg-${build.version}-src.zip">
+			<zipfileset dir="${defreg.license.dir}" prefix="eppsdk/license"/>
+			<zipfileset dir="${defreg.lib.dir}" prefix="eppsdk/lib">
+				<exclude name="epp/**"/>
+			</zipfileset>
+			<zipfileset dir="${defreg.epp.lib.dir}" prefix="eppsdk/lib/epp">
+				<include name="${defreg.epp.lib.dir}/epp-gen-${build.version}.jar"/>
+				<include name="${defreg.epp.lib.dir}/epp-idn-${build.version}.jar"/>
+			</zipfileset>
+			<zipfileset dir="${defreg.dir}" prefix="eppsdk/defreg">
+				<exclude name="junit*"/>
+				<exclude name="*.log*"/>
+				<exclude name="*.err"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.doc"/>
+				<exclude name="doc/html/**"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+			</zipfileset>
+		</zip>
+		
+		<!-- Create source .tar.gz distribution -->
+		<tar destfile="${defreg.dist.dir}/epp-defreg-${build.version}-src.tar.gz"
+			compression="gzip">
+			<tarfileset dir="${defreg.license.dir}" prefix="eppsdk/license"/>
+			<tarfileset dir="${defreg.lib.dir}" prefix="eppsdk/lib">
+				<exclude name="epp/**"/>
+			</tarfileset>			
+			<tarfileset dir="${defreg.dir}" mode="755" prefix="eppsdk/defreg">
+				<exclude name="junit*"/>
+				<exclude name="*.log*"/>
+				<exclude name="*.err"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.doc"/>
+				<exclude name="doc/html/**"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+			</tarfileset>
+		</tar>		
+		
+	</target>
+		
+
+
+	<!-- =================================================================== -->
+	<!-- Creates SDK binary distribution                                     -->
+	<!-- =================================================================== -->
+	<target name="dist-bin" depends="check-build-version, jar, test, doc"
+				description = "Creates SDK binary distribution (-Dbuild.version required)" >
+		<mkdir dir="${defreg.dist.dir}" />
+		<mkdir dir="${defreg.tmp.dir}" />
+		
+		<copy file="${defreg.dir}/build-bin.xml" tofile="${defreg.tmp.dir}/build.xml"/>
+		
+
+		<!-- Create binary .zip distribution -->
+		<zip destfile="${defreg.dist.dir}/epp-defreg-${build.version}-bin.zip">
+			<zipfileset dir="${defreg.license.dir}" prefix="eppsdk/license"/>
+			<zipfileset dir="${defreg.lib.dir}" prefix="eppsdk/lib"/>
+			<zipfileset dir="${defreg.tmp.dir}" includes="build.xml" prefix="eppsdk/defreg"/>
+			<zipfileset dir="${defreg.dir}" prefix="eppsdk/defreg">
+				<exclude name="*.log"/>
+				<exclude name="*.err"/>
+				<exclude name="java/**"/>
+				<exclude name="schemas/**"/>
+				<exclude name="build.xml"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.doc"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+				<exclude name="tmp/**"/>
+			</zipfileset>
+		</zip>
+
+		<!-- Create binary .tar.gz distribution -->
+		<tar destfile="${defreg.dist.dir}/epp-defreg-${build.version}-bin.tar.gz"
+			compression="gzip">
+			<tarfileset dir="${defreg.license.dir}" prefix="eppsdk/license"/>
+			<tarfileset dir="${defreg.lib.dir}" prefix="eppsdk/lib"/>
+			<tarfileset dir="${defreg.tmp.dir}" includes="build.xml" prefix="eppsdk/defreg"/>
+			<tarfileset dir="${defreg.dir}" mode="755" prefix="eppsdk/defreg">
+				<exclude name="*.log"/>
+				<exclude name="*.err"/>
+				<exclude name="java/**"/>
+				<exclude name="schemas/**"/>
+				<exclude name="build.xml"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.doc"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+				<exclude name="tmp/**"/>
+			</tarfileset>
+		</tar>		
+
+		<delete dir="${defreg.tmp.dir}"/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates SDK distributions						                     -->
+	<!-- =================================================================== -->
+	<target name="dist" depends="dist-src, dist-bin"
+				description = "Creates SDK distributions (-Dbuild.version required)" >
+	</target>
+
+  <!-- =================================================================== -->
+  <!-- Clean targets                                                       -->
+  <!-- =================================================================== -->
+  <target 	name="clean" depends="init, clean-gen, clean-idn"
+			description="Clean EPP SDK-DefReg compiled files" >
+
+		<!-- Clean build directory -->
+		<delete dir="${defreg.build.dir}" quiet="true"/>
+		
+		<!-- Clean the EPP lib directory -->
+		<delete dir="${defreg.epp.lib.dir}" quiet="true"/>
+
+		<!-- Clean results directory -->
+		<delete dir="${defreg.results.dir}" quiet="true"/>
+
+		<!-- Clean log files -->
+		<delete>
+			<fileset dir="${defreg.dir}" includes="*.log, *.err"/>
+		</delete>
+
+		<!-- Clean generated documentation files -->
+		<delete dir="${defreg.doc.dir}/html" quiet="true"/>
+
+		<!-- Clean distribution directory -->
+		<delete dir="${defreg.dist.dir}" quiet="true"/>
+
+		<!-- Clean the tmp directory -->
+		<delete dir="${defreg.tmp.dir}" quiet="true"/>
+		
+  </target>
+
+</project>
+
+<!-- End of file -->

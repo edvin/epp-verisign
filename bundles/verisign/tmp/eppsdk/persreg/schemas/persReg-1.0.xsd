@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<schema targetNamespace="http://www.nic.name/epp/persReg-1.0"
+
+        xmlns:persReg="http://www.nic.name/epp/persReg-1.0"
+
+        xmlns="http://www.w3.org/2001/XMLSchema"
+
+        elementFormDefault="qualified">
+
+
+
+  <annotation>
+
+    <documentation>
+
+      Extensible Provisioning Protocol v1.0
+
+      .name email forwarding extension schema for
+
+      personal registration provisioning.
+
+    </documentation>
+
+  </annotation>
+
+
+
+<!--
+
+Child elements found in EPP commands.
+
+-->
+
+  <element name="create" type="persReg:createType"/>
+
+
+
+<!--
+
+Child elements of the <create> command.
+
+-->
+
+  <complexType name="createType">
+
+    <sequence>
+
+      <element name="consentID" type="persReg:consentIDType"/>
+
+    </sequence>
+
+  </complexType>
+
+
+
+  <simpleType name="consentIDType">
+
+    <restriction base="token">
+
+      <minLength value="1"/>
+
+      <maxLength value="64"/>
+
+    </restriction>
+
+  </simpleType>
+
+
+
+<!--
+
+Child response elements.
+
+-->
+
+  <element name="creData" type="persReg:genDataType"/>
+
+  <element name="creErrData" type="persReg:creErrDataType"/>
+
+  <element name="infData" type="persReg:infDataType"/>
+
+  <element name="renData" type="persReg:genDataType"/>
+
+  <element name="trnData" type="persReg:genDataType"/>
+
+
+
+<!--
+
+General response elements.
+
+-->
+
+  <complexType name="genDataType">
+
+    <sequence>
+
+      <element name="bundledRate" type="boolean"/>
+
+    </sequence>
+
+  </complexType>
+
+
+
+<!--
+
+<info> response elements.
+
+-->
+
+  <complexType name="infDataType">
+
+    <sequence>
+
+      <element name="consentID" type="persReg:consentIDType"/>
+
+    </sequence>
+
+  </complexType>
+
+
+
+<!--
+
+<creErrData> <msg> element.
+
+-->
+
+<complexType name="msgType">
+
+	<simpleContent>
+
+		<extension base="normalizedString">
+
+			<attribute name="code" type="persReg:creErrCodeType"
+
+				use="required"/>
+
+			<attribute name="lang" type="language"
+
+			default="en"/>
+
+		</extension>
+
+	</simpleContent>
+
+</complexType>
+
+
+
+<!--
+
+<create> error response elements.
+
+-->
+
+  <complexType name="creErrDataType">
+
+	<sequence>
+
+		<element name="msg" type="persReg:msgType">
+
+		</element>
+
+	</sequence>
+
+  </complexType>
+
+
+
+
+
+<!--
+
+<create> error response codes.
+
+-->
+
+  <simpleType name="creErrCodeType">
+
+    <restriction base="unsignedShort">
+
+		<!-- Corresponding service exists -->
+
+		<enumeration value="1"/>
+
+		<!-- Conflicting defensive registration exists -->
+
+		<enumeration value="2"/>
+
+    </restriction>
+
+  </simpleType>
+
+
+
+
+
+<!--
+
+End of schema.
+
+-->
+
+</schema>
+

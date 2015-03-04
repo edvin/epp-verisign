@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="http://www.nic.name/epp/nameWatch-1.0"
+        xmlns:nameWatch="http://www.nic.name/epp/nameWatch-1.0"
+        xmlns:epp="urn:ietf:params:xml:ns:epp-1.0"
+        xmlns:eppcom="urn:ietf:params:xml:ns:eppcom-1.0"
+        xmlns="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified">
+
+<!--
+Import common element types.
+-->
+  <import namespace="urn:ietf:params:xml:ns:eppcom-1.0"
+          schemaLocation="eppcom-1.0.xsd"/>
+  <import namespace="urn:ietf:params:xml:ns:epp-1.0"
+          schemaLocation="epp-1.0.xsd"/>
+
+  <annotation>
+    <documentation>
+      Extensible Provisioning Protocol v1.0
+      .name name watch provisioning schema.
+    </documentation>
+  </annotation>
+
+<!--
+Child elements found in EPP commands.
+-->
+  <element name="create" type="nameWatch:createType"/>
+  <element name="delete" type="nameWatch:roidOnlyType"/>
+  <element name="info" type="nameWatch:infoType"/>
+  <element name="renew" type="nameWatch:renewType"/>
+  <element name="transfer" type="nameWatch:transferType"/>
+  <element name="update" type="nameWatch:updateType"/>
+
+<!--
+Child elements of the <create> command.
+-->
+  <complexType name="createType">
+    <sequence>
+      <element name="name" type="nameWatch:nameType"/>
+      <element name="registrant" type="eppcom:clIDType"/>
+      <element name="rptTo" type="nameWatch:rptToType"/>
+      <element name="period" type="nameWatch:periodType"
+       minOccurs="0"/>
+      <element name="authInfo" type="nameWatch:authInfoType"/>
+    </sequence>
+  </complexType>
+
+  <simpleType name="nameType">
+    <restriction base="token">
+      <minLength value="1"/>
+      <maxLength value="63"/>
+    </restriction>
+  </simpleType>
+
+  <complexType name="rptToType">
+    <simpleContent>
+      <extension base="nameWatch:emailAddrType">
+        <attribute name="freq" type="nameWatch:freqType"
+         use="required"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+
+<!-- This isn't a complete pattern; additional out-of-parser
+processing is required to validate address format.
+-->
+  <simpleType name="emailAddrType">
+    <restriction base="token">
+      <pattern value=".+@.+"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="freqType">
+    <restriction base="token">
+      <enumeration value="daily"/>
+      <enumeration value="weekly"/>
+      <enumeration value="monthly"/>
+    </restriction>
+  </simpleType>
+
+  <complexType name="periodType">
+    <simpleContent>
+      <extension base="nameWatch:pLimitType">
+        <attribute name="unit" type="nameWatch:pUnitType"
+         use="required"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+
+  <simpleType name="pLimitType">
+    <restriction base="unsignedShort">
+      <minInclusive value="1"/>
+      <maxInclusive value="99"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="pUnitType">
+    <restriction base="token">
+      <enumeration value="y"/>
+      <enumeration value="m"/>
+    </restriction>
+  </simpleType>
+
+
+<!--
+Child elements of the <info> command.
+-->
+  <complexType name="authInfoType">
+    <choice>
+      <element name="pw" type="eppcom:pwAuthInfoType"/>
+      <element name="ext" type="eppcom:extAuthInfoType"/>
+    </choice>
+  </complexType>
+
+
+
+<!--
+Child element of commands that require a ROID.
+-->
+  <complexType name="roidOnlyType">
+    <sequence>
+      <element name="roid" type="eppcom:roidType"/>
+    </sequence>
+  </complexType>
+
+<!--
+Child elements of the <info> command.
+-->
+<complexType name="infoType">
+	<sequence>
+      	<element name="roid" type="eppcom:roidType"/>
+		<element name="authInfo" type="nameWatch:authInfoType" 
+		 minOccurs="0"/> 
+    	</sequence>
+</complexType>
+
+
+<!--
+Child elements of the <renew> command.
+-->
+  <complexType name="renewType">
+    <sequence>
+      <element name="roid" type="eppcom:roidType"/>
+      <element name="curExpDate" type="date"/>
+      <element name="period" type="nameWatch:periodType"
+       minOccurs="0"/>
+    </sequence>
+  </complexType>
+
+<!--
+Child elements of the <transfer> command.
+-->
+  <complexType name="transferType">
+    <sequence>
+      <element name="roid" type="eppcom:roidType"/>
+      <element name="period" type="nameWatch:periodType"
+       minOccurs="0"/>
+      <element name="authInfo" type="nameWatch:authInfoType"
+       minOccurs="0"/>
+    </sequence>
+  </complexType>
+
+<!--
+Child elements of the <update> command.
+-->
+  <complexType name="updateType">
+    <sequence>
+      <element name="roid" type="eppcom:roidType"/>
+      <element name="add" type="nameWatch:addRemType"
+       minOccurs="0"/>
+      <element name="rem" type="nameWatch:addRemType"
+       minOccurs="0"/>
+      <element name="chg" type="nameWatch:chgType"
+	   minOccurs="0"/>
+    </sequence>
+  </complexType>
+
+<!--
+Data elements that can be added or removed.
+-->
+  <complexType name="addRemType">
+    <sequence>
+      <element name="status" type="nameWatch:statusType"
+       minOccurs="0" maxOccurs="12"/>
+    </sequence>
+  </complexType>
+
+<!--
+Data elements that can be changed.
+-->
+  <complexType name="chgType">
+    <sequence>
+      <element name="registrant" type="eppcom:clIDType"
+       minOccurs="0"/>
+      <element name="rptTo" type="nameWatch:rptToType"
+       minOccurs="0"/>
+      <element name="authInfo" type="nameWatch:authInfoChgType"
+       minOccurs="0"/>
+    </sequence>
+  </complexType>
+
+<!--
+Allow the authInfo value to be nullified by including an
+empty element within the choice.
+-->
+<complexType name="authInfoChgType">
+	<choice>
+		<element name="pw" type="eppcom:pwAuthInfoType"/>
+		<element name="ext" type="eppcom:extAuthInfoType"/>
+		<element name="null"/>
+	</choice>
+</complexType>
+
+
+<!--
+Child response elements.
+-->
+  <element name="creData" type="nameWatch:creDataType"/>
+  <element name="infData" type="nameWatch:infDataType"/>
+  <element name="renData" type="nameWatch:renDataType"/>
+  <element name="trnData" type="nameWatch:trnDataType"/>
+
+<!--
+<create> response elements.
+-->
+  <complexType name="creDataType">
+    <sequence>
+      <element name="roid" type="eppcom:roidType"/>
+      <element name="name" type="nameWatch:nameType"/>
+      <element name="crDate" type="dateTime"/>
+      <element name="exDate" type="dateTime"
+       minOccurs="0"/>
+    </sequence>
+  </complexType>
+
+<!--
+<info> response elements.
+-->
+  <complexType name="infDataType">
+    <sequence>
+      <element name="roid" type="eppcom:roidType"/>
+      <element name="name" type="nameWatch:nameType"/>
+      <element name="registrant" type="eppcom:clIDType"
+       minOccurs="0"/>
+      <element name="rptTo" type="nameWatch:rptToType"
+       minOccurs="0"/>
+      <element name="status" type="nameWatch:statusType"
+       minOccurs="0" maxOccurs="14"/>
+      <element name="clID" type="eppcom:clIDType"/>
+      <element name="crID" type="eppcom:clIDType"
+       minOccurs="0"/>
+      <element name="crDate" type="dateTime"
+       minOccurs="0"/>
+      <element name="upID" type="eppcom:clIDType"
+       minOccurs="0"/>
+      <element name="upDate" type="dateTime"
+       minOccurs="0"/>
+      <element name="exDate" type="dateTime"
+       minOccurs="0"/>
+      <element name="trDate" type="dateTime"
+       minOccurs="0"/>
+      <element name="authInfo" type="nameWatch:authInfoType"
+       minOccurs="0"/>
+    </sequence>
+  </complexType>
+
+<!--
+Status is a combination of attributes and an optional human-readable
+message that may be expressed in languages other than English.
+A list of messages should be defined in the Programmer's Guide for
+this mapping.
+-->
+  <complexType name="statusType">
+    <simpleContent>
+      <extension base="normalizedString">
+        <attribute name="s" type="nameWatch:statusValueType"
+         use="required"/>
+        <attribute name="lang" type="language"
+         default="en"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+
+  <simpleType name="statusValueType">
+    <restriction base="token">
+      <enumeration value="clientDeleteProhibited"/>
+      <enumeration value="clientHold"/>
+      <enumeration value="clientRenewProhibited"/>
+      <enumeration value="clientTransferProhibited"/>
+      <enumeration value="clientUpdateProhibited"/>
+      <enumeration value="ok"/>
+      <enumeration value="pendingDelete"/>
+      <enumeration value="pendingTransfer"/>
+      <enumeration value="serverDeleteProhibited"/>
+      <enumeration value="serverHold"/>
+      <enumeration value="serverRenewProhibited"/>
+      <enumeration value="serverTransferProhibited"/>
+      <enumeration value="serverUpdateProhibited"/>
+    </restriction>
+  </simpleType>
+
+<!--
+<renew> response elements.
+-->
+  <complexType name="renDataType">
+    <sequence>
+      <element name="roid" type="eppcom:roidType"/>
+      <element name="exDate" type="dateTime"/>
+    </sequence>
+  </complexType>
+
+<!--
+<transfer> response elements.
+-->
+  <complexType name="trnDataType">
+    <sequence>
+      <element name="roid" type="eppcom:roidType"/>
+      <element name="trStatus" type="eppcom:trStatusType"/>
+      <element name="reID" type="eppcom:clIDType"/>
+      <element name="reDate" type="dateTime"/>
+      <element name="acID" type="eppcom:clIDType"/>
+      <element name="acDate" type="dateTime"/>
+      <element name="exDate" type="dateTime"
+       minOccurs="0"/>
+    </sequence>
+  </complexType>
+
+<!--
+End of schema.
+-->
+</schema>

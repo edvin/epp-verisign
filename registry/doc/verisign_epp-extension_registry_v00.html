@@ -1,0 +1,3082 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en"><head><title>VeriSign Inc. Proprietary Information: Registry Mapping for the Extensible Provisioning Protocol (EPP)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="description" content="Registry Mapping for the Extensible Provisioning Protocol (EPP)">
+<meta name="generator" content="xml2rfc v1.36 (http://xml.resource.org/)">
+<style type='text/css'><!--
+        body {
+                font-family: verdana, charcoal, helvetica, arial, sans-serif;
+                font-size: small; color: #000; background-color: #FFF;
+                margin: 2em;
+        }
+        h1, h2, h3, h4, h5, h6 {
+                font-family: helvetica, monaco, "MS Sans Serif", arial, sans-serif;
+                font-weight: bold; font-style: normal;
+        }
+        h1 { color: #900; background-color: transparent; text-align: right; }
+        h3 { color: #333; background-color: transparent; }
+
+        td.RFCbug {
+                font-size: x-small; text-decoration: none;
+                width: 30px; height: 30px; padding-top: 2px;
+                text-align: justify; vertical-align: middle;
+                background-color: #000;
+        }
+        td.RFCbug span.RFC {
+                font-family: monaco, charcoal, geneva, "MS Sans Serif", helvetica, verdana, sans-serif;
+                font-weight: bold; color: #666;
+        }
+        td.RFCbug span.hotText {
+                font-family: charcoal, monaco, geneva, "MS Sans Serif", helvetica, verdana, sans-serif;
+                font-weight: normal; text-align: center; color: #FFF;
+        }
+
+        table.TOCbug { width: 30px; height: 15px; }
+        td.TOCbug {
+                text-align: center; width: 30px; height: 15px;
+                color: #FFF; background-color: #900;
+        }
+        td.TOCbug a {
+                font-family: monaco, charcoal, geneva, "MS Sans Serif", helvetica, sans-serif;
+                font-weight: bold; font-size: x-small; text-decoration: none;
+                color: #FFF; background-color: transparent;
+        }
+
+        td.header {
+                font-family: arial, helvetica, sans-serif; font-size: x-small;
+                vertical-align: top; width: 33%;
+                color: #FFF; background-color: #666;
+        }
+        td.author { font-weight: bold; font-size: x-small; margin-left: 4em; }
+        td.author-text { font-size: x-small; }
+
+        /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+        a.info {
+                /* This is the key. */
+                position: relative;
+                z-index: 24;
+                text-decoration: none;
+        }
+        a.info:hover {
+                z-index: 25;
+                color: #FFF; background-color: #900;
+        }
+        a.info span { display: none; }
+        a.info:hover span.info {
+                /* The span will display just on :hover state. */
+                display: block;
+                position: absolute;
+                font-size: smaller;
+                top: 2em; left: -5em; width: 15em;
+                padding: 2px; border: 1px solid #333;
+                color: #900; background-color: #EEE;
+                text-align: left;
+        }
+
+        a { font-weight: bold; }
+        a:link    { color: #900; background-color: transparent; }
+        a:visited { color: #633; background-color: transparent; }
+        a:active  { color: #633; background-color: transparent; }
+
+        p { margin-left: 2em; margin-right: 2em; }
+        p.copyright { font-size: x-small; }
+        p.toc { font-size: small; font-weight: bold; margin-left: 3em; }
+        table.toc { margin: 0 0 0 3em; padding: 0; border: 0; vertical-align: text-top; }
+        td.toc { font-size: small; font-weight: bold; vertical-align: text-top; }
+
+        ol.text { margin-left: 2em; margin-right: 2em; }
+        ul.text { margin-left: 2em; margin-right: 2em; }
+        li      { margin-left: 3em; }
+
+        /* RFC-2629 <spanx>s and <artwork>s. */
+        em     { font-style: italic; }
+        strong { font-weight: bold; }
+        dfn    { font-weight: bold; font-style: normal; }
+        cite   { font-weight: normal; font-style: normal; }
+        tt     { color: #036; }
+        tt, pre, pre dfn, pre em, pre cite, pre span {
+                font-family: "Courier New", Courier, monospace; font-size: small;
+        }
+        pre {
+                text-align: left; padding: 4px;
+                color: #000; background-color: #CCC;
+        }
+        pre dfn  { color: #900; }
+        pre em   { color: #66F; background-color: #FFC; font-weight: normal; }
+        pre .key { color: #33C; font-weight: bold; }
+        pre .id  { color: #900; }
+        pre .str { color: #000; background-color: #CFF; }
+        pre .val { color: #066; }
+        pre .rep { color: #909; }
+        pre .oth { color: #000; background-color: #FCF; }
+        pre .err { background-color: #FCC; }
+
+        /* RFC-2629 <texttable>s. */
+        table.all, table.full, table.headers, table.none {
+                font-size: small; text-align: center; border-width: 2px;
+                vertical-align: top; border-collapse: collapse;
+        }
+        table.all, table.full { border-style: solid; border-color: black; }
+        table.headers, table.none { border-style: none; }
+        th {
+                font-weight: bold; border-color: black;
+                border-width: 2px 2px 3px 2px;
+        }
+        table.all th, table.full th { border-style: solid; }
+        table.headers th { border-style: none none solid none; }
+        table.none th { border-style: none; }
+        table.all td {
+                border-style: solid; border-color: #333;
+                border-width: 1px 2px;
+        }
+        table.full td, table.headers td, table.none td { border-style: none; }
+
+        hr { height: 1px; }
+        hr.insert {
+                width: 80%; border-style: none; border-width: 0;
+                color: #CCC; background-color: #CCC;
+        }
+--></style>
+</head>
+<body>
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<table summary="layout" width="66%" border="0" cellpadding="0" cellspacing="0"><tr><td><table summary="layout" width="100%" border="0" cellpadding="2" cellspacing="1">
+<tr><td class="header">VeriSign Inc. Proprietary Information</td><td class="header">J. Gould</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">L. Jia</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">VeriSign, Inc.</td></tr>
+<tr><td class="header">&nbsp;</td><td class="header">January 10, 2014</td></tr>
+</table></td></tr></table>
+<h1><br />Registry Mapping for the Extensible Provisioning Protocol (EPP)</h1>
+
+<h3>Abstract</h3>
+
+<p>This document describes an Extensible Provisioning Protocol (EPP)
+      mapping for provisioning zones (e.g. top-level domains) in a 
+      Domain Name Registry.  The attributes of a zone include the features 
+      and policies of the zone.
+</p>
+<h3>Legal Disclaimer</h3>
+
+<p>COPYRIGHT NOTIFICATION
+</p>
+<p>Copyright 2014 VeriSign, Inc. All rights reserved. VERISIGN; 
+      the Verisign logo; and other trademarks, service marks and Verisign designs are registered or 
+      unregistered trademarks of VeriSign Inc. and its subsidiaries in the United States and foreign countries. 
+      Copyright laws and international treaties protect this document, and any Verisign product to which it relates.
+</p>
+<p>VERISIGN PROPRIETARY INFORMATION
+</p>
+<p>This document is the property of VeriSign, Inc. and its subsidiaries (together "Verisign") It may be used by 
+      recipient only for the purpose for which it was transmitted and must be returned upon request or when no longer 
+      needed by recipient. It may not be copied or communicated without the prior written consent of Verisign.
+</p>
+<p>NOTICE AND CAUTION
+</p>
+<p>Concerning U.S. Patent or Trademark Rights
+</p>
+<p>Verisign and other trademarks, service marks and logos are registered or unregistered trademarks of 
+      Verisign and its subsidiaries in the United States and in foreign countries. The inclusion in this 
+      document, the associated on-line file or the associated software of any information covered by any 
+      other patent, trademark or service mark rights does not constitute nor imply a grant of or authority 
+      to exercise, any right or privilege protected by such patent, trademark or service mark. All such 
+      rights and privileges are vested in the patent, trademark or service mark owner and no other person 
+      may exercise such rights without express permission, authority or license secured from the patent, 
+      trademark or service mark owner.
+</p><a name="toc"></a><br /><hr />
+<h3>Table of Contents</h3>
+<p class="toc">
+<a href="#anchor1">1.</a>&nbsp;
+Introduction<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor2">1.1.</a>&nbsp;
+Conventions Used in This Document<br />
+<a href="#attrs">2.</a>&nbsp;
+Object Attributes<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#zone-name">2.1.</a>&nbsp;
+Zone Name<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#dates-times">2.2.</a>&nbsp;
+Dates and Times<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#zone-object">2.3.</a>&nbsp;
+Zone Object<br />
+<a href="#commands">3.</a>&nbsp;
+EPP Command Mapping<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#queryCommands">3.1.</a>&nbsp;
+EPP Query Commands<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#checkCommand">3.1.1.</a>&nbsp;
+EPP &lt;check&gt; Command<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#infoCommand">3.1.2.</a>&nbsp;
+EPP &lt;info&gt; Command<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#transferQueryCommand">3.1.3.</a>&nbsp;
+EPP &lt;transfer&gt; Command<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#transformCommands">3.2.</a>&nbsp;
+EPP Transform Commands<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#createCommand">3.2.1.</a>&nbsp;
+EPP &lt;create&gt; Command<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#deleteCommand">3.2.2.</a>&nbsp;
+EPP &lt;delete&gt; Command<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#renewCommand">3.2.3.</a>&nbsp;
+EPP &lt;renew&gt; Command<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#transferCommand">3.2.4.</a>&nbsp;
+EPP &lt;transfer&gt; Command<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#updateCommand">3.2.5.</a>&nbsp;
+EPP &lt;update&gt; Command<br />
+<a href="#syntax">4.</a>&nbsp;
+Formal Syntax<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#anchor3">4.1.</a>&nbsp;
+Registry Mapping Schema<br />
+<a href="#anchor4">5.</a>&nbsp;
+Change History<br />
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="#version-00">5.1.</a>&nbsp;
+Version 00<br />
+<a href="#Security">6.</a>&nbsp;
+Security Considerations<br />
+<a href="#rfc.references1">7.</a>&nbsp;
+Normative References<br />
+<a href="#rfc.authors">&#167;</a>&nbsp;
+Authors' Addresses<br />
+</p>
+<br clear="all" />
+
+<a name="anchor1"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.1"></a><h3>1.&nbsp;
+Introduction</h3>
+
+<p>This document describes an extension mapping for version 1.0 of the
+      <a class='info' href='#RFC5730'>Extensible Provisioning Protocol (EPP)<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP),&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5730].
+      This document describes a Domain Name Registry Mapping, referred to as 
+      Registry Mapping, for the <a class='info' href='#RFC5730'>Extensible Provisioning Protocol (EPP)<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP),&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5730].  
+      A Domain Name Registry can service one or more zones (e.g. top-level domains) with a 
+      variety of supported services and policies.  This mapping enables the provisioning of the 
+      zones in the Domain Name Registry.  A Domain Name Registry MAY support a subset of all 
+      of the commands defined in this mapping.
+</p>
+<a name="anchor2"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.1.1"></a><h3>1.1.&nbsp;
+Conventions Used in This Document</h3>
+
+<p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+        "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+        document are to be interpreted as described in <a class='info' href='#RFC2119'>RFC 2119<span> (</span><span class='info'>Bradner, S., &ldquo;Key words for use in RFCs to Indicate Requirement Levels,&rdquo; March&nbsp;1997.</span><span>)</span></a> [RFC2119].
+</p>
+<p>XML is case sensitive. Unless stated otherwise, XML specifications
+        and examples provided in this document MUST be interpreted in the
+        character case presented in order to develop a conforming
+        implementation.
+</p>
+<p>In examples, "C:" represents lines sent by a protocol client and "S:" represents lines returned by a protocol server.  
+        Indentation and white space in examples are provided only to illustrate element relationships 
+        and are not a REQUIRED feature of this protocol.        
+        
+</p>
+<p>"registry-1.0" is used as an abbreviation for
+        "http://www.verisign.com/epp/registry-1.0". The XML namespace prefix "registry"
+        is used, but implementations MUST NOT depend on it and instead employ
+        a proper namespace-aware XML parser and serializer to interpret and
+        output the XML documents.
+</p>
+<a name="attrs"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.2"></a><h3>2.&nbsp;
+Object Attributes</h3>
+
+<p>An EPP registry object has attributes and associated values 
+      that may be viewed and modified by the sponsoring client or the server.  
+      This section describes each attribute type in detail. The formal 
+      syntax for the attribute values described here can be found 
+      in the "Formal Syntax" section of this document and in the 
+      appropriate normative references.
+</p>
+<a name="zone-name"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.2.1"></a><h3>2.1.&nbsp;
+Zone Name</h3>
+
+<p>The syntax for zone names described in this document MUST conform to 
+        <a class='info' href='#RFC0952'>[RFC0952]<span> (</span><span class='info'>Harrenstien, K., Stahl, M., and E. Feinler, &ldquo;DoD Internet host table specification,&rdquo; October&nbsp;1985.</span><span>)</span></a> and <a class='info' href='#RFC1123'>[RFC1123]<span> (</span><span class='info'>Braden, R., &ldquo;Requirements for Internet Hosts - Application and Support,&rdquo; October&nbsp;1989.</span><span>)</span></a>.  
+        At the time of this writing, 
+        <a class='info' href='#RFC3490'>[RFC3490]<span> (</span><span class='info'>Faltstrom, P., Hoffman, P., and A. Costello, &ldquo;Internationalizing Domain Names in Applications (IDNA),&rdquo; March&nbsp;2003.</span><span>)</span></a> describes a standard to use certain ASCII name labels 
+        to represent non-ASCII name labels.  These conformance requirements 
+        might change in the future as a result of progressing work in developing 
+        standards for internationalized names.
+</p>
+<a name="dates-times"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.2.2"></a><h3>2.2.&nbsp;
+Dates and Times</h3>
+
+<p>Date and time attribute values MUST be represented in Universal Coordinated Time  
+        (UTC) using the Gregorian calendar.  The extended date-time form using upper case "T" 
+        and "Z" characters defined in <a href='http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/'>XML Schema Part 2</a> 
+         MUST be used to represent date-time values, as 
+        XML Schema does not support truncated date-time forms or lower case "T" and "Z" characters.
+</p>
+<a name="zone-object"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.2.3"></a><h3>2.3.&nbsp;
+Zone Object</h3>
+
+<p>The Zone object, represented by the &lt;registry:zone&gt; element,  
+        is the primary object managed by this mapping.  The Zone object can 
+        apply to any zone level (top level, second level, third level, etc.).  
+        The &lt;registry:zone&gt; element contains the following child elements:
+</p>
+<p></p>
+<blockquote class="text"><dl>
+<dt>&lt;registry:name&gt;</dt>
+<dd>The zone name that can be at 
+          any level (top level, second level, third level, etc.).
+</dd>
+<dt>&lt;registry:group&gt;</dt>
+<dd>An OPTIONAL server defined 
+          grouping of zones where the zones belong to the same deployable 
+          unit.
+</dd>
+<dt>&lt;registry:subProduct&gt;</dt>
+<dd>An OPTIONAL sub-product 
+          identifier used for the zone and used as the value of the 
+          &lt;namestoreExt:subProduct&gt; element of the NameStore EPP Extension.
+</dd>
+<dt>&lt;registry:related&gt;</dt>
+<dd>An OPTIONAL definition of 
+          the related zones, where there MAY be different forms of 
+          relationships.  The &lt;registry:related&gt; element contains the 
+          following child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:fields&gt;</dt>
+<dd>An OPTIONAL definition 
+            of how related zone fields are managed.  The &lt;registry:fields&gt; 
+            element includes a required "type" attribute with either 
+            a "shared" or "sync" value.  A "shared" value indicates that 
+            the server shares a single set of field values across the 
+            related zones, where updating a field in one related zone 
+            results in updating the field value across all of the 
+            related zones.  A "sync" value indicates that the field 
+            values MUST be synchronized across the related zones by 
+            server policy.  The &lt;registry:fields&gt; element contains 
+            the following child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:field&gt;</dt>
+<dd>One or more 
+              &lt;registry:field&gt; elements that are shared or MUST be 
+              synchronized according to the &lt;registry:fields&gt; "type" 
+              attribute value.  An example field value is "clID" 
+              to refer to the identifier of the sponsoring client or 
+              "registrant" to refer to the registrant contact.
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:zoneMember&gt;</dt>
+<dd>One or more 
+           &lt;registry:zoneMember&gt; elements that defines the related zones.  
+           The value of the &lt;registry:zoneMember&gt; element is the zone name.  
+           The &lt;registry:zoneMember&gt; element includes a required "type" 
+           attribute with one of the following values:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&quot;primary&quot;</dt>
+<dd>All domain names in the 
+              zone MUST be a primary domain name.  A primary domain name 
+              MUST be the first one created and the last one deleted in 
+              the set of related domain names.
+</dd>
+<dt>&quot;alternate&quot;</dt>
+<dd>Domain names of the zone 
+              can only be created when the primary domain name exists.
+</dd>
+<dt>&quot;primaryBasedOnCrDate&quot;</dt>
+<dd>A domain name 
+              in the zone can be either a primary or alternate domain name 
+              based on the earliest created date.  The first domain name 
+              created in the related zones will become the primary domain 
+              name and alternate domain names can be created / deleted.
+</dd>
+<dt>&quot;equal&quot;</dt>
+<dd>There is no concept of 
+              primary and alternate domain names, so the related zones 
+              are treated as equal.  Domain names can be created and 
+              deleted in any order.
+</dd>
+</dl></blockquote>
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:phase&gt;</dt>
+<dd>Zero or more 
+           &lt;registry:phase&gt; elements that defines a phase of the 
+           zone based on the phases defined in the <a href='http://tools.ietf.org/html/draft-tan-epp-launchphase'>Launch Phase Mapping 
+           for the Extensible Provisioning Protocol (EPP)</a>.  
+           The "type" attribute defines the phase name / type that include 
+           the following possible values with an OPTIONAL "name" attribute 
+           that defines the name of the type when the "type" attribute is 
+           set to "custom" or the name of the sub-type of the "type". 
+           The "mode" attribute reflects the mode in which the phase 
+           runs. The &lt;registry:phase&gt; element contains a 
+           &lt;registry:startDate&gt; child element that defines the 
+           start date and time of the phase and an OPTIONAL 
+           &lt;registry:endDate&gt; child element that defines the end 
+           date and time of the phase.  
+           The "type" attribute supports the following values:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&quot;pre-delegation&quot;</dt>
+<dd>Phase when 
+              pre-delegation testing is done.
+</dd>
+<dt>&quot;pre-launch&quot;</dt>
+<dd>A phase prior to the 
+              sunrise phase where no writable operations will be allowed.
+</dd>
+<dt>&quot;sunrise&quot;</dt>
+<dd>Phase when trademark holders 
+              can submit registration applications with trademark information 
+              that can be validated by the server.
+</dd>
+<dt>&quot;landrush&quot;</dt>
+<dd>Post sunrise phase when 
+              non-trademark holders are allowed to register domain names.
+</dd>
+<dt>&quot;claims&quot;</dt>
+<dd>Trademark claims phase as 
+              defined by Trademark Clearinghouse model of displaying a 
+              claims notice to clients for domain names that match 
+              trademarks.
+</dd>
+<dt>&quot;open&quot;</dt>
+<dd>Post launch phase that is also 
+              referred to as "steady state".  Servers MAY require additional 
+              trademark protection with this phase.
+</dd>
+<dt>&quot;custom&quot;</dt>
+<dd>A custom server launch phase 
+              that is defined using the "name" attribute.
+</dd>
+</dl></blockquote>
+</dd>
+<dt></dt>
+<dd>The "mode" attribute 
+              supports the following values with the default value of "fcfs":
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&quot;fcfs&quot;</dt>
+<dd>first-come-first-serve. 
+              In this mode, each domain name is immediately created and there 
+              is no use of an application identifier.
+</dd>
+<dt>&quot;pending-registration&quot;</dt>
+<dd>In this mode, 
+              the domain name is created with the pendingCreate status with 
+              no use of an application identifier.
+</dd>
+<dt>&quot;pending-application&quot;</dt>
+<dd>In this mode, 
+              the domain name, referred to as a domain application, 
+              is created in pendingCreate status with the server returning 
+              an application identifier in the create response for the client 
+              to use in subsequent commands (info, update, delete). 
+              When a domain application is allocated, it will become a 
+              domain without the use of an application identifier.
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:services&gt;</dt>
+<dd>The OPTIONAL EPP namespace 
+          URIs of the objects and object extensions supported by the server 
+          based on <a class='info' href='#RFC5730'>[RFC5730]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP),&rdquo; August&nbsp;2009.</span><span>)</span></a>.  The &lt;registry:services&gt; 
+          element contains the following child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:objURI&gt;</dt>
+<dd>One or more 
+              &lt;registry:objURI&gt; elements that contain namespace URIs 
+              representing the objects that the server is capable of managing 
+              for the zone with the required "required" attribute that defines 
+              whether the server requires the use of object represented 
+              by the URI.
+</dd>
+<dt>&lt;registry:svcExtension&gt;</dt>
+<dd>An OPTIONAL element 
+              that contains one or more &lt;registry:extURI&gt; elements that 
+              contain namespace URIs representing object extensions support 
+              by the server for the zone with the required "required" 
+              attribute that defines whether the server requires the use of 
+              the object extension represented by the URI.
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:slaInfo&gt;</dt>
+<dd>The OPTIONAL Service-Level 
+          Agreement (SLA) information for the zone.  
+          The SLA information CAN include availability as well as response 
+          time SLA's.  The &lt;registry:slaInfo&gt; element is a decimal value 
+          with the following attributes to define what the SLA value 
+          represents:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&quot;type&quot;</dt>
+<dd>The type of the SLA.
+</dd>
+<dt>&quot;subtype&quot;</dt>
+<dd>The OPTIONAL sub-type of the 
+              SLA of the type in the event that there is a hierarchy 
+              of SLA types.
+</dd>
+<dt>&quot;command&quot;</dt>
+<dd>The OPTIONAL command that 
+              the SLA applies to.
+</dd>
+<dt>&quot;unit&quot;</dt>
+<dd>The OPTIONAL unit of the SLA.
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:crID&gt;</dt>
+<dd>The OPTIONAL identifier of the 
+          client that created the zone.
+</dd>
+<dt>&lt;registry:crDate&gt;</dt>
+<dd>The date and time of zone 
+          object creation.
+</dd>
+<dt>&lt;registry:upID&gt;</dt>
+<dd>The OPTIONAL identifier of the 
+          client that last updated the zone object.  This element MUST NOT 
+          be present if the zone has never been modified.
+</dd>
+<dt>&lt;registry:upDate&gt;</dt>
+<dd>The OPTIONAL date and time 
+          of the most recent zone object modification.  This element MUST NOT 
+          be present if the domain object has never been modified.
+</dd>
+<dt>&lt;registry:domain&gt;</dt>
+<dd>The domain name object policy 
+         information per <a class='info' href='#RFC5731'>[RFC5731]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Domain Name Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a>.  The &lt;registry:domain&gt; 
+         element contains the following child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:domainName&gt;</dt>
+<dd>One or more 
+              &lt;registry:domainName&gt; that define the policies for a 
+              domain name label for a specific level, defined with the 
+              "level" attribute, with a minimum value of "2" for the second 
+              level domain name label level.  The &lt;registry:domainName&gt; 
+              element contains the following child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:minLength&gt;</dt>
+<dd>An OPTIONAL minimum 
+                length of the domain name label.
+</dd>
+<dt>&lt;registry:maxLength&gt;</dt>
+<dd>An OPTIONAL maximum 
+                length of the domain name label.
+</dd>
+<dt>&lt;registry:alphaNumStart&gt;</dt>
+<dd>An OPTIONAL flag 
+                indicating whether the label must start with an alphanumeric 
+                character with a default of "false".
+</dd>
+<dt>&lt;registry:alphaNumEnd&gt;</dt>
+<dd>An OPTIONAL flag 
+                indicating whether the label must end with an alphanumeric 
+                character with a default value of "false".
+</dd>
+<dt>&lt;registry:onlyDnsChars&gt;</dt>
+<dd>An OPTIONAL flag 
+                indicating whether the label MUST only contain valid DNS 
+                characters (alphanumeric and '-') with a default value 
+                of "true".
+</dd>
+<dt>&lt;registry:regex&gt;</dt>
+<dd>Zero or more 
+                &lt;registry:regex&gt; elements that contain a 
+                &lt;registry:expression&gt; child element that defines the 
+                regular expression to apply to domain name label along with 
+                an OPTIONAL &lt;registry:explanation&gt; child element that 
+                describes the regular expression with an OPTIONAL "lang" 
+                attribute that defines the language of the explanation 
+                with a default value of "en".
+</dd>
+<dt>&lt;registry:reservedNames&gt;</dt>
+<dd>An OPTIONAL 
+                element that defines the set of reserved domain names 
+                starting from that label level.  The reserved names can 
+                refer to values with more than one level which is relative 
+                to the level of the parent &lt;registry:domainName&gt; element.  
+                The &lt;registry:reservedNames&gt; element contains the 
+                following child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:reservedName&gt;</dt>
+<dd>Zero or more 
+                    &lt;registry:reservedName&gt; elements containing a 
+                    reserved domain name relative to the level of the 
+                    parent &lt;registry:domainName&gt; element.
+</dd>
+<dt>&lt;registry:reservedNameURI&gt;</dt>
+<dd>An OPTIONAL 
+                    URI that to an externally defined list of reserved 
+                    domain name relative to the level of the 
+                    parent &lt;registry:domainName&gt; element.
+</dd>
+</dl></blockquote>
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:idn&gt;</dt>
+<dd>The OPTIONAL 
+              Internationalized Domain Name (IDN) policy information.  
+              The &lt;registry:idn&gt; element contains the following 
+              child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:idnVersion&gt;</dt>
+<dd>The OPTIONAL server 
+                unique version of the IDN language rules.
+</dd>
+<dt>&lt;registry:idnaVersion&gt;</dt>
+<dd>An 
+                Internationalizing Domain Names in Applications (IDNA) version 
+                supported by the server.  IDNA represents a collection of 
+                documents that describe the protocol and usage for 
+                Internationalized Domain for Applications like IDNA 2003, 
+                with value of 2003, or IDNA 2008, with value of 2008.
+</dd>
+<dt>&lt;registry:unicodeVersion&gt;</dt>
+<dd>The Unicode 
+                version supported by the server like the value of 
+                "6.0" for Unicode 6.0.
+</dd>
+<dt>&lt;registry:encoding&gt;</dt>
+<dd>The OPTIONAL encoding 
+                for transforming Unicode characters uniquely and reversibly 
+                into DNS compatible characters with a default value 
+                of "Punycode".
+</dd>
+<dt>&lt;registry:commingleAllowed&gt;</dt>
+<dd>An OPTIONAL 
+                boolean value that indicates whether commingling of scripts 
+                is allowed with a default value of "false".
+</dd>
+<dt>&lt;registry:language&gt;</dt>
+<dd>Zero or more 
+                &lt;registry:language&gt; elements that defines the supported 
+                language codes and character code point policy.  
+                The required "code" attribute defines the language 
+                code for the supported language.  The language code 
+                SHOULD be an ISO 639 (ISO 639-1 or ISO 639-2) value.  
+                The &lt;registry:language&gt; element contains the following 
+                child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:table&gt;</dt>
+<dd>The OPTIONAL language 
+                    table URI that contains the set of code points for 
+                    the language.
+</dd>
+<dt>&lt;registry:variantStrategy&gt;</dt>
+<dd>An OPTIONAL 
+                    strategy for the handling of variants for the language.  
+                    If no &lt;registry:variantStrategy&gt; element is specified 
+                    then variants are not supported by the language.  
+                    The possible values for the &lt;registry:variantStrategy&gt; 
+                    element include:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&quot;blocked&quot;</dt>
+<dd>Variant registrations 
+                        are blocked for all clients.
+</dd>
+<dt>&quot;restricted&quot;</dt>
+<dd>Variant 
+                        registrations are allowed for client of the 
+                        original IDN registration.
+</dd>
+<dt>&quot;open&quot;</dt>
+<dd>Variant registrations 
+                        are open to all clients.
+</dd>
+</dl></blockquote>
+</dd>
+</dl></blockquote>
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:premiumSupport&gt;</dt>
+<dd>The OPTIONAL 
+                boolean value that indicates whether the server supports 
+                premium domain names with a default value of "false".
+</dd>
+<dt>&lt;registry:contactsSupported&gt;</dt>
+<dd>The OPTIONAL 
+                boolean value that indicates whether contacts are supported 
+                with a default value of "true".
+</dd>
+<dt>&lt;registry:contact&gt;</dt>
+<dd>Zero to three 
+                &lt;registry:contact&gt; elements that defines the minimum 
+                and maximum number of contacts by contact type.  
+                The contact type is defined with the required "type" 
+                attribute with the possible values of "admin", "tech", and 
+                "billing".  The &lt;registry:contact&gt; element contains 
+                the following child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:min&gt;</dt>
+<dd>The minimum number of 
+                    contacts for the contact type.
+</dd>
+<dt>&lt;registry:max&gt;</dt>
+<dd>The OPTIONAL maximum 
+                    number of contacts for the contact type.  If the 
+                    &lt;registry:max&gt; element is not defined the maximum 
+                    number is unbounded.
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:ns&gt;</dt>
+<dd>Defines the minimum and 
+                maximum number of delegated host objects (name servers) that 
+                can be associated with a domain object.  
+                The &lt;registry:ns&gt; element contains the following 
+                child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:min&gt;</dt>
+<dd>The minimum number of 
+                    name servers associated with a domain object.
+</dd>
+<dt>&lt;registry:max&gt;</dt>
+<dd>The OPTIONAL maximum 
+                    number of name servers associated with a domain object.  
+                    If the &lt;registry:max&gt; element is not defined the 
+                    maximum number is unbounded.
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:childHost&gt;</dt>
+<dd>Defines the minimum 
+                and maximum number of subordinate host objects (child hosts) 
+                for a domain object.  The &lt;registry: childHost&gt; element 
+                contains the following child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:min&gt;</dt>
+<dd>The minimum number of 
+                    child hosts for a domain object.
+</dd>
+<dt>&lt;registry:max&gt;</dt>
+<dd>The OPTIONAL maximum 
+                    number of child hosts for a domain object.  
+                    If the &lt;registry:max&gt; element is not defined the 
+                    maximum number is unbounded.
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:period&gt;</dt>
+<dd>Zero or more 
+                &lt;registry:period&gt; elements that defines the supported 
+                registration periods and default periods by command type.  
+                The required "command" attribute defines the command type 
+                with sample values of "create", "renew", and "transfer".  
+                The &lt;registry:period&gt; element contains one of the 
+                following elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:length&gt;</dt>
+<dd>The default, 
+                    minimum, and maximum period length for the command type.  
+                    The &lt;registry:length&gt; element contains the 
+                    following child elements, where all of the child 
+                    elements require the "unit" attribute with possible 
+                    values of "y" for year and "m" for month:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:min&gt;</dt>
+<dd>The minimum supported 
+                        period length.
+</dd>
+<dt>&lt;registry:max&gt;</dt>
+<dd>The maximum supported 
+                        period length.
+</dd>
+<dt>&lt;registry:default&gt;</dt>
+<dd>The default 
+                        period length if not defined by the client.
+</dd>
+</dl></blockquote>
+</dd>
+<dt>or &lt;registry:serverDecided&gt;</dt>
+<dd>The 
+                    registration period is decided by the server based on the 
+                    relationship to a related object that MUST have the 
+                    same expiration date.
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:transferHoldPeriod&gt;</dt>
+<dd>The period 
+                of time a domain object is in the pending transfer before the 
+                transfer is auto approved by the server.  The 
+                &lt;registry:transferHoldPeriod&gt; element MUST have the 
+                "unit" attribute with the possible values of "y" for year, 
+                "m" for month, and "d" for day.
+</dd>
+<dt>&lt;registry:gracePeriod&gt;</dt>
+<dd>Zero or more 
+                &lt;registry:gracePeriod&gt; elements that defines the grace 
+                periods by operation type.  The required "command" attribute 
+                defines the operation type with the sample values of "create", 
+                "renew", "transfer", and "autoRenew".  
+                The &lt;registry:gracePeriod&gt; element requires the 
+                "unit" attribute with the possible values of "d" for day, 
+                "h" for hour, and "m" for minute.
+</dd>
+<dt>&lt;registry:rgp&gt;</dt>
+<dd>The OPTIONAL Registry Grace 
+                Period (RGP) status periods.  The &lt;registry:rgp&gt; element 
+                contains the following child elements, where each child 
+                element supports the "unit" attribute with the possible 
+                values of "y" for year, "m" for month, "d" for day, 
+                and "h" for hour:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:redemptionPeriod&gt;</dt>
+<dd>The length 
+                    of time that a domain object will remain in the 
+                    redemptionPeriod status unless the restore request 
+                    command is received.
+</dd>
+<dt>&lt;registry:pendingRestore&gt;</dt>
+<dd>The length of 
+                    time that the domain object will remain in the 
+                    pendingRestore status unless the restore report command 
+                    is received.
+</dd>
+<dt>&lt;registry:pendingDelete&gt;</dt>
+<dd>The length of 
+                    time that the domain object will remain in the 
+                    pendingDelete status prior to be purged.
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:dnssec&gt;</dt>
+<dd>The OPTIONAL DNS 
+                Security Extensions (DNSSEC) policies for the server.  
+                The &lt;registry:dnssec&gt; element contains the following 
+                child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:dsDataInterface&gt;</dt>
+<dd>Defines 
+                    the DS Data Interface, as defined in <a class='info' href='#RFC5910'>[RFC5910]<span> (</span><span class='info'>Gould, J. and S. Hollenbeck, &ldquo;Domain Name System (DNS) Security Extensions Mapping for the Extensible Provisioning Protocol (EPP),&rdquo; May&nbsp;2010.</span><span>)</span></a>, 
+                    policies.  The &lt;registry:dsDataInterface&gt; element contains 
+                    the following child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:min&gt;</dt>
+<dd>The minimum number 
+                        of DS associated with the domain object.
+</dd>
+<dt>&lt;registry:max&gt;</dt>
+<dd>The maximum number 
+                        of DS associated with the domain object.
+</dd>
+<dt>&lt;registry:alg&gt;</dt>
+<dd>Zero or more 
+                        &lt;registry:alg&gt; elements that define the 
+                        supported algorithms as described in section 5.1.2 
+                        of <a class='info' href='#RFC4034'>[RFC4034]<span> (</span><span class='info'>Arends, R., Austein, R., Larson, M., Massey, D., and S. Rose, &ldquo;Resource Records for the DNS Security Extensions,&rdquo; March&nbsp;2005.</span><span>)</span></a>.
+</dd>
+<dt>&lt;registry:digestType&gt;</dt>
+<dd>Zero or more 
+                        &lt;registry:digestType&gt; elements that define the 
+                        supported digest types as described in 
+                        section 5.1.3 of <a class='info' href='#RFC4034'>[RFC4034]<span> (</span><span class='info'>Arends, R., Austein, R., Larson, M., Massey, D., and S. Rose, &ldquo;Resource Records for the DNS Security Extensions,&rdquo; March&nbsp;2005.</span><span>)</span></a>.
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:keyDataInterface&gt;</dt>
+<dd>Defines the 
+                    Key Data Interface, as defined in <a class='info' href='#RFC5910'>[RFC5910]<span> (</span><span class='info'>Gould, J. and S. Hollenbeck, &ldquo;Domain Name System (DNS) Security Extensions Mapping for the Extensible Provisioning Protocol (EPP),&rdquo; May&nbsp;2010.</span><span>)</span></a>, 
+                    policies.  The &lt;registry:keyDataInterface&gt; element 
+                    contains the following child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:min&gt;</dt>
+<dd>The minimum number 
+                        of keys associated with the domain object.
+</dd>
+<dt>&lt;registry:max&gt;</dt>
+<dd>The maximum number 
+                        of keys associated with the domain object.
+</dd>
+<dt>&lt;registry:alg&gt;</dt>
+<dd>Zero or more 
+                        &lt;registry:alg&gt; elements that define the 
+                        supported algorithms as described in section 2.1.3 
+                        of <a class='info' href='#RFC4034'>[RFC4034]<span> (</span><span class='info'>Arends, R., Austein, R., Larson, M., Massey, D., and S. Rose, &ldquo;Resource Records for the DNS Security Extensions,&rdquo; March&nbsp;2005.</span><span>)</span></a>.
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:maxSigLife&gt;</dt>
+<dd>Defines the 
+                    maximum signature life policies.  The 
+                    &lt;registry:maxSigLife&gt; element contains the 
+                    following child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:clientDefined&gt;</dt>
+<dd>An 
+                        OPTIONAL boolean flag indicating whether the client 
+                        can set the maximum signature life with a default 
+                        value of "false".
+</dd>
+<dt>&lt;registry:default&gt;</dt>
+<dd>The OPTIONAL 
+                        default maximum signature life set by the server.
+</dd>
+<dt>&lt;registry:min&gt;</dt>
+<dd>An OPTIONAL minimum 
+                        signature life supported.  The &lt;registry:min&gt; 
+                        element MUST NOT be defined if the 
+                        &lt;registry:clientDefined&gt; element 
+                        value is "false".
+</dd>
+<dt>&lt;registry:max&gt;</dt>
+<dd>An OPTIONAL 
+                        maximum signature life supported.  The 
+                        &lt;registry:max&gt; element MUST NOT be defined 
+                        if the &lt;registry:clientDefined&gt; element value 
+                        is "false".
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:urgent&gt;</dt>
+<dd>An OPTIONAL flag 
+                    that of whether the client can specify the urgent attribute 
+                    for DNSSEC updates with a default value of "false".
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:maxCheckDomain&gt;</dt>
+<dd>The maximum 
+                number of domain names (&lt;domain:name&gt; elements) that 
+                can be included in a domain check command defined in 
+                <a class='info' href='#RFC5731'>[RFC5731]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Domain Name Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a>.
+</dd>
+<dt>&lt;registry:supportedStatus&gt;</dt>
+<dd>The OPTIONAL 
+                set of supported domain statuses defined in 
+                <a class='info' href='#RFC5731'>[RFC5731]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Domain Name Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a>.
+</dd>
+<dt>&lt;registry:authInfoRegEx&gt;</dt>
+<dd>The OPTIONAL 
+                regular expression used to validate the domain object 
+                authorization information value.
+</dd>
+<dt>&lt;registry:customData&gt;</dt>
+<dd>The OPTIONAL set of 
+                custom data using key, value pairs. The 
+                &lt;registry:customData&gt; element contains the following 
+                child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:value&gt;</dt>
+<dd>One or more 
+                    &lt;registry:value&gt; elements with a required 
+                    "key" attribute .  The "key" attribute defines the key, 
+                    and the &lt;registry:value&gt; value defines the value of 
+                    the key, value pair.
+</dd>
+</dl></blockquote>
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:host&gt;</dt>
+<dd>The host object policy information per 
+         <a class='info' href='#RFC5732'>[RFC5732]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Host Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a>.  The &lt;registry:host&gt; element contains the 
+         following child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:internal&gt;</dt>
+<dd>Defines the minimum and 
+              maximum number of IP addresses supported for an internal host.  
+              The &lt;registry:internal&gt; elements contains the following 
+              child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:minIP&gt;</dt>
+<dd>Minimum number of IP 
+                addresses supported for an internal host.
+</dd>
+<dt>&lt;registry:maxIP&gt;</dt>
+<dd>Maximum number of IP 
+                addresses supported for an internal host.
+</dd>
+<dt>&lt;registry:sharePolicy&gt;</dt>
+<dd>The OPTIONAL policy 
+                for the sharing of internal hosts in the server.  
+                The possible shared policy values include:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&quot;perZone&quot;</dt>
+<dd>The internal hosts are 
+                    shared across all domains of the zone.  
+                    There is a single pool of internal hosts 
+                    defined for the zone.
+</dd>
+<dt>&quot;perSystem&quot;</dt>
+<dd>The internal hosts 
+                     are shared across all zones of the system.  
+                     There is a single pool of internal hosts across 
+                     all of the zones supported by the system.
+</dd>
+</dl></blockquote>
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:external&gt;</dt>
+<dd>Defines the policies 
+              for external hosts.  The &lt;registry:external&gt; elements contains 
+              the following child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:minIP&gt;</dt>
+<dd>Minimum number of IP 
+                addresses supported for an external host.
+</dd>
+<dt>&lt;registry:maxIP&gt;</dt>
+<dd>Maximum number of IP 
+                addresses supported for an external host.
+</dd>
+<dt>&lt;registry:sharePolicy&gt;</dt>
+<dd>The OPTIONAL policy 
+                for the sharing of external hosts in the server.  
+                The possible shared policy values include:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&quot;perZone&quot;</dt>
+<dd>The external hosts are 
+                    shared across all domains of the zone.  
+                    There is a single pool of external hosts 
+                    defined for the zone.
+</dd>
+<dt>&quot;perSystem&quot;</dt>
+<dd>The external hosts 
+                     are shared across all zones of the system.  
+                     There is a single pool of external hosts across 
+                     all of the zones supported by the system.
+</dd>
+</dl></blockquote>
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:nameRegex&gt;</dt>
+<dd>Zero or more 
+              &lt;registry:nameRegex&gt; elements that define the regular 
+              expressions used to validate the host name value.
+</dd>
+<dt>&lt;registry:maxCheckHost&gt;</dt>
+<dd>The maximum number of 
+              host names (&lt;host:name&gt; elements) that can be included in a 
+              host check command defined in <a class='info' href='#RFC5732'>[RFC5732]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Host Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a>.
+</dd>
+<dt>&lt;registry:supportedStatus&gt;</dt>
+<dd>The OPTIONAL set 
+              of supported host statuses defined in <a class='info' href='#RFC5732'>[RFC5732]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Host Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a>.
+</dd>
+<dt>&lt;registry:customData&gt;</dt>
+<dd>The OPTIONAL set of 
+                custom data using key, value pairs. The 
+                &lt;registry:customData&gt; element contains the following 
+                child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:value&gt;</dt>
+<dd>One or more 
+                    &lt;registry:value&gt; elements with a required 
+                    "key" attribute .  The "key" attribute defines the key, 
+                    and the &lt;registry:value&gt; value defines the value of 
+                    the key, value pair.
+</dd>
+</dl></blockquote>
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:contact&gt;</dt>
+<dd>The OPTIONAL contact object 
+         policy information per <a class='info' href='#RFC5733'>[RFC5733]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Contact Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a>.  
+         The &lt;registry:contact&gt; element contains the following child 
+         elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:contactIdRegEx&gt;</dt>
+<dd>The OPTIONAL regular 
+              expression used to validate the &lt;contact:id&gt; element 
+              defined in <a class='info' href='#RFC5733'>[RFC5733]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Contact Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a>.
+</dd>
+<dt>&lt;registry:sharePolicy&gt;</dt>
+<dd>The OPTIONAL policy for 
+              the sharing of contacts in the server.  The possible 
+              shared policy values include:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&quot;perZone&quot;</dt>
+<dd>The contacts are shared 
+                  across all objects of the zone.  There is a single pool 
+                  of contacts defined for the zone.
+</dd>
+<dt>&quot;perSystem&quot;</dt>
+<dd>The contacts are shared 
+                  across all zones of the system.  There is a single pool of 
+                  contacts across all of the zones supported by 
+                  the system.
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:intSupport&gt;</dt>
+<dd>A boolean value that 
+              defines whether the server supports the internationalized form 
+              of postal-address information using the type="int" attribute 
+              of <a class='info' href='#RFC5733'>[RFC5733]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Contact Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a>.
+</dd>
+<dt>&lt;registry:locSupport&gt;</dt>
+<dd>A boolean value that 
+              defines whether the server supports the localized form 
+              of postal-address information using the type="loc" attribute 
+              of <a class='info' href='#RFC5733'>[RFC5733]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Contact Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a>.
+</dd>
+<dt>&lt;registry:postalInfo&gt;</dt>
+<dd>The postal-address 
+              information policy information.  The &lt;registry:postalInfo&gt; 
+              element contains the following child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:name&gt;</dt>
+<dd>The minimum and maximum 
+                  length of &lt;contact:name&gt; element defined 
+                  <a class='info' href='#RFC5733'>[RFC5733]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Contact Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> using the &lt;registry:minLength&gt; 
+                  and &lt;registry:maxLength&gt; child elements, 
+                  respectively.
+</dd>
+<dt>&lt;registry:org&gt;</dt>
+<dd>The minimum and maximum 
+                  length of the &lt;contact:org&gt; element defined in 
+                  <a class='info' href='#RFC5733'>[RFC5733]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Contact Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> using the &lt;registry:minLength&gt; 
+                  and &lt;registry:maxLength&gt; child elements, 
+                  respectively.
+</dd>
+<dt>&lt;registry:address&gt;</dt>
+<dd>The address 
+                  information policy information.  The &lt;registry:address&gt; 
+                  element contains the following child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:street&gt;</dt>
+<dd>The minimum and 
+                      maximum length and the minimum and maximum 
+                      number of the &lt;contact:street&gt; elements defined in 
+                      <a class='info' href='#RFC5733'>[RFC5733]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Contact Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a>.  The &lt;registry:street&gt; 
+                      element contains the following child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:minLength&gt;</dt>
+<dd>The minimum 
+                        length of the &lt;contact:street&gt; elements.
+</dd>
+<dt>&lt;registry:maxLength&gt;</dt>
+<dd>The maximum  
+                        length of the &lt;contact:street&gt; elements.
+</dd>
+<dt>&lt;registry:minEntry&gt;</dt>
+<dd>The minimum 
+                        number of &lt;contact:street&gt; elements.
+</dd>
+<dt>&lt;registry:maxEntry&gt;</dt>
+<dd>The maximum  
+                        number of &lt;contact:street&gt; elements.
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:city&gt;</dt>
+<dd>The minimum and 
+                      maximum length of the &lt;contact:city&lt; element 
+                      defined in <a class='info' href='#RFC5733'>[RFC5733]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Contact Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> using the 
+                      &lt;registry:minLength&gt; and &lt;registry:maxLength&gt; 
+                      child elements, respectively.
+</dd>
+<dt>&lt;registry:sp&gt;</dt>
+<dd>The minimum and 
+                      maximum length of the &lt;contact:sp&gt; element 
+                      defined in <a class='info' href='#RFC5733'>[RFC5733]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Contact Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> using the 
+                      &lt;registry:minLength&gt; and &lt;registry:maxLength&gt; 
+                      child elements, respectively.
+</dd>
+<dt>&lt;registry:pc&gt;</dt>
+<dd>The minimum and 
+                      maximum length of the &lt;contact:pc&gt; element defined 
+                      in <a class='info' href='#RFC5733'>[RFC5733]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Contact Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> using the 
+                      &lt;registry:minLength&gt; and &lt;registry:maxLength&gt; 
+                      child elements, respectively.
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:voiceRequired&gt;</dt>
+<dd>An OPTIONAL 
+                boolean flag indicating whether the server requires 
+                the &lt;contact:voice&gt; element to be defined, with a 
+                default value of "false".
+</dd>
+<dt>&lt;registry:voiceExt&gt;</dt>
+<dd>The OPTIONAL minimum 
+                and maximum length of the &lt;contact:voice&gt; extension "x" 
+                attribute defined in <a class='info' href='#RFC5733'>[RFC5733]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Contact Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> using the 
+                &lt;registry:minLength&gt; and &lt;registry:maxLength&gt; child 
+                elements, respectively.
+</dd>
+<dt>&lt;registry:emailRegex&gt;</dt>
+<dd>Zero or more 
+                &lt;registry:emailRegex&gt; elements that define the regular 
+                expressions used to validate the &lt;contact:email&gt; element 
+                defined in <a class='info' href='#RFC5733'>[RFC5733]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Contact Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a>.
+</dd>
+</dl></blockquote>
+</dd>
+<dt>&lt;registry:maxCheckContact&gt;</dt>
+<dd>The maximum number 
+              of contact identifiers (&lt;contact:id&gt; elements) that can be 
+              included in a contact check command defined in 
+              <a class='info' href='#RFC5733'>[RFC5733]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Contact Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a>.
+</dd>
+<dt>&lt;registry:authInfoRegex&gt;</dt>
+<dd>The OPTIONAL regular 
+              expression used to validate the contact object authorization 
+              information value.
+</dd>
+<dt>&lt;registry:clientDisclosureSupported&gt;</dt>
+<dd>The 
+              OPTIONAL flag that indicates whether the server supports 
+              the client to identify elements that require exception 
+              server-operator handling to allow or restrict disclosure to 
+              third parties defined in <a class='info' href='#RFC5733'>[RFC5733]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Contact Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a> with a 
+              default of "false".
+</dd>
+<dt>&lt;registry:supportedStatus&gt;</dt>
+<dd>The OPTIONAL set 
+              of supported contact statuses defined in 
+              <a class='info' href='#RFC5733'>[RFC5733]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP) Contact Mapping,&rdquo; August&nbsp;2009.</span><span>)</span></a>.
+</dd>
+<dt>&lt;registry:transferHoldPeriod&gt;</dt>
+<dd>The OPTIONAL 
+              period of time a contact object is in the pending transfer 
+              before the transfer is auto approved by the server.  
+              The &lt;registry:transferHoldPeriod&gt; element MUST have 
+              the "unit" attribute with the possible values of "y" for year, 
+              "m" for month, and "d" for day.
+</dd>
+<dt>&lt;registry:customData&gt;</dt>
+<dd>The OPTIONAL set of 
+                custom data using key, value pairs. The 
+                &lt;registry:customData&gt; element contains the following 
+                child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:value&gt;</dt>
+<dd>One or more 
+                    &lt;registry:value&gt; elements with a required 
+                    "key" attribute .  The "key" attribute defines the key, 
+                    and the &lt;registry:value&gt; value defines the value of 
+                    the key, value pair.
+</dd>
+</dl></blockquote>
+</dd>
+</dl></blockquote>
+</dd>
+</dl></blockquote>
+
+<p>Example of a &lt;registry:zone&gt; element:
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+&lt;registry:zone&gt;
+  &lt;registry:name&gt;EXAMPLE&lt;/registry:name&gt;
+  &lt;registry:group&gt;STANDARD&lt;/registry:group&gt;
+  &lt;registry:subProduct&gt;EXAMPLE&lt;/registry:subProduct&gt;
+  &lt;registry:related&gt;
+    &lt;registry:fields type="sync"&gt;
+      &lt;registry:field&gt;clID&lt;/registry:field&gt;
+      &lt;registry:field&gt;registrant&lt;/registry:field&gt;
+      &lt;registry:field&gt;ns&lt;/registry:field&gt;
+    &lt;/registry:fields&gt;
+    &lt;registry:zoneMember type="equal"&gt;EXAMPLE
+    &lt;/registry:zoneMember&gt;
+    &lt;registry:zoneMember type="equal"&gt;EXAMPLE2
+    &lt;/registry:zoneMember&gt;
+    &lt;registry:zoneMember type="equal"&gt;EXAMPLE3
+    &lt;/registry:zoneMember&gt;
+  &lt;/registry:related&gt;
+  &lt;registry:phase type="sunrise"&gt;
+    &lt;registry:startDate&gt;2012-11-01T00:00:00.0Z
+    &lt;/registry:startDate&gt;
+    &lt;registry:endDate&gt;2012-12-01T00:00:00.0Z
+    &lt;/registry:endDate&gt;
+  &lt;/registry:phase&gt;
+  &lt;registry:phase type="claims" name="landrush"&gt;
+    &lt;registry:startDate&gt;2012-12-01T00:00:00.0Z
+    &lt;/registry:startDate&gt;
+    &lt;registry:endDate&gt;2012-12-08T00:00:00.0Z
+    &lt;/registry:endDate&gt;
+  &lt;/registry:phase&gt;
+  &lt;registry:phase type="claims" name="open"&gt;
+    &lt;registry:startDate&gt;2012-12-08T00:00:00.0Z
+    &lt;/registry:startDate&gt;
+    &lt;registry:endDate&gt;2013-02-01T00:00:00.0Z
+    &lt;/registry:endDate&gt;
+  &lt;/registry:phase&gt;
+  &lt;registry:phase type="open"&gt;
+    &lt;registry:startDate&gt;2013-02-01T00:00:00.0Z&lt;/registry:startDate&gt;
+  &lt;/registry:phase&gt;
+  &lt;registry:services&gt;
+    &lt;registry:objURI required="true"&gt;
+    urn:ietf:params:xml:ns:domain-1.0
+    &lt;/registry:objURI&gt;
+    &lt;registry:objURI required="true"&gt;
+    urn:ietf:params:xml:ns:host-1.0
+    &lt;/registry:objURI&gt;
+    &lt;registry:objURI required="true"&gt;
+    urn:ietf:params:xml:ns:contact-1.0
+    &lt;/registry:objURI&gt;
+    &lt;registry:svcExtension&gt;
+      &lt;registry:extURI required="true"&gt;
+      urn:ietf:params:xml:ns:rgp-1.0
+      &lt;/registry:extURI&gt;
+      &lt;registry:extURI required="true"&gt;
+      urn:ietf:params:xml:ns:secDNS-1.1
+      &lt;/registry:extURI&gt;
+      &lt;registry:extURI required="true"&gt;
+      http://www.verisign-grs.com/epp/namestoreExt-1.1
+      &lt;/registry:extURI&gt;
+      &lt;registry:extURI required="false"&gt;
+      http://www.verisign.com/epp/idnLang-1.0
+      &lt;/registry:extURI&gt;
+    &lt;/registry:svcExtension&gt;
+  &lt;/registry:services&gt;
+  &lt;registry:slaInfo&gt;
+    &lt;registry:sla type="downtime" unit="min"&gt;
+      864
+    &lt;/registry:sla&gt;
+    &lt;registry:sla type="rtt"
+      command="domain:check" unit="ms"&gt;
+      2000
+    &lt;/registry:sla&gt;
+    &lt;registry:sla type="rtt"
+      command="domain:info" unit="ms"&gt;
+      2000
+    &lt;/registry:sla&gt;
+    &lt;registry:sla type="rtt"
+      command="domain:create" unit="ms"&gt;
+      4000
+    &lt;/registry:sla&gt;
+    &lt;registry:sla type="rtt"
+      command="domain:update" unit="ms"&gt;
+      4000
+    &lt;/registry:sla&gt;
+    &lt;registry:sla type="rtt"
+      command="domain:renew" unit="ms"&gt;
+      4000
+    &lt;/registry:sla&gt;
+    &lt;registry:sla type="rtt"
+      command="domain:delete" unit="ms"&gt;
+      4000
+    &lt;/registry:sla&gt;
+    &lt;registry:sla type="rtt"
+      command="domain:transfer" unit="ms"&gt;
+      4000
+    &lt;/registry:sla&gt;
+  &lt;/registry:slaInfo&gt;
+  &lt;registry:crID&gt;clientX&lt;/registry:crID&gt;
+  &lt;registry:crDate&gt;2012-10-01T00:00:00.0Z
+  &lt;/registry:crDate&gt;
+  &lt;registry:upID&gt;clientY&lt;/registry:upID&gt;
+  &lt;registry:upDate&gt;2012-10-15T00:00:00.0Z
+  &lt;/registry:upDate&gt;
+  &lt;registry:domain&gt;
+    &lt;registry:domainName level="2"&gt;
+      &lt;registry:minLength&gt;5
+      &lt;/registry:minLength&gt;
+      &lt;registry:maxLength&gt;50
+      &lt;/registry:maxLength&gt;
+      &lt;registry:alphaNumStart&gt;true
+      &lt;/registry:alphaNumStart&gt;
+      &lt;registry:alphaNumEnd&gt;false
+      &lt;/registry:alphaNumEnd&gt;
+      &lt;registry:onlyDnsChars&gt;true
+      &lt;/registry:onlyDnsChars&gt;
+      &lt;registry:regex&gt;
+        &lt;registry:expression&gt;^\w+.*$
+        &lt;/registry:expression&gt;
+        &lt;registry:explanation&gt;Alphanumeric
+        &lt;/registry:explanation&gt;
+      &lt;/registry:regex&gt;
+      &lt;registry:regex&gt;
+        &lt;registry:expression&gt;^\d+.*$
+        &lt;/registry:expression&gt;
+      &lt;/registry:regex&gt;
+      &lt;registry:reservedNames&gt;
+        &lt;registry:reservedName&gt;reserved1
+        &lt;/registry:reservedName&gt;
+      &lt;/registry:reservedNames&gt;
+    &lt;/registry:domainName&gt;
+    &lt;registry:idn&gt;
+      &lt;registry:idnVersion&gt;4.1
+      &lt;/registry:idnVersion&gt;
+      &lt;registry:idnaVersion&gt;2008
+      &lt;/registry:idnaVersion&gt;
+      &lt;registry:unicodeVersion&gt;6.0
+      &lt;/registry:unicodeVersion&gt;
+      &lt;registry:encoding&gt;Punycode
+      &lt;/registry:encoding&gt;
+      &lt;registry:commingleAllowed&gt;false
+      &lt;/registry:commingleAllowed&gt;
+      &lt;registry:language code="LANG-1"&gt;
+        &lt;registry:table&gt;
+        http://www.iana.org/idn-tables/test_tab1_1.1.txt
+        &lt;/registry:table&gt;
+        &lt;registry:variantStrategy&gt;blocked
+        &lt;/registry:variantStrategy&gt;
+      &lt;/registry:language&gt;
+    &lt;/registry:idn&gt;
+    &lt;registry:premiumSupport&gt;false
+    &lt;/registry:premiumSupport&gt;
+    &lt;registry:contact type="admin"&gt;
+      &lt;registry:min&gt;1&lt;/registry:min&gt;
+      &lt;registry:max&gt;4&lt;/registry:max&gt;
+    &lt;/registry:contact&gt;
+    &lt;registry:ns&gt;
+      &lt;registry:min&gt;0&lt;/registry:min&gt;
+      &lt;registry:max&gt;13&lt;/registry:max&gt;
+    &lt;/registry:ns&gt;
+    &lt;registry:childHost&gt;
+      &lt;registry:min&gt;0&lt;/registry:min&gt;
+    &lt;/registry:childHost&gt;
+    &lt;registry:period command="create"&gt;
+      &lt;registry:length&gt;
+        &lt;registry:min unit="y"&gt;1&lt;/registry:min&gt;
+        &lt;registry:max unit="y"&gt;10&lt;/registry:max&gt;
+        &lt;registry:default unit="y"&gt;1&lt;/registry:default&gt;
+      &lt;/registry:length&gt;
+    &lt;/registry:period&gt;
+    &lt;registry:transferHoldPeriod unit="d"&gt;5
+    &lt;/registry:transferHoldPeriod&gt;
+    &lt;registry:gracePeriod command="create" unit="d"&gt;5
+    &lt;/registry:gracePeriod&gt;
+    &lt;registry:gracePeriod command="renew" unit="d"&gt;5
+    &lt;/registry:gracePeriod&gt;
+    &lt;registry:gracePeriod command="transfer" unit="d"&gt;5
+    &lt;/registry:gracePeriod&gt;
+    &lt;registry:gracePeriod command="autoRenew" unit="d"&gt;45
+    &lt;/registry:gracePeriod&gt;
+    &lt;registry:rgp&gt;
+      &lt;registry:redemptionPeriod unit="d"&gt;30
+      &lt;/registry:redemptionPeriod&gt;
+      &lt;registry:pendingRestore unit="d"&gt;7
+      &lt;/registry:pendingRestore&gt;
+      &lt;registry:pendingDelete unit="d"&gt;5
+      &lt;/registry:pendingDelete&gt;
+    &lt;/registry:rgp&gt;
+    &lt;registry:dnssec&gt;
+      &lt;registry:dsDataInterface&gt;
+       &lt;registry:min&gt;0&lt;/registry:min&gt;
+       &lt;registry:max&gt;13&lt;/registry:max&gt;
+       &lt;registry:alg&gt;3&lt;/registry:alg&gt;
+       &lt;registry:digestType&gt;1&lt;/registry:digestType&gt;
+      &lt;/registry:dsDataInterface&gt;
+      &lt;registry:maxSigLife&gt;
+        &lt;registry:clientDefined&gt;false
+        &lt;/registry:clientDefined&gt;
+      &lt;/registry:maxSigLife&gt;
+    &lt;/registry:dnssec&gt;
+    &lt;registry:maxCheckDomain&gt;5
+    &lt;/registry:maxCheckDomain&gt;
+    &lt;registry:supportedStatus&gt;
+      &lt;registry:status&gt;ok
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;clientDeleteProhibited
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;serverDeleteProhibited
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;clientHold
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;serverHold
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;clientRenewProhibited
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;serverRenewProhibited
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;clientTransferProhibited
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;serverTransferProhibited
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;clientUpdateProhibited
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;serverUpdateProhibited
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;inactive
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;pendingDelete
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;pendingTransfer
+      &lt;/registry:status&gt;
+    &lt;/registry:supportedStatus&gt;
+    &lt;registry:authInfoRegex&gt;
+      &lt;registry:expression&gt;^.*$&lt;/registry:expression&gt;
+    &lt;/registry:authInfoRegex&gt;
+  &lt;/registry:domain&gt;
+  &lt;registry:host&gt;
+    &lt;registry:internal&gt;
+      &lt;registry:minIP&gt;1&lt;/registry:minIP&gt;
+      &lt;registry:maxIP&gt;13&lt;/registry:maxIP&gt;
+      &lt;registry:sharePolicy&gt;perZone
+      &lt;/registry:sharePolicy&gt;
+    &lt;/registry:internal&gt;
+    &lt;registry:external&gt;
+      &lt;registry:minIP&gt;0&lt;/registry:minIP&gt;
+      &lt;registry:maxIP&gt;0&lt;/registry:maxIP&gt;
+      &lt;registry:sharePolicy&gt;perZone
+      &lt;/registry:sharePolicy&gt;
+    &lt;/registry:external&gt;
+    &lt;registry:nameRegex&gt;
+      &lt;registry:expression&gt;^.*$
+      &lt;/registry:expression&gt;
+    &lt;/registry:nameRegex&gt;
+    &lt;registry:maxCheckHost&gt;5
+    &lt;/registry:maxCheckHost&gt;
+    &lt;registry:supportedStatus&gt;
+      &lt;registry:status&gt;ok&lt;/registry:status&gt;
+      &lt;registry:status&gt;clientDeleteProhibited
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;serverDeleteProhibited
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;clientUpdateProhibited
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;serverUpdateProhibited
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;linked
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;pendingDelete
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;pendingTransfer
+      &lt;/registry:status&gt;
+    &lt;/registry:supportedStatus&gt;
+  &lt;/registry:host&gt;
+  &lt;registry:contact&gt;
+    &lt;registry:contactIdRegex&gt;
+      &lt;registry:expression&gt;^.*$
+      &lt;/registry:expression&gt;
+    &lt;/registry:contactIdRegex&gt;
+    &lt;registry:sharePolicy&gt;perZone
+    &lt;/registry:sharePolicy&gt;
+    &lt;registry:intSupport&gt;true&lt;/registry:intSupport&gt;
+    &lt;registry:locSupport&gt;false&lt;/registry:locSupport&gt;
+    &lt;registry:postalInfo&gt;
+      &lt;registry:name&gt;
+        &lt;registry:minLength&gt;5&lt;/registry:minLength&gt;
+        &lt;registry:maxLength&gt;15&lt;/registry:maxLength&gt;
+      &lt;/registry:name&gt;
+      &lt;registry:org&gt;
+        &lt;registry:minLength&gt;2&lt;/registry:minLength&gt;
+        &lt;registry:maxLength&gt;40&lt;/registry:maxLength&gt;
+      &lt;/registry:org&gt;
+      &lt;registry:address&gt;
+        &lt;registry:street&gt;
+          &lt;registry:minLength&gt;1&lt;/registry:minLength&gt;
+          &lt;registry:maxLength&gt;40&lt;/registry:maxLength&gt;
+          &lt;registry:minEntry&gt;1&lt;/registry:minEntry&gt;
+          &lt;registry:maxEntry&gt;3&lt;/registry:maxEntry&gt;
+        &lt;/registry:street&gt;
+        &lt;registry:city&gt;
+          &lt;registry:minLength&gt;1&lt;/registry:minLength&gt;
+          &lt;registry:maxLength&gt;40&lt;/registry:maxLength&gt;
+        &lt;/registry:city&gt;
+        &lt;registry:sp&gt;
+          &lt;registry:minLength&gt;1&lt;/registry:minLength&gt;
+          &lt;registry:maxLength&gt;40&lt;/registry:maxLength&gt;
+        &lt;/registry:sp&gt;
+        &lt;registry:pc&gt;
+          &lt;registry:minLength&gt;1&lt;/registry:minLength&gt;
+          &lt;registry:maxLength&gt;40&lt;/registry:maxLength&gt;
+        &lt;/registry:pc&gt;
+      &lt;/registry:address&gt;
+      &lt;registry:voiceRequired&gt;false
+      &lt;/registry:voiceRequired&gt;
+      &lt;registry:voiceExt&gt;
+        &lt;registry:minLength&gt;1&lt;/registry:minLength&gt;
+        &lt;registry:maxLength&gt;40&lt;/registry:maxLength&gt;
+      &lt;/registry:voiceExt&gt;
+      &lt;registry:faxExt&gt;
+        &lt;registry:minLength&gt;1&lt;/registry:minLength&gt;
+        &lt;registry:maxLength&gt;40&lt;/registry:maxLength&gt;
+      &lt;/registry:faxExt&gt;
+      &lt;registry:emailRegex&gt;
+        &lt;registry:expression&gt;^.+\..+$
+        &lt;/registry:expression&gt;
+      &lt;/registry:emailRegex&gt;
+    &lt;/registry:postalInfo&gt;
+    &lt;registry:maxCheckContact&gt;5&lt;/registry:maxCheckContact&gt;
+    &lt;registry:authInfoRegex&gt;
+      &lt;registry:expression&gt;^.*$&lt;/registry:expression&gt;
+    &lt;/registry:authInfoRegex&gt;
+    &lt;registry:clientDisclosureSupported&gt;false
+    &lt;/registry:clientDisclosureSupported&gt;
+    &lt;registry:supportedStatus&gt;
+      &lt;registry:status&gt;ok
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;clientDeleteProhibited
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;serverDeleteProhibited
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;clientTransferProhibited
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;serverTransferProhibited
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;clientUpdateProhibited
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;serverUpdateProhibited
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;linked
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;pendingDelete
+      &lt;/registry:status&gt;
+      &lt;registry:status&gt;pendingTransfer
+      &lt;/registry:status&gt;
+    &lt;/registry:supportedStatus&gt;
+    &lt;registry:transferHoldPeriod unit="d"&gt;5
+    &lt;/registry:transferHoldPeriod&gt;
+  &lt;/registry:contact&gt;
+&lt;/registry:zone&gt;</pre></div>
+<a name="commands"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3"></a><h3>3.&nbsp;
+EPP Command Mapping</h3>
+
+<p>A detailed description of the EPP syntax and semantics can be found
+      in the EPP core protocol specification <a class='info' href='#RFC5730'>[RFC5730]<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP),&rdquo; August&nbsp;2009.</span><span>)</span></a>. The 
+      command mappings described here are specifically for use in provisioning 
+      and managing TLD names via EPP.
+</p>
+<a name="queryCommands"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.1"></a><h3>3.1.&nbsp;
+EPP Query Commands</h3>
+
+<p><a class='info' href='#RFC5730'>EPP<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP),&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5730] provides three commands to retrieve object information: &lt;check&gt; to determine 
+        if an object is known to the server, &lt;info&gt; to retrieve detailed information associated 
+        with an object, and &lt;transfer&gt; to retrieve object transfer status information.
+</p>
+<a name="checkCommand"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.1.1"></a><h3>3.1.1.&nbsp;
+EPP &lt;check&gt; Command</h3>
+
+<p>The EPP &lt;check&gt; command is used to determine if the server 
+       currently supports a zone.  If the response indicates that the zone 
+       is not available, then it is currently supported; otherwise it MAY be 
+       available to be created by an authorized client.
+</p>
+<p>In addition to the standard EPP command elements, the &lt;check&gt;
+       command MUST contain a &lt;registry:check&gt; element that identifies 
+       the registry namespace.  The &gt;registry:check&gt; element contains the 
+       following child elements:
+</p>
+<p></p>
+<blockquote class="text"><dl>
+<dt>&lt;registry:name&gt;</dt>
+<dd>One or more &lt;registry:name&gt; 
+          elements that contain the fully 
+          qualified names of the zone objects to be queried.
+</dd>
+</dl></blockquote>
+
+<p>Example &lt;check&gt; command:
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+C:&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+C:&lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+C:  &lt;command&gt;
+C:    &lt;check&gt;
+C:      &lt;registry:check
+C:       xmlns:registry="http://www.verisign.com/epp/registry-1.0"&gt;
+C:        &lt;registry:name&gt;zone1&lt;/registry:name&gt;
+C:        &lt;registry:name&gt;zone2&lt;/registry:name&gt;
+C:        &lt;registry:name&gt;zone3&lt;/registry:name&gt;
+C:      &lt;/registry:check&gt;
+C:    &lt;/check&gt;
+C:    &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
+C:  &lt;/command&gt;
+C:&lt;/epp&gt;
+</pre></div>
+<p>When a &lt;check&gt; command has been processed successfully, the 
+       EPP &lt;resData&gt; element MUST contain a child &lt;registry:chkData&gt; 
+       element that identifies the registry namespace. The 
+       &lt;registry:chkData&gt; element contains one or more &lt;registry:cd&gt; 
+       elements that contain the following child elements:
+</p>
+<p></p>
+<blockquote class="text"><dl>
+<dt>&lt;registry:name&gt;</dt>
+<dd>element that contains the fully 
+          qualified name of the queried zone object.  This element MUST contain 
+          an "avail" attribute whose value indicates zone is currently 
+          supported or availability at the moment the &lt;check&gt; command was 
+          completed for an authorized client.  A value of "1" or "true" means 
+          that the zone object is available for an authorized client.  A value 
+          of "0" or "false" means that the zone object is currently supported 
+          by the server.
+</dd>
+<dt>&lt;registry:reason&gt;</dt>
+<dd>The OPTIONAL element that 
+          MAY be provided when a zone object is not available for 
+          provisioning.  If present, this element contains server-specific 
+          text to help explain why the zone object is unavailable.  This 
+          text MUST be represented in the response language previously 
+          negotiated with the client; an OPTIONAL "lang" attribute MAY be 
+          present to identify the language if the negotiated value is 
+          something other than a default value of "en" (English).
+</dd>
+</dl></blockquote>
+
+<p>Example &lt;check&gt; response:
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+S:&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+S:&lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+S:  &lt;response&gt;
+S:    &lt;result code="1000"&gt;
+S:      &lt;msg&gt;Command completed successfully&lt;/msg&gt;
+S:    &lt;/result&gt;
+S:    &lt;resData&gt;
+S:      &lt;registry:chkData
+S:        xmlns:registry=
+S:        "http://www.verisign.com/epp/registry-1.0"&gt;
+S:        &lt;registry:cd&gt;
+S:          &lt;registry:name avail="0"&gt;zone1&lt;/registry:name&gt;
+S:          &lt;registry:reason&gt;Client not authorized
+S:          &lt;/registry:reason&gt;
+S:        &lt;/registry:cd&gt;
+S:        &lt;registry:cd&gt;
+S:          &lt;registry:name avail="0"&gt;zone2
+S:          &lt;/registry:name&gt;
+S:          &lt;registry:reason&gt;Already supported
+S:          &lt;/registry:reason&gt;
+S:        &lt;/registry:cd&gt;
+S:        &lt;registry:cd&gt;
+S:          &lt;registry:name avail="1"&gt;zone3
+S:          &lt;/registry:name&gt;
+S:        &lt;/registry:cd&gt;
+S:      &lt;/ registry:chkData&gt;
+S:    &lt;/resData&gt;
+S:    &lt;trID&gt;
+S:      &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
+S:      &lt;svTRID&gt;54322-XYZ&lt;/svTRID&gt;
+S:    &lt;/trID&gt;
+S:  &lt;/response&gt;
+S:&lt;/epp&gt;</pre></div>
+<p>An EPP error response MUST be returned if a &lt;check&gt; command 
+       cannot be processed for any reason.
+</p>
+<a name="infoCommand"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.1.2"></a><h3>3.1.2.&nbsp;
+EPP &lt;info&gt; Command</h3>
+
+<p>The EPP &lt;info&gt; command is used to retrieve information 
+       associated with a zone object.  The response to this command MAY 
+       vary depending on the identity of the querying client, use of 
+       authorization information, and server policy towards unauthorized 
+       clients.  Server policy determines which OPTIONAL elements are 
+       returned.
+</p>
+<p>In addition to the standard EPP command elements, the &lt;info&gt; 
+       command MUST contain a &lt;registry:info&gt; element that identifies 
+       the registry namespace. The &lt;registry:info&gt; element contains 
+       the following one of the two child elements:
+</p>
+<p></p>
+<blockquote class="text"><dl>
+<dt>&lt;registry:all&gt;</dt>
+<dd>element that is empty and that 
+          indicates that a list of all of the supported zone objects 
+          are queried with a summary set of attributes per zone object.
+</dd>
+<dt>or a &lt;registry:name&gt;</dt>
+<dd>element that contains the 
+          fully qualified name of the zone object to be queried for a full 
+          set of attributes for the zone object.
+</dd>
+</dl></blockquote>
+
+<p>Example &lt;info&gt; command to query for a summary set of 
+            attributes for all of the supported zone objects:
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+C:&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+C:&lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+C:  &lt;command&gt;
+C:    &lt;info&gt;
+C:      &lt;registry:info
+C:        xmlns:registry="http://www.verisign.com/epp/registry-1.0"&gt;
+C:        &lt;registry:all/&gt;
+C:      &lt;/registry:info&gt;
+C:    &lt;/info&gt;
+C:    &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
+C:  &lt;/command&gt;
+C:&lt;/epp&gt;</pre></div>
+<p>Example &lt;info&gt; command to query for the full set 
+            of "zone1" zone object attributes:
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+C:&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+C:&lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+C:  &lt;command&gt;
+C:    &lt;info&gt;
+C:      &lt;registry:info
+C:        xmlns:registry="http://www.verisign.com/epp/registry-1.0"&gt;
+C:        &lt;registry:name&gt;zone1&lt;/registry:name&gt;
+C:      &lt;/registry:info&gt;
+C:    &lt;/info&gt;
+C:    &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
+C:  &lt;/command&gt;
+C:&lt;/epp&gt;</pre></div>
+<p>When an &lt;info&gt; command has been processed successfully, 
+       the EPP &lt;resData&gt; element MUST contain a child &lt;registry:infData&gt; 
+       element that identifies the registry namespace. The &lt;registry:infData&gt; 
+       element contains one of the two following child elements:
+</p>
+<p></p>
+<blockquote class="text"><dl>
+<dt>&lt;registry:zoneList&gt;</dt>
+<dd>element that contains the 
+          list of supported zones by the server with a set of summary 
+          attributes per zone.  The &lt;registry:zoneList&gt; element contains 
+          the following child elements:
+</dd>
+<dt></dt>
+<dd>
+<blockquote class="text"><dl>
+<dt>&lt;registry:name&gt;</dt>
+<dd>element that contains the fully 
+                qualified name of the queried zone object.
+</dd>
+<dt>&lt;registry:crDate&gt;</dt>
+<dd>The date and time of zone 
+              object creation.
+</dd>
+<dt>&lt;registry:upDate&gt;</dt>
+<dd>The OPTIONAL date and time 
+              of the most recent zone object modification.
+</dd>
+</dl></blockquote>
+</dd>
+<dt>or a &lt;registry:zone&gt;</dt>
+<dd>element that contains the 
+          full set of attributes for the zone name as defined in 
+          <a class='info' href='#zone-object'>Section&nbsp;2.3<span> (</span><span class='info'>Zone Object</span><span>)</span></a>.
+</dd>
+</dl></blockquote>
+
+<p>Example &lt;info&gt; response to a query for a summary of all 
+            of the supported zone objects:
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+S:&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+S:&lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+S:  &lt;response&gt;
+S:    &lt;result code="1000"&gt;
+S:      &lt;msg&gt;Command completed successfully&lt;/msg&gt;
+S:    &lt;/result&gt;
+S:    &lt;resData&gt;
+S:      &lt;registry:infData
+S:        xmlns:registry="http://www.verisign.com/epp/registry-1.0"&gt;
+S:        &lt;registry:zoneList&gt;
+S:          &lt;registry:zone&gt;
+S:            &lt;registry:name&gt;EXAMPLE1&lt;/registry:name&gt;
+S:            &lt;registry:crDate&gt;2012-10-01T00:00:00.0Z
+S:            &lt;/registry:crDate&gt;
+S:            &lt;registry:upDate&gt;2012-10-15T00:00:00.0Z
+S:            &lt;/registry:upDate&gt;
+S:          &lt;/registry:zone&gt;
+S:          &lt;registry:zone&gt;
+S:            &lt;registry:name&gt;EXAMPLE2&lt;/registry:name&gt;
+S:            &lt;registry:crDate&gt;2012-09-01T00:00:00.0Z
+S:            &lt;/registry:crDate&gt;
+S:            &lt;registry:upDate&gt;2012-09-19T00:00:00.0Z
+S:            &lt;/registry:upDate&gt;
+S:          &lt;/registry:zone&gt;
+S:        &lt;/registry:zoneList&gt;
+S:      &lt;/registry:infData&gt;
+S:    &lt;/resData&gt;
+S:    &lt;trID&gt;
+S:      &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
+S:      &lt;svTRID&gt;54322-XYZ&lt;/svTRID&gt;
+S:    &lt;/trID&gt;
+S:  &lt;/response&gt;
+S:&lt;/epp&gt;</pre></div>
+<p>Example &lt;info&gt; response to query for the full set 
+            of "EXAMPLE" zone object attributes:
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+S:&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+S:&lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+S:  &lt;response&gt;
+S:    &lt;result code="1000"&gt;
+S:      &lt;msg&gt;Command completed successfully&lt;/msg&gt;
+S:    &lt;/result&gt;
+S:    &lt;resData&gt;
+S:      &lt;registry:infData
+S:        xmlns:registry="http://www.verisign.com/epp/registry-1.0"&gt;
+S:        &lt;registry:zone&gt;
+S:          &lt;registry:name&gt;EXAMPLE&lt;/registry:name&gt;
+S:          ...
+S:        &lt;/registry:zone&gt;
+S:      &lt;/registry:infData&gt;
+S:    &lt;/resData&gt;
+S:    &lt;trID&gt;
+S:      &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
+S:      &lt;svTRID&gt;54322-XYZ&lt;/svTRID&gt;
+S:    &lt;/trID&gt;
+S:  &lt;/response&gt;
+S:&lt;/epp&gt;</pre></div>
+<p>An EPP error response MUST be returned if an &lt;info&gt; command 
+       cannot be processed for any reason.
+</p>
+<a name="transferQueryCommand"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.1.3"></a><h3>3.1.3.&nbsp;
+EPP &lt;transfer&gt; Command</h3>
+
+<p>Transfer semantics do not directly apply to zone objects, so there 
+       is no mapping defined for the EPP &lt;transfer&gt; query command.
+</p>
+<a name="transformCommands"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.2"></a><h3>3.2.&nbsp;
+EPP Transform Commands</h3>
+
+<p>EPP provides five commands to transform objects: &lt;create&gt; to create an instance of an object, 
+        &lt;delete&gt; to delete an instance of an object, &lt;renew&gt; to extend the validity period of an object,
+        &lt;transfer&gt; to manage object sponsorship changes, and &lt;update&gt; to change information associated 
+        with an object.
+</p>
+<a name="createCommand"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.2.1"></a><h3>3.2.1.&nbsp;
+EPP &lt;create&gt; Command</h3>
+
+<p>The EPP &lt;create&gt; command provides a transform operation that 
+       allows a client to create a zone object.  In addition to the standard 
+       EPP command elements, the &lt;create&gt; command MUST contain a 
+       &lt;registry:create&gt; element that identifies the registry namespace.  
+       The &lt;registry:create&gt; element contains the following 
+       child elements:
+</p>
+<p></p>
+<blockquote class="text"><dl>
+<dt>&lt;registry:zone&gt;</dt>
+<dd>element that contains the full 
+          set of attributes for the zone to create as defined in 
+          <a class='info' href='#zone-object'>Section&nbsp;2.3<span> (</span><span class='info'>Zone Object</span><span>)</span></a>.
+</dd>
+</dl></blockquote>
+
+<p>Example &lt;create&gt; command:
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+C:&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+C:&lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"
+C:  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+C:  &lt;command&gt;
+C:    &lt;create&gt;
+C:      &lt;registry:create
+C:        xmlns:registry="http://www.verisign.com/epp/registry-1.0"&gt;
+C:        &lt;registry:zone&gt;
+C:          &lt;registry:name&gt;EXAMPLE&lt;/registry:name&gt;
+C:          ...
+C:        &lt;/registry:zone&gt;
+C:      &lt;/registry:create&gt;
+C:    &lt;/create&gt;
+C:    &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
+C:  &lt;/command&gt;
+C:&lt;/epp&gt;</pre></div>
+<p>When a &lt;create&gt; command has been processed successfully, 
+       the EPP &lt;resData&gt; element MUST contain a child 
+       &lt;registry:creData&gt; element that identifies the registry namespace. 
+       The &lt;registry:creData&gt; element contains the following child 
+       elements:
+</p>
+<p></p>
+<blockquote class="text"><dl>
+<dt>&lt;registry:name&gt;</dt>
+<dd>element that contains the fully 
+          qualified name of the zone object.
+</dd>
+<dt>&lt;registry:crDate&gt;</dt>
+<dd>element that contains the 
+          date and time of zone object creation.
+</dd>
+</dl></blockquote>
+
+<p>Example &lt;create&gt; response:
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+S:&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+S:&lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+S:  &lt;response&gt;
+S:    &lt;result code="1000"&gt;
+S:      &lt;msg&gt;Command completed successfully&lt;/msg&gt;
+S:    &lt;/result&gt;
+S:    &lt;resData&gt;
+S:      &lt;registry:creData
+S:        xmlns:registry="http://www.verisign.com/epp/registry-1.0"&gt;
+S:        &lt;registry:name&gt;zone1&lt;/registry:name&gt;
+S:        &lt;registry:crDate&gt;2012-10-30T22:00:00.0Z
+S:        &lt;/registry:crDate&gt;
+S:      &lt;/registry:creData&gt;
+S:    &lt;/resData&gt;
+S:    &lt;trID&gt;
+S:      &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
+S:      &lt;svTRID&gt;54321-XYZ&lt;/svTRID&gt;
+S:    &lt;/trID&gt;
+S:  &lt;/response&gt;
+S:&lt;/epp&gt;</pre></div>
+<p>An EPP error response MUST be returned if a &lt;create&gt; command 
+       can not be processed for any reason.
+</p>
+<a name="deleteCommand"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.2.2"></a><h3>3.2.2.&nbsp;
+EPP &lt;delete&gt; Command</h3>
+
+<p>The EPP &lt;delete&gt; command provides a transform operation that 
+       allows a client to delete a zone object.  In addition to the standard 
+       EPP command elements, the &lt;delete&gt; command MUST contain 
+       a &lt;registry:delete&gt; element that identifies the registry namespace.  
+       The &lt;registry:delete&gt; element contains the following child 
+       elements:
+</p>
+<p></p>
+<blockquote class="text"><dl>
+<dt>&lt;registry:name&gt;</dt>
+<dd>element that contains the fully 
+          qualified name of the zone object to be deleted.
+</dd>
+</dl></blockquote>
+
+<p>Example &lt;delete&gt; command:
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+C:&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+C:&lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+C:  &lt;command&gt;
+C:    &lt;delete&gt;
+C:      &lt;registry:delete
+C:        xmlns: registry="http://www.verisign.com/epp/registry-1.0"&gt;
+C:        &lt;registry:name&gt;EXAMPLE&lt;/registry:name&gt;
+C:      &lt;/registry:delete&gt;
+C:    &lt;/delete&gt;
+C:    &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
+C:  &lt;/command&gt;
+C:&lt;/epp&gt;</pre></div>
+<p>When a &lt;delete&gt; zone has been processed successfully, 
+       a server MUST respond with an EPP response with no &lt;resData&gt; 
+       element.
+</p>
+<p>Example &lt;delete&gt; response:
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+S:&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+S:&lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+S:  &lt;response&gt;
+S:    &lt;result code="1000"&gt;
+S:      &lt;msg&gt;Command completed successfully&lt;/msg&gt;
+S:    &lt;/result&gt;
+S:    &lt;trID&gt;
+S:      &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
+S:      &lt;svTRID&gt;54321-XYZ&lt;/svTRID&gt;
+S:    &lt;/trID&gt;
+S:  &lt;/response&gt;
+S:&lt;/epp&gt;</pre></div>
+<p>An EPP error response MUST be returned if a &lt;delete&gt; command 
+       can not be processed for any reason.
+</p>
+<a name="renewCommand"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.2.3"></a><h3>3.2.3.&nbsp;
+EPP &lt;renew&gt; Command</h3>
+
+<p>Renew semantics do not directly apply to zone objects, so there 
+       is no mapping defined for the EPP &lt;renew&gt; command.
+</p>
+<a name="transferCommand"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.2.4"></a><h3>3.2.4.&nbsp;
+EPP &lt;transfer&gt; Command</h3>
+
+<p>Transfer semantics do not directly apply to zone objects, so 
+       there is no mapping defined for the EPP &lt;transfer&gt; command.
+</p>
+<a name="updateCommand"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.3.2.5"></a><h3>3.2.5.&nbsp;
+EPP &lt;update&gt; Command</h3>
+
+<p>The EPP &lt;update&gt; command provides a transform operation 
+       that allows a client to modify the attributes of a zone object.  
+       In addition to the standard EPP command elements, the &lt;update&gt; 
+       command MUST contain a &lt;registry:update&gt; element that identifies 
+       the registry namespace. The &lt;registry:update&gt; element contains 
+       the following child elements:
+</p>
+<p></p>
+<blockquote class="text"><dl>
+<dt>&lt;registry:zone&gt;</dt>
+<dd>One or more elements that contain 
+          the full set of attributes for the zones as defined in 
+          <a class='info' href='#zone-object'>Section&nbsp;2.3<span> (</span><span class='info'>Zone Object</span><span>)</span></a>.  The update completely replaces 
+          the prior version of the zone.
+</dd>
+</dl></blockquote>
+
+<p>Example &lt;update&gt; command:
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+C:&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+C:&lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+C:  &lt;command&gt;
+C:    &lt;update&gt;
+C:      &lt;registry:update
+C:        xmlns:registry="http://www.verisign.com/epp/registry-1.0"&gt;
+C:        &lt;registry:zone&gt;
+C:          &lt;registry:name&gt;EXAMPLE&lt;/registry:name&gt;
+C:          ...
+C:        &lt;/registry:zone&gt;
+C:      &lt;/registry:update&gt;
+C:    &lt;/create&gt;
+C:    &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
+C:  &lt;/command&gt;
+C:&lt;/epp&gt;</pre></div>
+<p>When an &lt;update&gt; command has been processed successfully, 
+       a server MUST respond with an EPP response with no &lt;resData&gt; 
+       element.
+</p>
+<p>Example &lt;update&gt; command:
+</p><div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+S:&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
+S:&lt;epp xmlns="urn:ietf:params:xml:ns:epp-1.0"&gt;
+S:  &lt;response&gt;
+S:    &lt;result code="1000"&gt;
+S:      &lt;msg&gt;Command completed successfully&lt;/msg&gt;
+S:    &lt;/result&gt;
+S:    &lt;trID&gt;
+S:      &lt;clTRID&gt;ABC-12345&lt;/clTRID&gt;
+S:      &lt;svTRID&gt;54321-XYZ&lt;/svTRID&gt;
+S:    &lt;/trID&gt;
+S:  &lt;/response&gt;
+S:&lt;/epp&gt;</pre></div>
+<p>An EPP error response MUST be returned if an &lt;update&gt; command 
+       can not be processed for any reason.
+</p>
+<a name="syntax"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.4"></a><h3>4.&nbsp;
+Formal Syntax</h3>
+
+<p>One schema is presented here that is the EPP Registry Mapping 
+      Schema.
+</p>
+<p>The formal
+      syntax presented here is a complete schema representation of the object
+      mapping suitable for automated validation of EPP XML instances. The
+      BEGIN and END tags are not part of the schema; they are used to note the
+      beginning and ending of the schema for URI registration purposes.
+</p>
+<a name="anchor3"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.4.1"></a><h3>4.1.&nbsp;
+Registry Mapping Schema</h3>
+<div style='display: table; width: 0; margin-left: 3em; margin-right: auto'><pre>
+BEGIN
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;schema xmlns:registry=
+  "http://www.verisign.com/epp/registry-1.0"
+  xmlns:epp="urn:ietf:params:xml:ns:epp-1.0"
+  xmlns:eppcom="urn:ietf:params:xml:ns:eppcom-1.0"
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://www.verisign.com/epp/registry-1.0"
+  elementFormDefault="qualified"&gt;
+  &lt;!--
+  Import common element types.
+  --&gt;
+  &lt;import namespace="urn:ietf:params:xml:ns:eppcom-1.0"/&gt;
+  &lt;import namespace="urn:ietf:params:xml:ns:epp-1.0"/&gt;
+
+  &lt;annotation&gt;
+    &lt;documentation&gt;
+      Extensible Provisioning Protocol v1.0
+       Registry Mapping Schema.
+     &lt;/documentation&gt;
+  &lt;/annotation&gt;
+  &lt;!--
+  Child elements found in EPP commands.
+  --&gt;
+  &lt;element name="check" type="registry:mNameType"/&gt;
+  &lt;element name="create" type="registry:createType"/&gt;
+  &lt;element name="delete" type="registry:sNameType"/&gt;
+  &lt;element name="info" type="registry:infoType"/&gt;
+  &lt;element name="update" type="registry:updateType"/&gt;
+  &lt;!--
+    Child elements of the &lt;check&gt; command.
+  --&gt;
+  &lt;complexType name="mNameType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="name" type="eppcom:labelType"
+      maxOccurs="unbounded"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;!--
+    Child elements of the &lt;delete&gt; command.
+  --&gt;
+  &lt;complexType name="sNameType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="name"
+        type="eppcom:labelType"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;!--
+    Child elements of the &lt;create&gt; command.
+  --&gt;
+  &lt;complexType name="createType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="zone"
+        type="registry:zoneType"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="updateType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="zone"
+        type="registry:zoneType"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;!--
+    Child elements of the &lt;info&gt; command.
+  --&gt;
+  &lt;complexType name="infoType"&gt;
+    &lt;sequence&gt;
+      &lt;choice&gt;
+        &lt;element name="all"&gt;
+          &lt;complexType/&gt;
+        &lt;/element&gt;
+        &lt;element name="name"
+          type="eppcom:labelType"/&gt;
+      &lt;/choice&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+
+  &lt;!--
+    Child response elements.
+  --&gt;
+  &lt;element name="chkData"
+    type="registry:chkDataType"/&gt;
+  &lt;element name="creData"
+    type="registry:creDataType"/&gt;
+  &lt;element name="infData"
+    type="registry:infDataType"/&gt;
+
+  &lt;!--
+    &lt;create&gt; response elements.
+  --&gt;
+  &lt;complexType name="creDataType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="name"
+        type="eppcom:labelType"/&gt;
+      &lt;element name="crDate"
+        type="dateTime"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;!--
+    &lt;check&gt; response elements.
+  --&gt;
+  &lt;complexType name="chkDataType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="cd" type="registry:checkType"
+      maxOccurs="unbounded"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="checkType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="name"
+        type="registry:checkNameType"/&gt;
+      &lt;element name="reason"
+        type="eppcom:reasonType"
+      minOccurs="0"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="checkNameType"&gt;
+    &lt;simpleContent&gt;
+      &lt;extension base="eppcom:labelType"&gt;
+        &lt;attribute name="avail"
+          type="boolean" use="required"/&gt;
+      &lt;/extension&gt;
+    &lt;/simpleContent&gt;
+  &lt;/complexType&gt;
+  &lt;!--
+    &lt;info&gt; response elements.
+  --&gt;
+  &lt;complexType name="infDataType"&gt;
+    &lt;choice&gt;
+      &lt;element name="zoneList"
+        type="registry:zoneListType"/&gt;
+      &lt;element name="zone" type="registry:zoneType"/&gt;
+    &lt;/choice&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="zoneListType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="zone"
+        type="registry:zoneSummaryType"
+        minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="zoneSummaryType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="name"
+        type="string"/&gt;
+      &lt;element name="crDate"
+        type="dateTime"/&gt;
+      &lt;element name="upDate"
+        type="dateTime"
+      minOccurs="0"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="zoneType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="name"
+        type="eppcom:labelType"/&gt;
+      &lt;element name="group"
+        type="token" minOccurs="0"/&gt;
+      &lt;element name="subProduct"
+        type="token" minOccurs="0"/&gt;
+      &lt;element name="related"
+        type="registry:relatedType" minOccurs="0"/&gt;
+      &lt;element name="phase"
+        type="registry:phaseType"
+        minOccurs="0" maxOccurs="unbounded"/&gt;
+      &lt;element name="services"
+        type="registry:servicesType" minOccurs="0"/&gt;
+      &lt;element name="slaInfo"
+        type="registry:slaInfoType" minOccurs="0"/&gt;
+      &lt;element name="crID"
+        type="eppcom:clIDType" minOccurs="0"/&gt;
+      &lt;element name="crDate"
+        type="dateTime"/&gt;
+      &lt;element name="upID"
+        type="eppcom:clIDType" minOccurs="0"/&gt;
+      &lt;element name="upDate"
+        type="dateTime" minOccurs="0"/&gt;
+      &lt;element name="domain"
+        type="registry:domainType"/&gt;
+      &lt;element name="host"
+        type="registry:hostType"/&gt;
+      &lt;element name="contact"
+        type="registry:contactType"
+      minOccurs="0"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="slaInfoType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="sla" type="registry:slaType"
+      maxOccurs="unbounded"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="slaType"&gt;
+    &lt;simpleContent&gt;
+      &lt;extension base="decimal"&gt;
+        &lt;attribute name="type"
+          type="string" use="required"/&gt;
+        &lt;attribute name="subtype"
+          type="string" use="optional"/&gt;
+        &lt;attribute name="command"
+          type="string" use="optional"/&gt;
+        &lt;attribute name="unit"
+          type="string" use="optional"/&gt;
+      &lt;/extension&gt;
+    &lt;/simpleContent&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="fieldsType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="field" type="token"
+         maxOccurs="unbounded"/&gt;
+    &lt;/sequence&gt;
+    &lt;attribute name="type" use="required"&gt;
+      &lt;simpleType&gt;
+        &lt;restriction base="token"&gt;
+          &lt;enumeration value="shared"/&gt;
+          &lt;enumeration value="sync"/&gt;
+        &lt;/restriction&gt;
+      &lt;/simpleType&gt;
+    &lt;/attribute&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="zoneMemberType"&gt;
+    &lt;simpleContent&gt;
+      &lt;extension base="eppcom:labelType"&gt;
+        &lt;attribute name="type" use="required"&gt;
+          &lt;simpleType&gt;
+            &lt;restriction base="token"&gt;
+              &lt;enumeration value="primary"/&gt;
+              &lt;enumeration value="primaryBasedOnCrDate"/&gt;
+              &lt;enumeration value="alternate"/&gt;
+              &lt;enumeration value="equal"/&gt;
+            &lt;/restriction&gt;
+          &lt;/simpleType&gt;
+        &lt;/attribute&gt;
+      &lt;/extension&gt;
+    &lt;/simpleContent&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="relatedType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="fields" type="registry:fieldsType"
+        minOccurs="0"/&gt;
+      &lt;element name="zoneMember"
+        type="registry:zoneMemberType"
+      maxOccurs="unbounded"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="servicesType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="objURI" type="registry:uriType"
+      maxOccurs="unbounded"/&gt;
+      &lt;element name="svcExtension"
+      type="registry:svcExtensionType"
+      minOccurs="0"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="svcExtensionType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="extURI" type="registry:uriType"
+      minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="phaseType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="startDate" type="dateTime"/&gt;
+      &lt;element name="endDate" type="dateTime"
+      minOccurs="0"/&gt;
+    &lt;/sequence&gt;
+    &lt;attribute name="type" use="required"&gt;
+      &lt;simpleType&gt;
+        &lt;restriction base="token"&gt;
+          &lt;enumeration value="pre-delegation"/&gt;
+          &lt;enumeration value="pre-launch"/&gt;
+          &lt;enumeration value="sunrise"/&gt;
+          &lt;enumeration value="landrush"/&gt;
+          &lt;enumeration value="claims"/&gt;
+          &lt;enumeration value="open"/&gt;
+          &lt;enumeration value="custom"/&gt;
+        &lt;/restriction&gt;
+      &lt;/simpleType&gt;
+    &lt;/attribute&gt;
+    &lt;attribute name="mode" default="fcfs"&gt;
+      &lt;simpleType&gt;
+        &lt;restriction base="token"&gt;
+          &lt;enumeration value="fcfs"/&gt;
+          &lt;enumeration value="pending-registration"/&gt;
+          &lt;enumeration value="pending-application"/&gt;
+        &lt;/restriction&gt;
+      &lt;/simpleType&gt;
+    &lt;/attribute&gt;
+    &lt;attribute name="name" use="optional" type="token"/&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="uriType"&gt;
+    &lt;simpleContent&gt;
+      &lt;extension base="anyURI"&gt;
+        &lt;attribute name="required"
+          type="boolean" use="required"/&gt;
+      &lt;/extension&gt;
+    &lt;/simpleContent&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="reservedNamesType"&gt;
+    &lt;choice&gt;
+      &lt;element name="reservedName" type="normalizedString"
+      minOccurs="0" maxOccurs="unbounded"/&gt;
+      &lt;element name="reservedNameURI" type="anyURI"
+      minOccurs="0"/&gt;
+    &lt;/choice&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="domainNameType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="minLength"
+        type="unsignedShort" minOccurs="0"/&gt;
+      &lt;element name="maxLength"
+        type="unsignedShort" minOccurs="0"/&gt;
+      &lt;element name="alphaNumStart"
+        type="boolean" minOccurs="0"
+        default="false"/&gt;
+      &lt;element name="alphaNumEnd"
+        type="boolean" minOccurs="0"
+        default="false"/&gt;
+      &lt;element name="onlyDnsChars"
+        type="boolean" minOccurs="0"
+        default="true"/&gt;
+      &lt;element name="regex"
+        type="registry:regexType"
+        minOccurs="0" maxOccurs="unbounded"/&gt;
+      &lt;element name="reservedNames"
+        type="registry:reservedNamesType"
+        minOccurs="0"/&gt;
+    &lt;/sequence&gt;
+    &lt;attribute name="level" use="required"&gt;
+      &lt;simpleType&gt;
+        &lt;restriction base="unsignedShort"&gt;
+          &lt;minInclusive value="2"/&gt;
+        &lt;/restriction&gt;
+      &lt;/simpleType&gt;
+    &lt;/attribute&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="regexType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="expression"
+        type="string"/&gt;
+      &lt;element name="explanation"
+        minOccurs="0"&gt;
+        &lt;complexType&gt;
+          &lt;simpleContent&gt;
+            &lt;extension base="normalizedString"&gt;
+              &lt;attribute name="lang"
+                type="language"
+              default="en"/&gt;
+            &lt;/extension&gt;
+          &lt;/simpleContent&gt;
+        &lt;/complexType&gt;
+      &lt;/element&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;simpleType name="variantStrategyType"&gt;
+    &lt;restriction base="token"&gt;
+      &lt;enumeration value="blocked"/&gt;
+      &lt;enumeration value="restricted"/&gt;
+      &lt;enumeration value="open"/&gt;
+    &lt;/restriction&gt;
+  &lt;/simpleType&gt;
+  &lt;complexType name="languageType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="table" type="anyURI"
+      minOccurs="0"/&gt;
+      &lt;element name="variantStrategy"
+      type="registry:variantStrategyType"
+      minOccurs="0"/&gt;
+    &lt;/sequence&gt;
+    &lt;attribute name="code"
+      type="language" use="required"/&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="idnType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="idnVersion"
+        type="token" minOccurs="0"/&gt;
+      &lt;element name="idnaVersion"
+        type="token"/&gt;
+      &lt;element name="unicodeVersion"
+        type="token"/&gt;
+      &lt;element name="encoding"
+        type="token" minOccurs="0"
+        default="Punycode"/&gt;
+      &lt;element name="commingleAllowed"
+        type="boolean" minOccurs="0"
+        default="false"/&gt;
+      &lt;element name="language"
+        type="registry:languageType"
+        minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="dContactType"&gt;
+    &lt;complexContent&gt;
+      &lt;extension base="registry:minMaxType"&gt;
+        &lt;attribute name="type" use="required"&gt;
+          &lt;simpleType&gt;
+            &lt;restriction base="token"&gt;
+              &lt;enumeration value="admin"/&gt;
+              &lt;enumeration value="billing"/&gt;
+              &lt;enumeration value="tech"/&gt;
+            &lt;/restriction&gt;
+          &lt;/simpleType&gt;
+        &lt;/attribute&gt;
+      &lt;/extension&gt;
+    &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="minMaxType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="min"
+        type="unsignedShort"/&gt;
+      &lt;element name="max"
+        type="unsignedShort" minOccurs="0"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="minMaxPeriod"&gt;
+    &lt;sequence&gt;
+      &lt;element name="min"
+        type="registry:periodType"/&gt;
+      &lt;element name="max"
+        type="registry:periodType"/&gt;
+      &lt;element name="default"
+        type="registry:periodType"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="dPeriodType"&gt;
+    &lt;choice&gt;
+      &lt;element name="length" type="registry:minMaxPeriod"/&gt;
+      &lt;element name="serverDecided"&gt;
+        &lt;complexType/&gt;
+      &lt;/element&gt;
+    &lt;/choice&gt;
+    &lt;attribute name="command" type="token"
+    use="required"/&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="gPeriodType"&gt;
+    &lt;simpleContent&gt;
+      &lt;extension base="registry:periodType"&gt;
+        &lt;attribute name="command" type="token"
+        use="required"/&gt;
+      &lt;/extension&gt;
+    &lt;/simpleContent&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="periodType"&gt;
+    &lt;simpleContent&gt;
+      &lt;extension base="unsignedShort"&gt;
+        &lt;attribute name="unit"
+          type="registry:pUnitType"
+        use="required"/&gt;
+      &lt;/extension&gt;
+    &lt;/simpleContent&gt;
+  &lt;/complexType&gt;
+  &lt;simpleType name="pUnitType"&gt;
+    &lt;restriction base="token"&gt;
+      &lt;enumeration value="y"/&gt;
+      &lt;enumeration value="m"/&gt;
+      &lt;enumeration value="d"/&gt;
+      &lt;enumeration value="h"/&gt;
+    &lt;/restriction&gt;
+  &lt;/simpleType&gt;
+  &lt;complexType name="rgpType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="redemptionPeriod"
+      type="registry:periodType"/&gt;
+      &lt;element name="pendingRestore"
+      type="registry:periodType"/&gt;
+      &lt;element name="pendingDelete"
+      type="registry:periodType"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="keyInterfaceType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="min" type="unsignedShort"/&gt;
+      &lt;element name="max" type="unsignedShort"/&gt;
+      &lt;element name="alg" type="token"
+        minOccurs="0"
+      maxOccurs="unbounded"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="dsInterfaceType"&gt;
+    &lt;complexContent&gt;
+      &lt;extension base="registry:keyInterfaceType"&gt;
+        &lt;sequence&gt;
+          &lt;element name="digestType" type="token"
+          minOccurs="0"
+          maxOccurs="unbounded"/&gt;
+        &lt;/sequence&gt;
+      &lt;/extension&gt;
+    &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="maxSigLifeType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="clientDefined"
+        type="boolean"
+      minOccurs="0" default="false"/&gt;
+      &lt;element name="default"
+        type="int" minOccurs="0"/&gt;
+      &lt;element name="min"
+        type="int" minOccurs="0"/&gt;
+      &lt;element name="max"
+        type="int" minOccurs="0"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="dnssecType"&gt;
+    &lt;sequence&gt;
+      &lt;choice&gt;
+        &lt;element name="dsDataInterface"
+        type="registry:dsInterfaceType"/&gt;
+        &lt;element name="keyDataInterface"
+        type="registry:keyInterfaceType"/&gt;
+      &lt;/choice&gt;
+      &lt;element name="maxSigLife"
+      type="registry:maxSigLifeType"/&gt;
+      &lt;element name="urgent" type="boolean"
+      minOccurs="0" default="false"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="supportedStatusType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="status" type="token"
+        minOccurs="1"
+      maxOccurs="unbounded"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+
+  &lt;complexType name="keyValuesType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="value" maxOccurs="unbounded"&gt;
+        &lt;complexType&gt;
+          &lt;simpleContent&gt;
+            &lt;extension base="normalizedString"&gt;
+              &lt;attribute name="key" type="token"
+              use="required"/&gt;
+            &lt;/extension&gt;
+          &lt;/simpleContent&gt;
+        &lt;/complexType&gt;
+      &lt;/element&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="domainType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="domainName"
+        type="registry:domainNameType"
+      maxOccurs="unbounded"/&gt;
+      &lt;element name="idn"
+        type="registry:idnType" minOccurs="0"/&gt;
+      &lt;element name="premiumSupport"
+        type="boolean" minOccurs="0"
+        default="false"/&gt;
+      &lt;element name="contactsSupported"
+        type="boolean" minOccurs="0"
+        default="true"/&gt;
+      &lt;element name="contact"
+        type="registry:dContactType"
+        minOccurs="0" maxOccurs="3"/&gt;
+      &lt;element name="ns"
+        type="registry:minMaxType"/&gt;
+      &lt;element name="childHost"
+        type="registry:minMaxType"/&gt;
+      &lt;element name="period"
+        type="registry:dPeriodType"
+        minOccurs="0" maxOccurs="unbounded"/&gt;
+      &lt;element name="transferHoldPeriod"
+        type="registry:periodType"/&gt;
+      &lt;element name="gracePeriod"
+        type="registry:gPeriodType"
+        minOccurs="0" maxOccurs="unbounded"/&gt;
+      &lt;element name="rgp"
+        type="registry:rgpType" minOccurs="0"/&gt;
+      &lt;element name="dnssec"
+        type="registry:dnssecType" minOccurs="0"/&gt;
+      &lt;element name="maxCheckDomain"
+        type="unsignedShort"/&gt;
+      &lt;element name="supportedStatus"
+        type="registry:supportedStatusType" minOccurs="0"/&gt;
+      &lt;element name="authInfoRegex"
+        type="registry:regexType" minOccurs="0"/&gt;
+      &lt;element name="customData"
+        type="registry:keyValuesType" minOccurs="0"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;simpleType name="intHostSharePolicyType"&gt;
+    &lt;restriction base="token"&gt;
+      &lt;enumeration value="perZone"/&gt;
+      &lt;enumeration value="perSystem"/&gt;
+    &lt;/restriction&gt;
+  &lt;/simpleType&gt;
+  &lt;simpleType name="extHostSharePolicyType"&gt;
+    &lt;restriction base="token"&gt;
+      &lt;enumeration value="perRegistrar"/&gt;
+      &lt;enumeration value="perZone"/&gt;
+      &lt;enumeration value="perSystem"/&gt;
+    &lt;/restriction&gt;
+  &lt;/simpleType&gt;
+  &lt;complexType name="intHostPolicyType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="minIP"
+        type="unsignedShort"/&gt;
+      &lt;element name="maxIP"
+        type="unsignedShort"/&gt;
+      &lt;element name="sharePolicy"
+         type="registry:intHostSharePolicyType"
+         minOccurs="0"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="extHostPolicyType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="minIP"
+        type="unsignedShort"/&gt;
+      &lt;element name="maxIP"
+        type="unsignedShort"/&gt;
+      &lt;element name="sharePolicy"
+         type="registry:extHostSharePolicyType"
+         minOccurs="0"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="hostType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="internal"
+        type="registry:intHostPolicyType"/&gt;
+      &lt;element name="external"
+        type="registry:extHostPolicyType"/&gt;
+      &lt;element name="nameRegex"
+        type="registry:regexType"
+        minOccurs="0" maxOccurs="unbounded"/&gt;
+      &lt;element name="maxCheckHost"
+        type="unsignedShort"/&gt;
+      &lt;element name="supportedStatus"
+        type="registry:supportedStatusType"
+        minOccurs="0"/&gt;
+      &lt;element name="customData"
+        type="registry:keyValuesType"
+        minOccurs="0"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="minMaxLength"&gt;
+    &lt;sequence&gt;
+      &lt;element name="minLength"
+        type="unsignedShort"/&gt;
+      &lt;element name="maxLength"
+        type="unsignedShort"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;simpleType name="contactSharePolicyType"&gt;
+    &lt;restriction base="token"&gt;
+      &lt;enumeration value="perZone"/&gt;
+      &lt;enumeration value="perSystem"/&gt;
+    &lt;/restriction&gt;
+  &lt;/simpleType&gt;
+  &lt;complexType name="streetType"&gt;
+    &lt;complexContent&gt;
+      &lt;extension base="registry:minMaxLength"&gt;
+        &lt;sequence&gt;
+          &lt;element name="minEntry"
+            type="unsignedShort"/&gt;
+          &lt;element name="maxEntry"
+            type="unsignedShort"/&gt;
+        &lt;/sequence&gt;
+      &lt;/extension&gt;
+    &lt;/complexContent&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="contactAddressType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="street"
+        type="registry:streetType"/&gt;
+      &lt;element name="city"
+        type="registry:minMaxLength"/&gt;
+      &lt;element name="sp"
+        type="registry:minMaxLength"/&gt;
+      &lt;element name="pc"
+        type="registry:minMaxLength"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="postalType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="name"
+        type="registry:minMaxLength"/&gt;
+      &lt;element name="org"
+        type="registry:minMaxLength"/&gt;
+      &lt;element name="address"
+        type="registry:contactAddressType"/&gt;
+      &lt;element name="voiceRequired"
+        type="boolean" minOccurs="0"
+        default="false"/&gt;
+      &lt;element name="voiceExt"
+        type="registry:minMaxLength" minOccurs="0"/&gt;
+      &lt;element name="faxExt"
+        type="registry:minMaxLength" minOccurs="0"/&gt;
+      &lt;element name="emailRegex"
+        type="registry:regexType"
+        minOccurs="0" maxOccurs="unbounded"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+  &lt;complexType name="contactType"&gt;
+    &lt;sequence&gt;
+      &lt;element name="contactIdRegex"
+        type="registry:regexType"
+          minOccurs="0"/&gt;
+      &lt;element name="sharePolicy"
+          type="registry:contactSharePolicyType"
+          minOccurs="0"/&gt;
+      &lt;element name="intSupport"
+        type="boolean"/&gt;
+      &lt;element name="locSupport"
+        type="boolean"/&gt;
+      &lt;element name="postalInfo"
+        type="registry:postalType"/&gt;
+      &lt;element name="maxCheckContact"
+        type="unsignedShort"/&gt;
+      &lt;element name="authInfoRegex"
+        type="registry:regexType" minOccurs="0"/&gt;
+      &lt;element name="clientDisclosureSupported"
+        type="boolean" minOccurs="0"
+        default="false"/&gt;
+      &lt;element name="supportedStatus"
+        type="registry:supportedStatusType"
+        minOccurs="0"/&gt;
+      &lt;element name="transferHoldPeriod"
+        type="registry:periodType"
+        minOccurs="0"/&gt;
+      &lt;element name="customData"
+        type="registry:keyValuesType"
+        minOccurs="0"/&gt;
+    &lt;/sequence&gt;
+  &lt;/complexType&gt;
+&lt;/schema&gt;
+END</pre></div>
+<a name="anchor4"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.5"></a><h3>5.&nbsp;
+Change History</h3>
+
+<a name="version-00"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.5.1"></a><h3>5.1.&nbsp;
+Version 00</h3>
+
+<p></p>
+<ol class="text">
+<li>Initial version of Internet-Draft format of the 
+        EPP Registry Mapping, version 1.5.1.
+</li>
+</ol>
+
+<a name="Security"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<a name="rfc.section.6"></a><h3>6.&nbsp;
+Security Considerations</h3>
+
+<p>The mapping extensions described in this document do not provide any
+      security services beyond those described by <a class='info' href='#RFC5730'>EPP<span> (</span><span class='info'>Hollenbeck, S., &ldquo;Extensible Provisioning Protocol (EPP),&rdquo; August&nbsp;2009.</span><span>)</span></a> [RFC5730] and protocol layers used by EPP. The security
+      considerations described in these other specifications apply to this
+      specification as well.
+</p>
+<a name="rfc.references1"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<h3>7.&nbsp;Normative References</h3>
+<table width="99%" border="0">
+<tr><td class="author-text" valign="top"><a name="RFC0952">[RFC0952]</a></td>
+<td class="author-text">Harrenstien, K., Stahl, M., and E. Feinler, &ldquo;<a href="http://tools.ietf.org/html/rfc952">DoD Internet host table specification</a>,&rdquo; RFC&nbsp;952, October&nbsp;1985 (<a href="http://www.rfc-editor.org/rfc/rfc952.txt">TXT</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC1123">[RFC1123]</a></td>
+<td class="author-text"><a href="mailto:Braden@ISI.EDU">Braden, R.</a>, &ldquo;<a href="http://tools.ietf.org/html/rfc1123">Requirements for Internet Hosts - Application and Support</a>,&rdquo; STD&nbsp;3, RFC&nbsp;1123, October&nbsp;1989 (<a href="http://www.rfc-editor.org/rfc/rfc1123.txt">TXT</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC2119">[RFC2119]</a></td>
+<td class="author-text"><a href="mailto:sob@harvard.edu">Bradner, S.</a>, &ldquo;<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>,&rdquo; BCP&nbsp;14, RFC&nbsp;2119, March&nbsp;1997 (<a href="http://www.rfc-editor.org/rfc/rfc2119.txt">TXT</a>, <a href="http://xml.resource.org/public/rfc/html/rfc2119.html">HTML</a>, <a href="http://xml.resource.org/public/rfc/xml/rfc2119.xml">XML</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC3490">[RFC3490]</a></td>
+<td class="author-text">Faltstrom, P., Hoffman, P., and A. Costello, &ldquo;<a href="http://tools.ietf.org/html/rfc3490">Internationalizing Domain Names in Applications (IDNA)</a>,&rdquo; RFC&nbsp;3490, March&nbsp;2003 (<a href="http://www.rfc-editor.org/rfc/rfc3490.txt">TXT</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC4034">[RFC4034]</a></td>
+<td class="author-text">Arends, R., Austein, R., Larson, M., Massey, D., and S. Rose, &ldquo;<a href="http://tools.ietf.org/html/rfc4034">Resource Records for the DNS Security Extensions</a>,&rdquo; RFC&nbsp;4034, March&nbsp;2005 (<a href="http://www.rfc-editor.org/rfc/rfc4034.txt">TXT</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC5730">[RFC5730]</a></td>
+<td class="author-text">Hollenbeck, S., &ldquo;<a href="http://tools.ietf.org/html/rfc5730">Extensible Provisioning Protocol (EPP)</a>,&rdquo; STD&nbsp;69, RFC&nbsp;5730, August&nbsp;2009 (<a href="http://www.rfc-editor.org/rfc/rfc5730.txt">TXT</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC5731">[RFC5731]</a></td>
+<td class="author-text">Hollenbeck, S., &ldquo;<a href="http://tools.ietf.org/html/rfc5731">Extensible Provisioning Protocol (EPP) Domain Name Mapping</a>,&rdquo; STD&nbsp;69, RFC&nbsp;5731, August&nbsp;2009 (<a href="http://www.rfc-editor.org/rfc/rfc5731.txt">TXT</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC5732">[RFC5732]</a></td>
+<td class="author-text">Hollenbeck, S., &ldquo;<a href="http://tools.ietf.org/html/rfc5732">Extensible Provisioning Protocol (EPP) Host Mapping</a>,&rdquo; STD&nbsp;69, RFC&nbsp;5732, August&nbsp;2009 (<a href="http://www.rfc-editor.org/rfc/rfc5732.txt">TXT</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC5733">[RFC5733]</a></td>
+<td class="author-text">Hollenbeck, S., &ldquo;<a href="http://tools.ietf.org/html/rfc5733">Extensible Provisioning Protocol (EPP) Contact Mapping</a>,&rdquo; STD&nbsp;69, RFC&nbsp;5733, August&nbsp;2009 (<a href="http://www.rfc-editor.org/rfc/rfc5733.txt">TXT</a>).</td></tr>
+<tr><td class="author-text" valign="top"><a name="RFC5910">[RFC5910]</a></td>
+<td class="author-text">Gould, J. and S. Hollenbeck, &ldquo;<a href="http://tools.ietf.org/html/rfc5910">Domain Name System (DNS) Security Extensions Mapping for the Extensible Provisioning Protocol (EPP)</a>,&rdquo; RFC&nbsp;5910, May&nbsp;2010 (<a href="http://www.rfc-editor.org/rfc/rfc5910.txt">TXT</a>).</td></tr>
+</table>
+
+<a name="rfc.authors"></a><br /><hr />
+<table summary="layout" cellpadding="0" cellspacing="2" class="TOCbug" align="right"><tr><td class="TOCbug"><a href="#toc">&nbsp;TOC&nbsp;</a></td></tr></table>
+<h3>Authors' Addresses</h3>
+<table width="99%" border="0" cellpadding="0" cellspacing="0">
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">James Gould</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">VeriSign, Inc.</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">12061 Bluemont Way</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">Reston, VA  20190</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">US</td></tr>
+<tr><td class="author" align="right">Email:&nbsp;</td>
+<td class="author-text"><a href="mailto:jgould@verisign.com">jgould@verisign.com</a></td></tr>
+<tr><td class="author" align="right">URI:&nbsp;</td>
+<td class="author-text"><a href="http://www.verisigninc.com">http://www.verisigninc.com</a></td></tr>
+<tr cellpadding="3"><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">Lin Jia</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">VeriSign, Inc.</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">12061 Bluemont Way</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">Reston, VA  20190</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">US</td></tr>
+<tr><td class="author" align="right">Email:&nbsp;</td>
+<td class="author-text"><a href="mailto:ljia@verisign.com">ljia@verisign.com</a></td></tr>
+<tr><td class="author" align="right">URI:&nbsp;</td>
+<td class="author-text"><a href="http://www.verisigninc.com">http://www.verisigninc.com</a></td></tr>
+</table>
+</body></html>

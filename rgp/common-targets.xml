@@ -1,0 +1,101 @@
+<!--
+Copyright (C) 2004 VeriSign, Inc.
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-0107  USA
+
+http://www.verisign.com/nds/naming/namestore/techdocs.html
+-->
+<project name="EPP SDK-RGP Common Targets" default="test" basedir=".">
+
+
+  <!-- =================================================================== -->
+  <!-- Run All Tests 				 	                                   -->
+  <!-- =================================================================== -->
+  <target 	name="test" depends="test-codec, test-client-server"
+  			description="Run EPP SDK-Domain Unit Tests.  Requires JDK 1.4" >
+
+ </target>
+
+  <!-- =================================================================== -->
+  <!-- Codec Unit Test					 	                               -->
+  <!-- =================================================================== -->
+  <target	 name="test-codec" depends="jar" unless="rgp.test.codec.disable"
+  			description="Run CODEC Unit Test" >
+
+	<junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+		<formatter type="plain" usefile="true" />
+		<classpath refid="rgp.test.classpath" />
+		<test name="com.verisign.epp.codec.rgpext.EPPRgpExtTst"
+			fork="yes" todir="${rgp.results.dir}"
+		/>
+	</junit>
+
+  </target>
+
+
+  <!-- =================================================================== -->
+  <!-- Run full client/server test                                         -->
+  <!-- =================================================================== -->
+  <target	 name="test-client-server" depends="jar" unless="rgp.test.client-server.disable"
+  			description="Run full client server test.  Requires JDK 1.4" >
+
+	<parallel>
+		<daemons>
+			<java classname="com.verisign.epp.serverstub.Server" fork="true">
+				<arg value="epp.config"/>
+				<classpath refid="rgp.test.classpath" />
+			</java>
+		</daemons>
+		<sequential>
+			<sleep seconds="2"/>
+			<junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+				<formatter type="plain" usefile="true" />
+				<classpath refid="rgp.test.classpath" />
+				<test name="com.verisign.epp.interfaces.EPPRgpDomainTst"
+					fork="yes" todir="${rgp.results.dir}"
+				/>
+			</junit>
+		</sequential>
+	</parallel>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Run full client/server test                                         -->
+  <!-- =================================================================== -->
+  <target	 name="test-client" depends="jar" unless="rgp.test.client.disable"
+  			description="Run client test against an already running server" >
+
+		<junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+			<formatter type="plain" usefile="true" />
+			<classpath refid="rgp.test.classpath" />
+			<test name="com.verisign.epp.interfaces.EPPRgpDomainTst"
+				fork="yes" todir="${rgp.results.dir}"
+			/>
+		</junit>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Start the server stub                                               -->
+  <!-- =================================================================== -->
+  <target	 name="start-server" depends="jar"
+  			description="Start the server stub" >
+
+		<java classname="com.verisign.epp.serverstub.Server" fork="true">
+			<arg value="epp.config"/>
+			<classpath refid="rgp.test.classpath" />
+		</java>
+  </target>
+	
+</project>

@@ -1,0 +1,382 @@
+<!--
+Copyright (C) 2004 VeriSign, Inc.
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-0107  USA
+
+http://www.verisign.com/nds/naming/namestore/techdocs.html
+-->
+
+<project name="EPP SDK-Coa" default="jar" basedir=".">
+
+	<import file="${basedir}/common-targets.xml"/>	
+
+	<!-- SDK home directory -->
+    <property name="sdk.home.dir" location=".."/>
+
+	<!-- Ensure environment variables are set to env prefixed properties -->
+	<property environment="env"/>
+
+	<!-- All properties can be overridden in build.properties -->
+    <property file="${basedir}/build.properties"/>
+
+	<!-- Gen directories -->
+    <property name="coa.gen.dir" value="${sdk.home.dir}/gen"/>
+    <property name="coa.gen.src.dir" value="${coa.gen.dir}/java"/>
+
+
+	<!-- Domain directories -->
+    <property name="coa.domain.dir" value="${sdk.home.dir}/domain"/>
+    <property name="coa.domain.src.dir" value="${coa.domain.dir}/java"/>
+
+	<!-- Temporary directory used for distribution -->
+    <property name="coa.tmp.dir" location="${coa.dir}/tmp"/>
+
+	<!-- compiler option properties -->
+    <property name="debug" value="on"/>
+    <property name="optimize" value="on"/>
+    <property name="deprecation" value="on"/>
+
+	<!-- classpath to use for compilation tasks -->
+	<path id="coa.compile.classpath">
+		<fileset dir="${coa.lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${coa.epp.lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<!-- classpath to use for compilation tasks -->
+	<path id="coa.test.classpath">
+		<fileset dir="${coa.epp.lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<path refid="coa.compile.classpath"/>
+	</path>
+
+  <!-- =================================================================== -->
+  <!-- Initialization target                                               -->
+  <!-- =================================================================== -->
+  <target 	name="init"
+			description="Initializes the build for rest of targets ">
+
+	<!-- set time stamp properties -->
+    <tstamp/>
+
+	<!-- Give build.version a default value of SNAPSHOT -->
+	<property name="build.version" value="SNAPSHOT"/>
+
+    <echo message="----------- ${ant.project.name} ${build.version} ------------"/>
+
+	<mkdir dir="${coa.results.dir}" />
+	<mkdir dir="${coa.build.dir}" />
+	<mkdir dir="${coa.epp.lib.dir}" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Builds the epp-gen.jar file               		                   -->
+  <!-- =================================================================== -->
+  <target 	name="jar-gen"
+  			description="Build the dependent epp-gen.jar file" >
+		<ant dir="${coa.gen.dir}" target="jar" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Cleans the epp-gen files               		                       -->
+  <!-- =================================================================== -->
+  <target 	name="clean-gen"
+  			description="Clean the epp-gen files" >
+		<ant dir="${coa.gen.dir}" target="clean" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Builds the epp-domain.jar file               		                   -->
+  <!-- =================================================================== -->
+  <target 	name="jar-domain"
+  			description="Build the dependent epp-domain.jar file" >
+		<ant dir="${coa.domain.dir}" target="jar" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Cleans the epp-domain files               		                       -->
+  <!-- =================================================================== -->
+  <target 	name="clean-domain"
+  			description="Clean the epp-domain files" >
+		<ant dir="${coa.domain.dir}" target="clean" />
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Compiles source files                                     		   -->
+  <!-- =================================================================== -->
+  <target 	name="compile" depends="init, jar-gen, jar-domain"
+  			description="Compile EPP SDK-Domain source files" >
+
+    <echo message="${ant.project.name} ${build.version} Compile"/>
+    <javac srcdir="${coa.src.dir}"
+		   destdir="${coa.build.dir}"
+           debug="${debug}"
+           optimize="${optimize}"
+		   deprecation="${deprecation}"
+ 	       target="1.6"
+		   failonerror="true">
+
+		<classpath refid="coa.compile.classpath" />
+	</javac>
+
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Creates epp-coa.jar                                                -->
+  <!-- =================================================================== -->
+  <target 	name="jar" depends="compile"
+  			description="Generates EPP SDK-Domain .jar file (default)" >
+
+	<!-- Set default value of build.version to SNAPSHOT -->
+	<property name="build.version" value="SNAPSHOT"/>
+
+	<jar jarfile="${coa.epp.lib.dir}/epp-coa.jar" >
+			<manifest>
+					<attribute name="baseline" value="EPP-DOMAIN-SDK-${build.version}"/>
+			</manifest>
+		<fileset dir="${coa.build.dir}"
+			includes="com/**/*.class" />
+		<fileset dir="${coa.dir}"
+			includes="schemas/*.xsd" />
+	</jar>
+
+  </target>
+  
+	<!-- =================================================================== -->
+	<!-- Creates epp-coa-src.jar                                             -->
+	<!-- =================================================================== -->
+	<target 	name="jar-src" depends="init"
+  			description="Generates EPP SDK-coa-src.jar file " >
+		
+		<mkdir dir="${coa.dist.dir}/jar-src" />
+	
+		<!-- Create source .jar distribution -->
+		<zip destfile="${coa.dist.dir}/jar-src/epp-coa-${build.version}-src.jar">			
+			<zipfileset dir="${coa.dir}/java" includes="com/**/*.java">				
+			</zipfileset>			
+		</zip>
+	</target>
+  
+  <!-- =================================================================== -->
+  <!-- Formats the source code using Jalopy                                -->
+  <!-- =================================================================== -->
+  <target name="format"
+		  description="Format the source code">
+		  		<taskdef name="jalopy"
+				 classname="de.hunsicker.jalopy.plugin.ant.AntPlugin">
+			<classpath>
+				<fileset dir="${coa.lib.dir}/jalopy">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+		</taskdef>
+		<jalopy fileformat="unix"
+				convention="${coa.lib.dir}/jalopy/sdk-convention.xml"
+				loglevel="info"
+				threads="2"
+				classpathref="coa.compile.classpath">
+				<fileset dir="${coa.src.dir}">
+					<include name="**/*.java"/>
+				</fileset>
+		</jalopy>
+
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Creates the HTML API documentation                                  -->
+  <!-- =================================================================== -->
+  <target 	name="doc"
+  			description="Generate EPP SDK-Domain HTML API documentation" >
+
+    <mkdir dir="${coa.doc.dir}/html"/>
+    <javadoc packagenames="com.verisign.epp.*"
+             sourcepath="${coa.src.dir}:${coa.gen.src.dir}:${coa.domain.src.dir}"
+             destdir="${coa.doc.dir}/html"
+             author="true"
+             version="true"
+             use="true"
+             splitindex="true"
+			 breakiterator="true"
+             noindex="false"
+             windowtitle="${ant.project.name} API"
+             doctitle="${ant.project.name}"
+             bottom="Copyright &#169; VeriSign Inc. All Rights Reserved.">
+		<classpath refid="coa.compile.classpath" />
+	</javadoc>
+
+  </target>
+
+
+
+	<!-- =================================================================== -->
+	<!-- Ensure that build.version is set                                    -->
+	<!-- =================================================================== -->
+	<target name="check-build-version" unless="build.version">
+		<fail message="Must set build.version with -Dbuild.version=X"/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates SDK source distribution                                     -->
+	<!-- =================================================================== -->
+	<target name="dist-src" depends="check-build-version, init"
+				description = "Creates SDK source distribution (-Dbuild.version required)" >
+		<mkdir dir="${coa.dist.dir}" />
+
+		<!-- Create source .zip distribution -->
+		<zip destfile="${coa.dist.dir}/epp-coa-${build.version}-src.zip">
+			<zipfileset dir="${coa.license.dir}" prefix="eppsdk/license"/>
+			<zipfileset dir="${coa.lib.dir}" prefix="eppsdk/lib">
+				<exclude name="epp/**"/>
+			</zipfileset>
+			<zipfileset dir="${coa.epp.lib.dir}" prefix="eppsdk/lib/epp">
+				<include name="${coa.epp.lib.dir}/epp-gen-${build.version}.jar"/>
+			</zipfileset>
+			<zipfileset dir="${coa.dir}" prefix="eppsdk/coa">
+				<exclude name="junit*"/>
+				<exclude name="*.log*"/>
+				<exclude name="*.err"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.doc"/>
+				<exclude name="doc/*.xml"/>
+				<exclude name="doc/html/**"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+			</zipfileset>
+		</zip>
+
+		<!-- Create source .tar.gz distribution -->
+		<tar destfile="${coa.dist.dir}/epp-coa-${build.version}-src.tar.gz"
+			compression="gzip">
+			<tarfileset dir="${coa.license.dir}" prefix="eppsdk/license"/>
+			<tarfileset dir="${coa.lib.dir}" prefix="eppsdk/lib">
+				<exclude name="epp/**"/>
+			</tarfileset>
+			<tarfileset dir="${coa.dir}" mode="755" prefix="eppsdk/coa">
+				<exclude name="junit*"/>
+				<exclude name="*.log*"/>
+				<exclude name="*.err"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.doc"/>
+				<exclude name="doc/*.xml"/>
+				<exclude name="doc/html/**"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+			</tarfileset>
+		</tar>
+
+	</target>
+
+
+
+	<!-- =================================================================== -->
+	<!-- Creates SDK binary distribution                                     -->
+	<!-- =================================================================== -->
+	<target name="dist-bin" depends="check-build-version, jar, test, doc"
+				description = "Creates SDK binary distribution (-Dbuild.version required)" >
+		<mkdir dir="${coa.dist.dir}" />
+		<mkdir dir="${coa.tmp.dir}" />
+
+		<copy file="${coa.dir}/build-bin.xml" tofile="${coa.tmp.dir}/build.xml"/>
+
+
+		<!-- Create binary .zip distribution -->
+		<zip destfile="${coa.dist.dir}/epp-coa-${build.version}-bin.zip">
+			<zipfileset dir="${coa.license.dir}" prefix="eppsdk/license"/>
+			<zipfileset dir="${coa.lib.dir}" prefix="eppsdk/lib"/>
+			<zipfileset dir="${coa.tmp.dir}" includes="build.xml" prefix="eppsdk/coa"/>
+			<zipfileset dir="${coa.dir}" prefix="eppsdk/coa">
+				<exclude name="*.log"/>
+				<exclude name="*.err"/>
+				<exclude name="java/**"/>
+				<exclude name="schemas/**"/>
+				<exclude name="build.xml"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.doc"/>
+				<exclude name="doc/*.xml"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+				<exclude name="tmp/**"/>
+			</zipfileset>
+		</zip>
+
+		<!-- Create binary .tar.gz distribution -->
+		<tar destfile="${coa.dist.dir}/epp-coa-${build.version}-bin.tar.gz"
+			compression="gzip">
+			<tarfileset dir="${coa.license.dir}" prefix="eppsdk/license"/>
+			<tarfileset dir="${coa.lib.dir}" prefix="eppsdk/lib"/>
+			<tarfileset dir="${coa.tmp.dir}" includes="build.xml" prefix="eppsdk/coa"/>
+			<tarfileset dir="${coa.dir}" mode="755" prefix="eppsdk/coa">
+				<exclude name="*.log"/>
+				<exclude name="*.err"/>
+				<exclude name="java/**"/>
+				<exclude name="schemas/**"/>
+				<exclude name="build.xml"/>
+				<exclude name="build-bin.xml"/>
+				<exclude name="doc/*.doc"/>
+				<exclude name="doc/*.xml"/>
+				<exclude name="results/**"/>
+				<exclude name="build/**"/>
+				<exclude name="tmp/**"/>
+			</tarfileset>
+		</tar>
+
+		<delete dir="${coa.tmp.dir}"/>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Creates SDK distributions						                     -->
+	<!-- =================================================================== -->
+	<target name="dist" depends="dist-src, dist-bin"
+				description = "Creates SDK distributions (-Dbuild.version required)" >
+	</target>
+
+  <!-- =================================================================== -->
+  <!-- Clean targets                                                       -->
+  <!-- =================================================================== -->
+  <target 	name="clean" depends="init, clean-gen, clean-domain"
+			description="Clean EPP SDK-Domain compiled files" >
+
+		<!-- Clean build directory -->
+		<delete dir="${coa.build.dir}" quiet="true"/>
+
+		<!-- Clean the EPP lib directory -->
+		<delete dir="${coa.epp.lib.dir}" quiet="true"/>
+
+		<!-- Clean results directory -->
+		<delete dir="${coa.results.dir}" quiet="true"/>
+
+		<!-- Clean log files -->
+		<delete>
+			<fileset dir="${coa.dir}" includes="*.log, *.err"/>
+		</delete>
+
+		<!-- Clean generated documentation files -->
+		<delete dir="${coa.doc.dir}/html" quiet="true"/>
+
+		<!-- Clean distribution directory -->
+		<delete dir="${coa.dist.dir}" quiet="true"/>
+
+		<!-- Clean the tmp directory -->
+		<delete dir="${coa.tmp.dir}" quiet="true"/>
+
+  </target>
+
+</project>
+
+<!-- End of file -->

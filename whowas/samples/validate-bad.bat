@@ -1,0 +1,1 @@
+validate bad-*.xml

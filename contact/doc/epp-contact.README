@@ -1,0 +1,124 @@
+#############################################################
+# Copyright (C) 2005 VeriSign, Inc.
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.? See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA? 02111-1307? USA
+#
+# http://www.verisign.com/nds/naming/namestore/techdocs.html
+#############################################################
+
+1. Introduction
+2. Distribution Description
+3. Helpful World Wide Web URLs
+4. Contact Information
+
+
+Introduction
+-------------
+
+This directory contains the 1.0.0 release of the Extensible Provisioning
+Protocol (EPP) Contact Software Development Kit (SDK), hereon referred to as the
+EPP Contact SDK. The EPP Contact SDK is provided in Java and requires
+Java 1.4 and above.  The EPP DotName SDK is based on the following 
+EPP specifications:
+
+	o Extensible Provisiong Protocol, RFC 3730
+		doc/epp.txt
+	o EPP Domain Name Mapping, RFC 3731
+		doc/epp-domain.txt
+	o EPP Contact Mapping, RFC 3733
+		doc/epp-contact.txt
+	o EPP Host Mapping, RFC 3732
+		doc/epp-host.txt
+	o EPP Email Forwarding Mapping, version 1.1
+		doc/EPP-EmailFwd-Mapping.pdf
+	o EPP Defensive Registration Mapping, version 1.1
+		doc/EPP-DefReg-Mapping.pdf
+	o EPP NameWatch Mapping, version 1.1
+		doc/EPP-NameWatch-Mapping.pdf
+	o EPP Personal Registration Mapping, version 1.0 DRAFT 0.3
+		doc/EPP-PersReg-Mapping.pdf
+	
+	
+All software and source code 
+provided by VNDS may be used to support development of your registrar 
+systems subject to the terms of the license agreement between your 
+company and VNDS.
+
+Please check the system-specific notes below for any caveats related to
+your operating system.
+
+Changes
+-------------
+
+None - This is the first release of the SDK
+
+
+Documentation
+-------------
+
+The EPP SDK documentation resides in the 
+distribution doc directory.  
+
+Helpful World Wide Web URLs
+-------------
+
+Additional information related to the EPP SDK can be found on the
+World Wide Web at the following locations:
+
+Extensible Provisioning Protocol Transport Over TCP - 
+http://www.ietf.org/rfc/rfc3734.txt?number=3734
+
+Extensible Provisioning Protocol -
+http://www.ietf.org/rfc/rfc3730.txt?number=3730
+
+Extensible Provisioning Protocol Domain Name Mapping
+http://www.ietf.org/rfc/rfc3731.txt?number=3731
+
+Extensible Provisioning Protocol Host Mapping
+http://www.ietf.org/rfc/rfc3732.txt?number=3732
+
+Extensible Provisioning Protocol Contact Mapping
+http://www.ietf.org/rfc/rfc3733.txt?number=3733
+
+
+Bug Reporting
+-------------
+
+If you are in need of additional assistance, please contact VeriSign 
+Naming and Directory Services (VNDS).
+
+CVS Access
+----------
+
+No CVS access is provided at this time for the EPP SDK.
+
+Ports
+-----
+
+The EPP SDK has been built and tested in the following
+environments and languages:
+
+   - Linux 
+                        IBM JDK 1.4.2
+   - Windows NT
+                        JRockit 1.4.2
+   - Mac OS X           
+			Sun JDK 1.4.2       
+
+
+System-specific Notes
+---------------------
+
+

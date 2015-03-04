@@ -1,0 +1,728 @@
+
+
+
+VeriSign Inc. Proprietary Information                           J. Gould
+                                                                J. Faust
+                                                          VeriSign, Inc.
+                                                         January 2, 2014
+
+
+Common Object Attribute (COA) Extension for the Extensible Provisioning
+                             Protocol (EPP)
+
+Abstract
+
+   This document describes an Extensible Provisioning Protocol (EPP)
+   extension mapping for attaching additional key, value pair attributes
+   to objects defined in an EPP object mapping like the EPP domain name
+   mapping, the EPP host mapping, and the EPP contact mapping.
+
+Legal Disclaimer
+
+   COPYRIGHT NOTIFICATION
+
+   Copyright 2014 VeriSign, Inc. All rights reserved.  VERISIGN; the
+   Verisign logo; and other trademarks, service marks and Verisign
+   designs are registered or unregistered trademarks of VeriSign Inc.
+   and its subsidiaries in the United States and foreign countries.
+   Copyright laws and international treaties protect this document, and
+   any Verisign product to which it relates.
+
+   VERISIGN PROPRIETARY INFORMATION
+
+   This document is the property of VeriSign, Inc. and its subsidiaries
+   (together "Verisign") It may be used by recipient only for the
+   purpose for which it was transmitted and must be returned upon
+   request or when no longer needed by recipient.  It may not be copied
+   or communicated without the prior written consent of Verisign.
+
+   NOTICE AND CAUTION
+
+   Concerning U.S. Patent or Trademark Rights
+
+   Verisign and other trademarks, service marks and logos are registered
+   or unregistered trademarks of Verisign and its subsidiaries in the
+   United States and in foreign countries.  The inclusion in this
+   document, the associated on-line file or the associated software of
+   any information covered by any other patent, trademark or service
+   mark rights does not constitute nor imply a grant of or authority to
+   exercise, any right or privilege protected by such patent, trademark
+   or service mark.  All such rights and privileges are vested in the
+   patent, trademark or service mark owner and no other person may
+
+
+
+Gould & Faust                                                   [Page 1]
+
+                                   coa                      January 2014
+
+
+   exercise such rights without express permission, authority or license
+   secured from the patent, trademark or service mark owner.
+
+
+Table of Contents
+
+   1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .  3
+     1.1.  Conventions Used in This Document  . . . . . . . . . . . .  3
+   2.  Object Attributes  . . . . . . . . . . . . . . . . . . . . . .  3
+     2.1.  Client Object Attribute  . . . . . . . . . . . . . . . . .  3
+     2.2.  Key  . . . . . . . . . . . . . . . . . . . . . . . . . . .  4
+   3.  EPP Command Mapping  . . . . . . . . . . . . . . . . . . . . .  4
+     3.1.  EPP Query Commands . . . . . . . . . . . . . . . . . . . .  4
+       3.1.1.  EPP <check> Command  . . . . . . . . . . . . . . . . .  4
+       3.1.2.  EPP <info> Command . . . . . . . . . . . . . . . . . .  4
+       3.1.3.  EPP <transfer> Command . . . . . . . . . . . . . . . .  6
+     3.2.  EPP Transform Commands . . . . . . . . . . . . . . . . . .  6
+       3.2.1.  EPP <create> Command . . . . . . . . . . . . . . . . .  6
+       3.2.2.  EPP <delete> Command . . . . . . . . . . . . . . . . .  7
+       3.2.3.  EPP <renew> Command  . . . . . . . . . . . . . . . . .  7
+       3.2.4.  EPP <transfer> Command . . . . . . . . . . . . . . . .  7
+       3.2.5.  EPP <update> Command . . . . . . . . . . . . . . . . .  8
+   4.  Formal Syntax  . . . . . . . . . . . . . . . . . . . . . . . . 10
+     4.1.  Client Object Attribute Extension Schema . . . . . . . . . 10
+   5.  Change History . . . . . . . . . . . . . . . . . . . . . . . . 11
+     5.1.  Version 00 . . . . . . . . . . . . . . . . . . . . . . . . 12
+   6.  IANA Considerations  . . . . . . . . . . . . . . . . . . . . . 12
+   7.  Security Considerations  . . . . . . . . . . . . . . . . . . . 12
+   8.  Normative References . . . . . . . . . . . . . . . . . . . . . 12
+   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gould & Faust                                                   [Page 2]
+
+                                   coa                      January 2014
+
+
+1.  Introduction
+
+   This document describes an extension mapping for version 1.0 of the
+   Extensible Provisioning Protocol (EPP) [RFC5730].  This mapping, an
+   extension to EPP object mappings like the EPP domain name mapping
+   [RFC5731], for attaching additional key, value pair attributes to
+   objects.  The set of objects that support the COA extension and the
+   set of COA keys is up to server policy.
+
+1.1.  Conventions Used in This Document
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in RFC 2119 [RFC2119].
+
+   XML is case sensitive.  Unless stated otherwise, XML specifications
+   and examples provided in this document MUST be interpreted in the
+   character case presented in order to develop a conforming
+   implementation.
+
+   In examples, "C:" represents lines sent by a protocol client and "S:"
+   represents lines returned by a protocol server.  Indentation and
+   white space in examples are provided only to illustrate element
+   relationships and are not a REQUIRED feature of this protocol.
+
+   "coa-1.0" is used as an abbreviation for
+   "urn:ietf:params:xml:ns:coa-1.0".  The XML namespace prefix "coa" is
+   used, but implementations MUST NOT depend on it and instead employ a
+   proper namespace-aware XML parser and serializer to interpret and
+   output the XML documents.
+
+
+2.  Object Attributes
+
+   This extension adds additional elements to EPP object mappings like
+   the EPP domain name mapping [RFC5731].  Only those new elements are
+   described here.
+
+2.1.  Client Object Attribute
+
+   The Client Object Attribute (COA) is a client specified key, value
+   pair consisting of a key name and a key value.  A Client Object
+   Attribute is represented by the <coa:attr> element with the following
+   child elements:
+
+
+
+
+
+
+
+Gould & Faust                                                   [Page 3]
+
+                                   coa                      January 2014
+
+
+   <coa:key>  Element that contains a key name of 50 or less characters.
+   <coa:value>  Element that contains a key value of 1000 or less
+       characters.
+
+   An example <coa:attr> element with key name "KEY1" and key value of
+   "value1":
+
+   <coa:attr>
+     <coa:key>KEY1</coa:key>
+     <coa:value>value1</coa:value>
+   </coa:attr>
+
+2.2.  Key
+
+   The <coa:key> element can also be used outside of a <coa:attr>
+   element in certain contexts where it is only necessary to identify
+   the attribute and not specify its value.
+
+
+3.  EPP Command Mapping
+
+   A detailed description of the EPP syntax and semantics can be found
+   in the EPP core protocol specification [RFC5730].
+
+3.1.  EPP Query Commands
+
+   EPP provides three commands to retrieve object information: <check>
+   to determine if an object is known to the server, <info> to retrieve
+   detailed information associated with an object, and <transfer> to
+   retrieve object transfer status information.
+
+3.1.1.  EPP <check> Command
+
+   This extension does not add any elements to the EPP <check> command
+   or <check> response described in the [RFC5730].
+
+3.1.2.  EPP <info> Command
+
+   This extension does not add any elements to the EPP <info> command
+   described in the [RFC5730].  Additional elements are defined for the
+   <info> response.
+
+   When an <info> command has been processed successfully, the EPP
+   <resData> element MUST contain child elements as described in an
+   object mapping like [RFC5731].  In addition, the EPP <extension>
+   element SHOULD contain a child <coa:infData> element that identifies
+   the extension namespace if the object has one or more Client Object
+   Attributes associated with it and based on server policy.  The <coa:
+
+
+
+Gould & Faust                                                   [Page 4]
+
+                                   coa                      January 2014
+
+
+   infData> element contains the following child elements:
+
+   <caa:attr>  One or more <coa:attr> elements, as described in
+       Section 2.1, for the Client Object Attributes set on the object.
+
+   Example <info> response for a domain with an associated Client Object
+   Attribute:
+
+   S:<?xml version="1.0" encoding="UTF-8"?>
+   S:<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+   S:  <response>
+   S:     <result code="1000">
+   S:       <msg>Command completed successfully</msg>
+   S:     </result>
+   S:     <resData>
+   S:       <domain:infData
+   S:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
+   S:         <domain:name>example.tld</domain:name>
+   S:         <domain:roid>EXAMPLE1-REP</domain:roid>
+   S:         <domain:status s="ok"/>
+   S:         <domain:clID>ClientX</domain:clID>
+   S:         <domain:crID>ClientY</domain:crID>
+   S:         <domain:crDate>2011-02-04T15:44:37.0526Z
+   S:        </domain:crDate>
+   S:         <domain:authInfo>
+   S:           <domain:pw>2fooBAR</domain:pw>
+   S:         </domain:authInfo>
+   S:       </domain:infData>
+   S:     </resData>
+   S:     <extension>
+   S:       <coa:infData xmlns:coa=
+   S:        "urn:ietf:params:xml:ns:coa-1.0">
+   S:         <coa:attr>
+   S:           <coa:key>KEY1</coa:key>
+   S:           <coa:value>value1</coa:value>
+   S:         </coa:attr>
+   S:       </coa:infData>
+   S:     </extension>
+   S:     <trID>
+   S:       <clTRID>54321-CLI</clTRID>
+   S:       <svTRID>54321-SER</svTRID>
+   S:     </trID>
+   S:  </response>
+   S:</epp>
+
+
+
+
+
+
+
+Gould & Faust                                                   [Page 5]
+
+                                   coa                      January 2014
+
+
+3.1.3.  EPP <transfer> Command
+
+   This extension does not add any elements to the EPP <transfer>
+   command or <transfer> response described in the [RFC5730].
+
+3.2.  EPP Transform Commands
+
+   EPP provides five commands to transform objects: <create> to create
+   an instance of an object, <delete> to delete an instance of an
+   object, <renew> to extend the validity period of an object,
+   <transfer> to manage object sponsorship changes, and <update> to
+   change information associated with an object.
+
+3.2.1.  EPP <create> Command
+
+   This extension defines additional elements to extend the EPP <create>
+   command of an object mapping like [RFC5731].
+
+   The EPP <create> command provides a transform operation that allows a
+   client to create an object.  In addition to the EPP command elements
+   described in an object mapping like [RFC5731], the command MUST
+   contain a child <coa:create> element that identifies the extension
+   namespace if the client wants to associate Client Object Attributes
+   to the object.  The <coa:create> element contains the following child
+   elements:
+
+   <caa:attr>  One or more <coa:attr> elements, as described in
+       Section 2.1, for the Client Object Attributes to set on the
+       object.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gould & Faust                                                   [Page 6]
+
+                                   coa                      January 2014
+
+
+   Example <create> command to create a domain object with a Client
+   Object Attribute:
+
+   C:<?xml version="1.0" encoding="UTF-8"?>
+   C:<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+   C:  <command>
+   C:     <create>
+   C:       <domain:create
+   C:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
+   C:         <domain:name>example.tld</domain:name>
+   C:         <domain:authInfo>
+   C:           <domain:pw>2fooBAR</domain:pw>
+   C:         </domain:authInfo>
+   C:       </domain:create>
+   C:     </create>
+   C:     <extension>
+   C:       <coa:create xmlns:coa="urn:ietf:params:xml:ns:coa-1.0">
+   C:         <coa:attr>
+   C:           <coa:key>KEY1</coa:key>
+   C:           <coa:value>value1</coa:value>
+   C:         </coa:attr>
+   C:       </coa:create>
+   C:     </extension>
+   C:     <clTRID>ABC-12345</clTRID>
+   C:   </command>
+   C:  </epp>
+
+   This extension does not add any elements to the EPP <create> response
+   described in the [RFC5730].
+
+3.2.2.  EPP <delete> Command
+
+   This extension does not add any elements to the EPP <delete> command
+   or <delete> response described in the [RFC5730].
+
+3.2.3.  EPP <renew> Command
+
+   This extension does not add any elements to the EPP <renew> command
+   or <renew> response described in the [RFC5730].
+
+3.2.4.  EPP <transfer> Command
+
+   This extension does not add any elements to the EPP <transfer>
+   command or <transfer> response described in the [RFC5730].
+
+
+
+
+
+
+
+Gould & Faust                                                   [Page 7]
+
+                                   coa                      January 2014
+
+
+3.2.5.  EPP <update> Command
+
+   This extension defines additional elements to extend the EPP <update>
+   command of an object mapping like [RFC5731].
+
+   The EPP <update> command provides a transform operation that allows a
+   client to modify the attributes of an object.  In addition to the EPP
+   command elements described in the appropriate EPP object mapping, the
+   command MUST contain an <extension> element, and the <extension>
+   element MUST contain a child <coa:update> element that identifies the
+   extension namespace if the client wants to update the Client Object
+   Attributes of the object.  The <coa:update> element contains a <coa:
+   put> element to add or update one or more Client Object Attributes,
+   or a <coa:rem> element to remove existing Client Object Attributes.
+   At least one <coa:put> or <coa:rem> element MUST be provided.
+
+   The <coa:update> element contains the following child elements:
+
+   <caa:rem>  OPTIONAL element that is used to remove Client Object
+       Attributes from the object.  The <coa:rem> element MUST contain
+       one or more <coa:key> elements that are used to remove the
+       existing Client Object Attributes.
+   <caa:put>  OPTIONAL element that is used to add or update Client
+       Object Attributes.  The <coa:put> element MUST contain one or
+       more <coa:attr> elements that are each used to identify the name
+       and value of a Client Object Attribute being added to the object
+       or updated if the Client Object Attribute already exists.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gould & Faust                                                   [Page 8]
+
+                                   coa                      January 2014
+
+
+   Example <update> command to add or update a Client Object Attribute
+   "KEY1" with the value "value1":
+
+   C:<?xml version="1.0" encoding="UTF-8"?>
+   C:<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+   C:  <command>
+   C:     <update>
+   C:       <domain:update
+   C:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
+   C:         <domain:name>example.tld</domain:name>
+   C:         <domain:chg/>
+   C:       </domain:update>
+   C:     </update>
+   C:     <extension>
+   C:       <coa:update xmlns:coa="urn:ietf:params:xml:ns:coa-1.0">
+   C:         <coa:put>
+   C:           <coa:attr>
+   C:             <coa:key>KEY1</coa:key>
+   C:             <coa:value>value1</coa:value>
+   C:           </coa:attr>
+   C:         </coa:put>
+   C:       </coa:update>
+   C:     </extension>
+   C:   </command>
+   C:</epp>
+
+   Example <update> command to remove the Client Object Attribute
+   "KEY1":
+
+   C:<?xml version="1.0" encoding="UTF-8"?>
+   C:<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+   C:  <command>
+   C:     <update>
+   C:       <domain:update
+   C:         xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
+   C:         <domain:name>example.tld</domain:name>
+   C:         <domain:chg/>
+   C:       </domain:update>
+   C:     </update>
+   C:     <extension>
+   C:       <coa:update xmlns:coa="urn:ietf:params:xml:ns:coa-1.0">
+   C:         <coa:rem>
+   C:           <coa:key>KEY1</coa:key>
+   C:         </coa:rem>
+   C:       </coa:update>
+   C:     </extension>
+   C:   </command>
+   C:</epp>
+
+
+
+Gould & Faust                                                   [Page 9]
+
+                                   coa                      January 2014
+
+
+   This extension does not add any elements to the EPP <update> response
+   described in the [RFC5730].
+
+
+4.  Formal Syntax
+
+   One schema is presented here that is the EPP Client Object Attribute
+   Extension schema.
+
+   The formal syntax presented here is a complete schema representation
+   of the object mapping suitable for automated validation of EPP XML
+   instances.  The BEGIN and END tags are not part of the schema; they
+   are used to note the beginning and ending of the schema for URI
+   registration purposes.
+
+4.1.  Client Object Attribute Extension Schema
+
+   BEGIN
+   <?xml version="1.0" encoding="UTF-8"?>
+
+   <schema targetNamespace="urn:ietf:params:xml:ns:coa-1.0"
+     xmlns:coa="urn:ietf:params:xml:ns:coa-1.0"
+     xmlns="http://www.w3.org/2001/XMLSchema"
+     elementFormDefault="qualified">
+
+     <annotation>
+       <documentation>
+         Extensible Provisioning Protocol v1.0
+         extension schema for COA (Client Object Attribute).
+       </documentation>
+     </annotation>
+
+     <element name="create" type="coa:mapType" />
+     <element name="update" type="coa:updateType" />
+     <element name="infData" type="coa:mapType" />
+
+
+     <complexType name="updateType">
+       <sequence>
+         <element name="rem" type="coa:remType" minOccurs="0" />
+         <element name="put" type="coa:mapType" minOccurs="0" />
+       </sequence>
+     </complexType>
+
+     <!--
+       A sequence of key/value pairs,
+       for creating or updating a key/value
+       pair in the server.
+
+
+
+Gould & Faust                                                  [Page 10]
+
+                                   coa                      January 2014
+
+
+     -->
+     <complexType name="mapType">
+       <sequence>
+         <element name="attr" type="coa:attrType"
+         maxOccurs="unbounded" />
+       </sequence>
+     </complexType>
+
+     <!-- A single key/value pair -->
+     <complexType name="attrType">
+       <all>
+         <element name="key" type="coa:keyType" />
+         <element name="value" type="coa:valueType" />
+       </all>
+     </complexType>
+
+     <!-- A sequence of keys,
+     for removing key/value pairs in the server. -->
+     <complexType name="remType">
+       <sequence>
+         <element name="key" type="coa:keyType"
+         maxOccurs="unbounded" />
+       </sequence>
+     </complexType>
+
+     <simpleType name="keyType">
+       <restriction base="token">
+         <maxLength value="50" />
+       </restriction>
+     </simpleType>
+
+     <simpleType name="valueType">
+       <restriction base="token">
+         <maxLength value="1000" />
+       </restriction>
+     </simpleType>
+
+     <!--
+      End of schema.
+      -->
+   </schema>
+   END
+
+
+5.  Change History
+
+
+
+
+
+
+Gould & Faust                                                  [Page 11]
+
+                                   coa                      January 2014
+
+
+5.1.  Version 00
+
+   1.  Initial version of Internet-Draft format of the Verisign Client
+       Object Attribute, version 1.0.
+
+
+6.  IANA Considerations
+
+   This document uses URNs to describe XML namespaces and XML schemas
+   conforming to a registry mechanism described in [RFC3688].  One URI
+   assignment must be completed by the IANA.
+
+   Registration request for the COA namespace:
+
+   Registration request for the extension XML schema:
+
+   URI: urn:ietf:params:xml:ns:coa-1.0
+
+   Registrant Contact: IESG
+
+   XML: See the "Formal Syntax" section of this document.
+
+
+7.  Security Considerations
+
+   The mapping extensions described in this document do not provide any
+   security services beyond those described by EPP [RFC5730] and
+   protocol layers used by EPP.  The security considerations described
+   in these other specifications apply to this specification as well.
+
+
+8.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+   [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
+              January 2004.
+
+   [RFC5730]  Hollenbeck, S., "Extensible Provisioning Protocol (EPP)",
+              STD 69, RFC 5730, August 2009.
+
+   [RFC5731]  Hollenbeck, S., "Extensible Provisioning Protocol (EPP)
+              Domain Name Mapping", STD 69, RFC 5731, August 2009.
+
+
+
+
+
+
+
+Gould & Faust                                                  [Page 12]
+
+                                   coa                      January 2014
+
+
+Authors' Addresses
+
+   James Gould
+   VeriSign, Inc.
+   12061 Bluemont Way
+   Reston, VA  20190
+   US
+
+   Email: jgould@verisign.com
+   URI:   http://www.verisigninc.com
+
+
+   Jeffrey Faust
+   VeriSign, Inc.
+   12061 Bluemont Way
+   Reston, VA  20190
+   US
+
+   Email: jfaust@verisign.com
+   URI:   http://www.verisigninc.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gould & Faust                                                  [Page 13]
+

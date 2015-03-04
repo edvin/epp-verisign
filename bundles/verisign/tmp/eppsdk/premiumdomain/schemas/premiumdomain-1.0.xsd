@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  
+<schema targetNamespace=
+  "http://www.verisign.com/epp/premiumdomain-1.0"
+  xmlns:premiumdomain="http://www.verisign.com/epp/premiumdomain-1.0"
+  xmlns:eppcom="urn:ietf:params:xml:ns:eppcom-1.0"
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="qualified">
+
+<!-- Import common element types. -->
+<import namespace="urn:ietf:params:xml:ns:eppcom-1.0"/>
+    
+<annotation>
+  <documentation>
+    Extensible Provisioning Protocol v1.0 
+    Extension schema for Premium Domain
+  </documentation>
+</annotation>
+    
+<!-- Premium Domain check command extension root element -->
+<element name="check" 
+  type="premiumdomain:chkType"/>
+      
+<!-- Premium Domain check response extension root element -->     
+<element name="chkData" 
+  type="premiumdomain:chkDataType"/>
+  
+<!-- Premium Domain reassign command extension root element --> 
+<element name="reassign" 
+  type="premiumdomain:reassignType"/>
+          
+<!-- <premiumdomain:check> command extension -->
+<complexType name="chkType">
+  <sequence>
+    <element name="flag" 
+      type="boolean" minOccurs="1" maxOccurs="1" />
+  </sequence>
+</complexType>
+      
+<!-- <premiumdomain:chkData> response extension -->
+<complexType name="chkDataType">
+  <sequence>
+    <element name="cd" 
+      type="premiumdomain:checkType" maxOccurs="unbounded"/>       
+  </sequence>
+</complexType>    
+    
+<!-- <premiumdomain:reassign> command extension -->
+<complexType name="reassignType">
+  <sequence>
+      <element name="shortName" 
+        type="eppcom:labelType" minOccurs="1" maxOccurs="1" />
+  </sequence>
+</complexType>
+        
+<complexType name="checkType">
+  <sequence>
+    <element name="name" 
+      type="premiumdomain:checkNameType"/>
+    <element name="price" type="premiumdomain:priceType" 
+      minOccurs="0" maxOccurs="1" />
+    <element name="renewalPrice" type="premiumdomain:priceType" 
+      minOccurs="0" maxOccurs="1" />
+  </sequence>
+</complexType>    
+    
+<complexType name="checkNameType">
+  <simpleContent>
+    <extension base="eppcom:labelType">
+      <attribute name="premium" 
+        type="boolean" use="required"/>
+    </extension>
+  </simpleContent>
+</complexType>
+  
+<complexType name="priceType">
+  <simpleContent>
+    <extension base="premiumdomain:priceFormatType">
+      <attribute name="unit" 
+        type="premiumdomain:priceUnitType" use="required"/>
+    </extension>
+  </simpleContent>
+</complexType>
+  
+<!-- Price type restricted to include two decimal places --> 
+<simpleType name="priceFormatType">
+  <restriction base="decimal">
+    <fractionDigits value="2"/>
+    <minInclusive value="0.00"/>
+  </restriction>
+</simpleType>
+    
+<!-- Price unit type --> 
+<simpleType name="priceUnitType">
+  <restriction base="token">
+    <enumeration value="USD"/>
+  </restriction>
+</simpleType>
+          
+</schema>

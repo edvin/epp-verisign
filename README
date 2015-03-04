@@ -1,0 +1,81 @@
+This project contains the Verisign EPP Bundle from http://www.verisigninc.com/assets/epp-sdk/1_4_0_0/epp-verisign-1.4.0.0-src.tar.gz with some modifications and bug fixes.
+
+Target was changed to Java 1.8 in each modules build.xml
+
+We added maven-install.bat that will build the modules we use at the moment and add them to the local maven-repo.
+
+The files seem to be ISO-8859-1 encoded, so we convert to UTF8 like this:
+
+find . -name "*.java"|xargs recode ISO-8859-1..UTF8
+
+Document changes to this source base in this file, so that we can easily download a new version of epp-namestore, apply
+our changes, and build/deploy a new version with minimal fuss.
+
+The local additions we do in are primarily to extend some commands to adhere to the changes/additions made
+by NORID. The updated schema can be found here: http://www.norid.no/registrar/system/dokumentasjon/epp-grensesnitt.html
+
+The epp client is set to not validate the schemas, so we only use them as templates for building our own extension objects.
+(EPP.Validating=false in epp.config)
+
+CHANGES TO VERISIGN CODE:
+
+EPPCodec#decode() is changed to support more than one resData element by changing the switch statement:
+
+		// Response?
+		else if (messageType.getTagName().equals(EPPResponse.ELM_NAME)) {
+			NodeList responseDataElm =
+				messageType.getElementsByTagName(EPPResponse.ELM_RESPONSE_DATA);
+
+			switch (responseDataElm.getLength()) {
+				// No Response Extension?
+				case 0:
+					retVal = new EPPResponse();
+
+					break;
+
+				// Response Extension?
+				default:
+
+					// Create Concrete Response
+					Element responseMap =
+						EPPUtil.getFirstElementChild((Element) responseDataElm
+													 .item(0));
+
+					if (responseMap == null) {
+						throw new EPPDecodeException("No child element found for "
+													 + EPPResponse.ELM_RESPONSE_DATA);
+					}
+
+					try {
+						retVal =
+							EPPFactory.getInstance().createResponse(responseMap);
+					}
+					 catch (EPPCodecException e) {
+						throw new EPPComponentNotFoundException(
+								EPPComponentNotFoundException.RESPONSE,
+								"Unable to create concrete response: "
+													 + e);
+					}
+
+					break;
+
+                /* -- This used to be the default, and default: used to be 1:
+				default:
+					throw new EPPDecodeException("Invalid number of "
+												 + EPPResponse.ELM_RESPONSE_DATA
+												 + " elements of "
+												 + responseDataElm.getLength());
+				*/
+			} // end switch (responseDataElm.getLength())
+		}
+
+EPPSession#validateClientTransId() is changed to allow client to not send transId as per spec.
+This is necessary since RRP Proxy will send a transId back even if the client didn't send one,
+ and when you use pooling there is no way to set a transId for the initial login attempt. Catch22 created by Verisign :)
+
+Line 785:
+		
+		// If the client didn't send a transId, we don't validate what the server sent
+		if (theCmdTransId == null)
+			return;
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<epp xmlns="urn:ietf:params:xml:ns:epp-1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:ietf:params:xml:ns:epp-1.0 epp-1.0.xsd">
+	<response>
+		<result code="1000">
+			<msg>Command completed successfully</msg>
+		</result>
+		<resData>
+			<suggestion:infData
+				xmlns:suggestion="http://www.verisign-grs.com/epp/suggestion-1.1"
+				xsi:schemaLocation="http://www.verisign-grs.com/epp/suggestion-1.1
+				suggestion-1.1.xsd">
+				<suggestion:key>SoccerTeam.com</suggestion:key>
+				<suggestion:language>ENG</suggestion:language>
+				<suggestion:token name="Soccer">
+					<suggestion:related>football</suggestion:related>
+					<suggestion:related>rugby</suggestion:related>
+				</suggestion:token>
+				<suggestion:token name="Team">
+					<suggestion:related>squad</suggestion:related>
+				</suggestion:token>
+				<suggestion:answer>
+					<suggestion:table>
+						<suggestion:row name="SoccerTeam.com" score="1000" status="registered"/>
+						<suggestion:row name="SoccerSquad.com" score="952" status="available"/>
+						<suggestion:row name="FootballTeam.com" score="945" status="forsale"/>
+						<suggestion:row name="SoccerTeam.net" score="543" status="available"/>
+						<suggestion:row name="SoccerSquad.net" score="521" status="available"/>
+						<suggestion:row name="FootballTeam.net" score="432" status="available"/>
+						<suggestion:row name="xn--ftbolteam-58a.com" score="432" status="available" uName="FútbolTeam.com"/>
+					</suggestion:table>
+				</suggestion:answer>
+			</suggestion:infData>
+		</resData>
+		<trID>
+			<clTRID>51364-CLI</clTRID>
+			<svTRID>SRV-43659</svTRID>
+		</trID>
+	</response>
+</epp>

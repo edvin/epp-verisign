@@ -1,0 +1,616 @@
+
+
+
+VeriSign Inc. Proprietary Information                           J. Gould
+                                                          VeriSign, Inc.
+                                                       December 10, 2013
+
+
+  Namestore Extension Mapping for the Extensible Provisioning Protocol
+                                 (EPP)
+
+Abstract
+
+   This document describes an Extensible Provisioning Protocol (EPP)
+   extension mapping for routing commands to a logical registry using a
+   sub-product identifier.
+
+Legal Disclaimer
+
+   COPYRIGHT NOTIFICATION
+
+   Copyright 2013 VeriSign, Inc. All rights reserved.  VERISIGN; the
+   Verisign logo; and other trademarks, service marks and Verisign
+   designs are registered or unregistered trademarks of VeriSign Inc.
+   and its subsidiaries in the United States and foreign countries.
+   Copyright laws and international treaties protect this document, and
+   any Verisign product to which it relates.
+
+   VERISIGN PROPRIETARY INFORMATION
+
+   This document is the property of VeriSign, Inc. and its subsidiaries
+   (together "Verisign") It may be used by recipient only for the
+   purpose for which it was transmitted and must be returned upon
+   request or when no longer needed by recipient.  It may not be copied
+   or communicated without the prior written consent of Verisign.
+
+   NOTICE AND CAUTION
+
+   Concerning U.S. Patent or Trademark Rights
+
+   Verisign and other trademarks, service marks and logos are registered
+   or unregistered trademarks of Verisign and its subsidiaries in the
+   United States and in foreign countries.  The inclusion in this
+   document, the associated on-line file or the associated software of
+   any information covered by any other patent, trademark or service
+   mark rights does not constitute nor imply a grant of or authority to
+   exercise, any right or privilege protected by such patent, trademark
+   or service mark.  All such rights and privileges are vested in the
+   patent, trademark or service mark owner and no other person may
+   exercise such rights without express permission, authority or license
+   secured from the patent, trademark or service mark owner.
+
+
+
+Gould                                                           [Page 1]
+
+                              namestoreext                 December 2013
+
+
+Table of Contents
+
+   1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .  3
+     1.1.  Conventions Used in This Document  . . . . . . . . . . . .  3
+   2.  Object Attributes  . . . . . . . . . . . . . . . . . . . . . .  3
+     2.1.  Sub-Product Identifier . . . . . . . . . . . . . . . . . .  3
+   3.  EPP Command Mapping  . . . . . . . . . . . . . . . . . . . . .  4
+     3.1.  EPP Query Commands . . . . . . . . . . . . . . . . . . . .  4
+       3.1.1.  EPP <check> Command  . . . . . . . . . . . . . . . . .  4
+       3.1.2.  EPP <info> Command . . . . . . . . . . . . . . . . . .  7
+       3.1.3.  EPP <transfer> Command . . . . . . . . . . . . . . . .  7
+     3.2.  EPP Transform Commands . . . . . . . . . . . . . . . . . .  7
+       3.2.1.  EPP <create> Command . . . . . . . . . . . . . . . . .  8
+       3.2.2.  EPP <delete> Command . . . . . . . . . . . . . . . . .  8
+       3.2.3.  EPP <renew> Command  . . . . . . . . . . . . . . . . .  8
+       3.2.4.  EPP <transfer> Command . . . . . . . . . . . . . . . .  8
+       3.2.5.  EPP <update> Command . . . . . . . . . . . . . . . . .  8
+   4.  Formal Syntax  . . . . . . . . . . . . . . . . . . . . . . . .  8
+     4.1.  Namestore Extension Schema . . . . . . . . . . . . . . . .  8
+   5.  Change History . . . . . . . . . . . . . . . . . . . . . . . . 10
+     5.1.  Version 00 . . . . . . . . . . . . . . . . . . . . . . . . 10
+   6.  Security Considerations  . . . . . . . . . . . . . . . . . . . 10
+   7.  Normative References . . . . . . . . . . . . . . . . . . . . . 10
+   Author's Address . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gould                                                           [Page 2]
+
+                              namestoreext                 December 2013
+
+
+1.  Introduction
+
+   This document describes an extension mapping for version 1.0 of the
+   Extensible Provisioning Protocol (EPP) [RFC5730].  This EPP extension
+   mapping enables a client to specify the logical target registry of
+   the EPP command using a sub-product identifier (Section 2.1).  An EPP
+   server can host multiple logical registries, where the client MUST
+   route commands to the desired target logical registry.
+
+1.1.  Conventions Used in This Document
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in RFC 2119 [RFC2119].
+
+   XML is case sensitive.  Unless stated otherwise, XML specifications
+   and examples provided in this document MUST be interpreted in the
+   character case presented in order to develop a conforming
+   implementation.
+
+   In examples, "C:" represents lines sent by a protocol client and "S:"
+   represents lines returned by a protocol server.  Indentation and
+   white space in examples are provided only to illustrate element
+   relationships and are not a REQUIRED feature of this protocol.
+
+   "namestoreExt-1.1" is used as an abbreviation for
+   "http://www.verisign-grs.com/epp/namestoreExt-1.1".  The XML
+   namespace prefix "namestoreExt" is used, but implementations MUST NOT
+   depend on it and instead employ a proper namespace-aware XML parser
+   and serializer to interpret and output the XML documents.
+
+
+2.  Object Attributes
+
+   This extension adds additional elements to the EPP object mappings,
+   like the EPP domain name mapping [RFC5731].  The use of the EPP
+   domain name mapping [RFC5731] throughout the document is used
+   strictly as an example since the Namestore Extension MAY be used with
+   any EPP object mapping.  Only those new elements are described here.
+
+2.1.  Sub-Product Identifier
+
+   The sub-product identifier is used to identify the target logical
+   registry that the EPP command is intended for.  The valid set of sub-
+   product identifiers is up to server policy.  The server MUST validate
+   the sub-product identifier and route the EPP command to the logical
+   registry that matches the sub-product identifier.
+
+
+
+
+Gould                                                           [Page 3]
+
+                              namestoreext                 December 2013
+
+
+3.  EPP Command Mapping
+
+   A detailed description of the EPP syntax and semantics can be found
+   in the EPP core protocol specification [RFC5730].  The command
+   mappings described here are specifically for use with the Namestore
+   Extension.
+
+3.1.  EPP Query Commands
+
+   EPP provides three commands to retrieve object information: <check>
+   to determine if an object is known to the server, <info> to retrieve
+   detailed information associated with an object, and <transfer> to
+   retrieve object transfer status information.
+
+3.1.1.  EPP <check> Command
+
+   This extension defines additional elements to extend the EPP <check>
+   command and response to be used in conjunction with the EPP object
+   mappings, like the EPP domain name mapping [RFC5731].
+
+   The EPP <check> command is extended to include target logical
+   registry.  In addition to the EPP command elements defined in the EPP
+   object mappings, like the EPP domain name mapping [RFC5731], the
+   command MUST contain the <extension> element.  The <extension>
+   element MUST contain a child <namestoreExt:namestoreExt> element that
+   contains the following child elements:
+
+   <namestoreExt:subProduct>  element MUST contain a sub-product
+       identifier specifying the target logical registry.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gould                                                           [Page 4]
+
+                              namestoreext                 December 2013
+
+
+   Example <check> command with the Namestore Extension:
+
+   C:<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+   C:<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+   C:  <command>
+   C:    <check>
+   C:      <domain:check
+   C:       xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
+   C:        <domain:name>EXAMPLE1.TLD</domain:name>
+   C:        <domain:name>EXAMPLE2.TLD</domain:name>
+   C:        <domain:name>EXAMPLE3.TLD</domain:name>
+   C:      </domain:check>
+   C:    </check>
+   C:    <extension>
+   C:      <namestoreExt:namestoreExt
+   C:       xmlns:namestoreExt=
+   C:       "http://www.verisign-grs.com/epp/namestoreExt-1.1">
+   C:         <namestoreExt:subProduct>TLD</namestoreExt:subProduct>
+   C:      </namestoreExt:namestoreExt>
+   C:    </extension>
+   C:    <clTRID>ABC-12345</clTRID>
+   C:  </command>
+   C:</epp>
+
+   When a <check> command has been successfully processed, the response
+   MUST contain the elements defined in the EPP object mapping.  In
+   addition, the EPP <extension> element MUST contain a child
+   <namestoreExt:namestoreExt> element that contains the same
+   <namestoreExt:subProduct> element that was passed in the <check>
+   command.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gould                                                           [Page 5]
+
+                              namestoreext                 December 2013
+
+
+   Example <check> response with the Namestore Extension:
+
+   S:<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+   S:<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+   S:  <response>
+   S:    <result code="1000">
+   S:      <msg>Command completed successfully</msg>
+   S:    </result>
+   S:    <resData>
+   S:      <domain:chkData
+   S:       xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
+   S:        <domain:cd>
+   S:          <domain:name avail="1">EXAMPLE1.TLD</domain:name>
+   S:        </domain:cd>
+   S:        <domain:cd>
+   S:          <domain:name avail="0">EXAMPLE2.TLD</domain:name>
+   S:          <domain:reason>In use</domain:reason>
+   S:        </domain:cd>
+   S:        <domain:cd>
+   S:          <domain:name avail="1">EXAMPLE3.TLD</domain:name>
+   S:        </domain:cd>
+   S:      </domain:chkData>
+   S:    </resData>
+   S:    <extension>
+   S:      <namestoreExt:namestoreExt
+   S:       xmlns:namestoreExt=
+   S:       "http://www.verisign-grs.com/epp/namestoreExt-1.1">
+   S:         <namestoreExt:subProduct>TLD</namestoreExt:subProduct>
+   S:      </namestoreExt:namestoreExt>
+   S:    </extension>
+   S:    <trID>
+   S:      <clTRID>ABC-12345</clTRID>
+   S:      <svTRID>54321-XYZ</svTRID>
+   S:    </trID>
+   S:  </response>
+   S:</epp>
+
+   When a <check> command has failed, the response MUST contain the
+   elements defined in the EPP object mapping.  In addition, if the
+   command response code is 2306 "Parameter value policy error", the EPP
+   <extension> element MAY have a child <nsExtErrData> element that
+   contains the following child elements:
+
+   <namestoreExt:msg>  element MUST containing a human-readable
+       description of the error.  The error code of the error MUST be
+       identified with a "code" attribute.  The language of the error is
+       identified via an OPTIONAL "lang" attribute.  If not specified,
+       the default attribute value MUST be "en" (English).  The "code"
+
+
+
+Gould                                                           [Page 6]
+
+                              namestoreext                 December 2013
+
+
+       value of "1" with the error text "Invalid sub-product" indicates
+       that the server does not support the specified sub-product
+       identifier.
+
+   Example <check> error response with the Namestore Extension:
+
+   S:<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+   S:<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+   S:  <response>
+   S:    <result code="2306">
+   S:      <msg>Parameter value policy error</msg>
+   S:    </result>
+   S:    <extension>
+   S:      <namestoreExt:nsExtErrData
+   S:        xmlns:namestoreExt=
+   S:        "http://www.verisign-grs.com/epp/namestoreExt-1.1">
+   S:        <namestoreExt:msg code="1">
+   S:          Invalid sub-product
+   S:        </namestoreExt:msg>
+   S:      </namestoreExt:dstErrData>
+   S:    </extension>
+   S:    <trID>
+   S:      <clTRID>ABC-12345</clTRID>
+   S:      <svTRID>54321-XYZ</svTRID>
+   S:    </trID>
+   S:  </response>
+   S:</epp>
+
+3.1.2.  EPP <info> Command
+
+   This extension defines additional elements to extend the EPP <info>
+   command and response in the same fashion as defined for the EPP
+   <check> Command (Section 3.1.1).
+
+3.1.3.  EPP <transfer> Command
+
+   This extension defines additional elements to extend the EPP
+   <transfer> command and response in the same fashion as defined for
+   the EPP <check> Command (Section 3.1.1).
+
+3.2.  EPP Transform Commands
+
+   EPP provides five commands to transform objects: <create> to create
+   an instance of an object, <delete> to delete an instance of an
+   object, <renew> to extend the validity period of an object,
+   <transfer> to manage object sponsorship changes, and <update> to
+   change information associated with an object.
+
+
+
+
+Gould                                                           [Page 7]
+
+                              namestoreext                 December 2013
+
+
+3.2.1.  EPP <create> Command
+
+   This extension defines additional elements to extend the EPP <create>
+   command and response in the same fashion as defined for the EPP
+   <check> Command (Section 3.1.1).
+
+3.2.2.  EPP <delete> Command
+
+   This extension defines additional elements to extend the EPP <delete>
+   command and response in the same fashion as defined for the EPP
+   <check> Command (Section 3.1.1).
+
+3.2.3.  EPP <renew> Command
+
+   This extension defines additional elements to extend the EPP <renew>
+   command and response in the same fashion as defined for the EPP
+   <check> Command (Section 3.1.1).
+
+3.2.4.  EPP <transfer> Command
+
+   This extension defines additional elements to extend the EPP
+   <transfer> command and response in the same fashion as defined for
+   the EPP <check> Command (Section 3.1.1).
+
+3.2.5.  EPP <update> Command
+
+   This extension defines additional elements to extend the EPP <update>
+   command and response in the same fashion as defined for the EPP
+   <check> Command (Section 3.1.1).
+
+
+4.  Formal Syntax
+
+   One schema is presented here that is the EPP Namestore Extension
+   schema.
+
+   The formal syntax presented here is a complete schema representation
+   of the object mapping suitable for automated validation of EPP XML
+   instances.  The BEGIN and END tags are not part of the schema; they
+   are used to note the beginning and ending of the schema for URI
+   registration purposes.
+
+4.1.  Namestore Extension Schema
+
+   BEGIN
+   <?xml version="1.0" encoding="UTF-8"?>
+   <schema targetNamespace=
+      "http://www.verisign-grs.com/epp/namestoreExt-1.1"
+
+
+
+Gould                                                           [Page 8]
+
+                              namestoreext                 December 2013
+
+
+      xmlns="http://www.w3.org/2001/XMLSchema"
+      xmlns:namestoreExt=
+        "http://www.verisign-grs.com/epp/namestoreExt-1.1"
+      elementFormDefault="qualified">
+     <annotation>
+       <documentation>
+         Extensible Provisioning Protocol v1.0 Namestore
+         extension schema for destination registry routing.
+        </documentation>
+     </annotation>
+     <!-- General Data types. -->
+     <simpleType name="subProductType">
+       <restriction base="token">
+         <minLength value="1"/>
+         <maxLength value="64"/>
+       </restriction>
+     </simpleType>
+     <complexType name="extAnyType">
+       <sequence>
+         <any namespace="##other" maxOccurs="unbounded"/>
+       </sequence>
+     </complexType>
+     <!-- Child elements found in EPP commands and responses. -->
+     <element name="namestoreExt"
+       type="namestoreExt:namestoreExtType"/>
+     <!-- Child elements of the <product> command. -->
+     <complexType name="namestoreExtType">
+       <sequence>
+         <element name="subProduct"
+           type="namestoreExt:subProductType"/>
+       </sequence>
+     </complexType>
+     <!-- Child response elements. -->
+     <element name="nsExtErrData"
+       type="namestoreExt:nsExtErrDataType"/>
+
+     <!-- <prdErrData> error response elements. -->
+     <complexType name="nsExtErrDataType">
+       <sequence>
+         <element name="msg" type="namestoreExt:msgType"/>
+       </sequence>
+     </complexType>
+     <!-- <prdErrData> <msg> element. -->
+     <complexType name="msgType">
+       <simpleContent>
+         <extension base="normalizedString">
+               <attribute name="code"
+                 type="namestoreExt:prdErrCodeType"
+
+
+
+Gould                                                           [Page 9]
+
+                              namestoreext                 December 2013
+
+
+               use="required"/>
+           <attribute name="lang" type="language"
+             default="en"/>
+         </extension>
+       </simpleContent>
+     </complexType>
+     <!-- <prdErrData> error response codes. -->
+     <simpleType name="prdErrCodeType">
+       <restriction base="unsignedShort">
+         <enumeration value="1"/>
+       </restriction>
+     </simpleType>
+   <!-- End of schema. -->
+   </schema>
+   END
+
+
+5.  Change History
+
+5.1.  Version 00
+
+   1.  Initial version of Internet-Draft format of the EPP Namestore
+       Extension, version 1.2.
+
+
+6.  Security Considerations
+
+   The mapping extensions described in this document do not provide any
+   security services beyond those described by EPP [RFC5730] and
+   protocol layers used by EPP.  The security considerations described
+   in these other specifications apply to this specification as well.
+
+
+7.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+   [RFC5730]  Hollenbeck, S., "Extensible Provisioning Protocol (EPP)",
+              STD 69, RFC 5730, August 2009.
+
+   [RFC5731]  Hollenbeck, S., "Extensible Provisioning Protocol (EPP)
+              Domain Name Mapping", STD 69, RFC 5731, August 2009.
+
+
+
+
+
+
+
+
+Gould                                                          [Page 10]
+
+                              namestoreext                 December 2013
+
+
+Author's Address
+
+   James Gould
+   VeriSign, Inc.
+   12061 Bluemont Way
+   Reston, VA  20190
+   US
+
+   Email: jgould@verisign.com
+   URI:   http://www.verisigninc.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gould                                                          [Page 11]
+

@@ -1,0 +1,15 @@
+[PropertyInfo]
+DOMImplementation,DOMImplementation,false,false, , ,true,<default>
+entityResolver,EntityResolver,false,false, , ,true,<default>
+errorHandler,ErrorHandler,false,false, , ,true,<default>
+grammarPool,XMLGrammarPool,false,false, , ,false,<default>
+lockSchemaCache,boolean,false,false, , ,true,<default>
+namespaceAware,boolean,false,false, , ,true,<default>
+parserImpl,DOMParser,false,false, , ,false,<default>
+symbolTableSize,int,false,false, , ,false,<default>
+validating,boolean,false,false, , ,true,<default>
+[IconNames]
+
+
+
+

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema targetNamespace="urn:ietf:params:xml:ns:coa-1.0"
+  xmlns:coa="urn:ietf:params:xml:ns:coa-1.0" 
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="qualified">
+
+  <annotation>
+    <documentation>
+      Extensible Provisioning Protocol v1.0 
+      extension schema for COA (Client Object Attribute).
+    </documentation>
+  </annotation>
+
+  <element name="create" type="coa:mapType" />
+  <element name="update" type="coa:updateType" />
+  <element name="infData" type="coa:mapType" />
+
+
+  <complexType name="updateType">
+    <sequence>
+      <element name="rem" type="coa:remType" minOccurs="0" />
+      <element name="put" type="coa:mapType" minOccurs="0" />
+    </sequence>
+  </complexType>
+
+  <!--
+    A sequence of key/value pairs, 
+    for creating or updating a key/value
+    pair in the server.
+  -->
+  <complexType name="mapType">
+    <sequence>
+      <element name="attr" type="coa:attrType" 
+      maxOccurs="unbounded" />
+    </sequence>
+  </complexType>
+
+  <!-- A single key/value pair -->
+  <complexType name="attrType">
+    <all>
+      <element name="key" type="coa:keyType" />
+      <element name="value" type="coa:valueType" />
+    </all>
+  </complexType>
+
+  <!-- A sequence of keys, 
+  for removing key/value pairs in the server. -->
+  <complexType name="remType">
+    <sequence>
+      <element name="key" type="coa:keyType" 
+      maxOccurs="unbounded" />
+    </sequence>
+  </complexType>
+
+  <simpleType name="keyType">
+    <restriction base="token">
+      <maxLength value="50" />
+    </restriction>
+  </simpleType>
+
+  <simpleType name="valueType">
+    <restriction base="token">
+      <maxLength value="1000" />
+    </restriction>
+  </simpleType>
+
+  <!--
+   End of schema.
+   -->
+</schema>
+

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<epp xmlns="urn:ietf:params:xml:ns:epp-1.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="urn:ietf:params:xml:ns:epp-1.0 epp-1.0.xsd">
+  <response>
+    <result code="1000">
+      <msg>Command completed successfully</msg>
+    </result>
+    <extension>
+      <relDom:infData 
+        xmlns:relDom="http://www.verisign.com/epp/relatedDomain-1.0"
+        xsi:schemaLocation="http://www.verisign.com/epp/relatedDomain-1.0 relatedDomain-1.0.xsd">
+        <relDom:group type="tld">
+          <relDom:fields inSync="false">
+            <relDom:field name="clID" inSync="false"/>
+            <relDom:field name="registrant" inSync="true"/>
+            <relDom:field name="ns" inSync="false"/>
+          </relDom:fields>
+          <relDom:registered>
+            <relDom:name>xn--test.tld1</relDom:name>
+            <relDom:name>xn--test.tld2</relDom:name>
+          </relDom:registered>
+          <relDom:available>
+            <relDom:name>xn--test.tld3</relDom:name>
+          </relDom:available>
+        </relDom:group>
+        <relDom:group type="variant">
+          <relDom:fields inSync="true">
+            <relDom:field name="clID" inSync="true"/>
+            <relDom:field name="registrant" inSync="true"/>
+            <relDom:field name="ns" inSync="true"/>
+          </relDom:fields>
+          <relDom:registered>
+            <relDom:name>xn--test-variant1.tld1</relDom:name>
+            <relDom:name>xn--test-variant1.tld2</relDom:name>
+            <relDom:name>xn--test-variant1.tld3</relDom:name>
+          </relDom:registered>
+          <relDom:available>
+            <relDom:name>xn--test-variant2.tld1</relDom:name>
+            <relDom:name>xn--test-variant2.tld2</relDom:name>
+            <relDom:name>xn--test-variant2.tld3</relDom:name>
+          </relDom:available>
+        </relDom:group>
+      </relDom:infData>
+    </extension>
+    <trID>
+      <clTRID>ABC-12345</clTRID>
+      <svTRID>54322-XYZ</svTRID>
+    </trID>
+  </response>
+</epp>
