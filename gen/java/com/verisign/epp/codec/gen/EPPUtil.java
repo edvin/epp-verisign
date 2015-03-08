@@ -722,7 +722,7 @@ public class EPPUtil {
 	 * @exception EPPDecodeException
 	 *                Error decoding <code>aElement</code>.
 	 */
-	public static Vector decodeVector(Element aElement, String aNS,
+	public static <X> Vector<X> decodeVector(Element aElement, String aNS,
 			String aTagName) throws EPPDecodeException {
 		Vector retVal = new Vector();
 

@@ -19,6 +19,7 @@ http://www.verisign.com/nds/naming/namestore/techdocs.html
 ***********************************************************/
 package com.verisign.epp.interfaces;
 
+import java.util.Optional;
 import java.util.Vector;
 
 import com.verisign.epp.codec.contact.EPPContactAddChange;
@@ -58,6 +59,7 @@ import com.verisign.epp.codec.gen.EPPResponse;
  * @see com.verisign.epp.codec.contact.EPPContactCheckResp
  * @see com.verisign.epp.codec.contact.EPPContactTransferResp
  */
+@SuppressWarnings("UnusedDeclaration")
 public class EPPContact {
 	/** Status constants */
 	public final static String STAT_OK = EPPContactStatus.ELM_STATUS_OK;
@@ -120,7 +122,7 @@ public class EPPContact {
 	private String transId = null;
 
 	/** DOCUMENT ME! */
-	private Vector contactIds = new Vector();
+	private Vector<String> contactIds = new Vector<>();
 
 	/** Transfer Operation Code */
 	private String transferOpCode = null;
@@ -132,7 +134,7 @@ public class EPPContact {
 	 * This is Attribute Contains This Object Contains Information about the
 	 * Contact
 	 */
-	private Vector postalContacts = new Vector();
+	private Vector<EPPContactPostalDefinition> postalContacts = new Vector<>();
 
 	/** This is Attribute Contains Voice Phone Number */
 	private String voicePhone = null;
@@ -150,16 +152,16 @@ public class EPPContact {
 	private String email = null;
 
 	/** This is Attribute Contains Vector of Add Status for Update Command */
-	private Vector addStatuses = null;
+	private Vector<EPPContactStatus> addStatuses = null;
 
 	/** This is Attribute Contains Vector of Remove Status for Update Command */
-	private Vector removeStatuses = null;
+	private Vector<EPPContactStatus> removeStatuses = null;
 
 	/**
 	 * Extension objects associated with the command.  This is a
 	 * <code>Vector</code> of <code>EPPCodecComponent</code> objects.
 	 */
-	private Vector extensions = null;
+	private Vector<EPPCodecComponent> extensions = null;
 
 	/** disclose information of contact */
 	private com.verisign.epp.codec.contact.EPPContactDisclose disclose = null;
@@ -180,14 +182,11 @@ public class EPPContact {
 	 * @param aExtension command extension object associated with the command
 	 */
 	public void addExtension(EPPCodecComponent aExtension) {
-		if (this.extensions == null) {
-			this.extensions = new Vector();
-		}
+		if (this.extensions == null)
+			this.extensions = new Vector<>();
 
 		this.extensions.addElement(aExtension);
 	}
-
-	// End EPPContact.addExtension(EPPCodecComponent)
 
 	/**
 	 * Sets a command extension object.
@@ -202,14 +201,12 @@ public class EPPContact {
 		this.addExtension(aExtension);
 	}
 
-	// End EPPContact.setExtension(EPPCodecComponent)
-
 	/**
 	 * Sets the command extension objects.
 	 *
 	 * @param aExtensions command extension objects associated with the command
 	 */
-	public void setExtensions(Vector aExtensions) {
+	public void setExtensions(Vector<EPPCodecComponent> aExtensions) {
 		this.extensions = aExtensions;
 	}
 
@@ -222,7 +219,7 @@ public class EPPContact {
 	 * 		   associated with the command if exists; <code>null</code>
 	 * 		   otherwise.
 	 */
-	public Vector getExtensions() {
+	public Vector<EPPCodecComponent> getExtensions() {
 		return this.extensions;
 	}
 
@@ -246,7 +243,7 @@ public class EPPContact {
 	 *
 	 * @return DOCUMENT ME!
 	 */
-	public Vector getPostalInfo() {
+	public Vector<EPPContactPostalDefinition> getPostalInfo() {
 		return this.postalContacts;
 	}
 
@@ -255,7 +252,7 @@ public class EPPContact {
 	 *
 	 * @param newPostalContacts java.util.Vector
 	 */
-	public void setPostalInfo(java.util.Vector newPostalContacts) {
+	public void setPostalInfo(Vector<EPPContactPostalDefinition> newPostalContacts) {
 		this.postalContacts = newPostalContacts;
 	}
 
@@ -267,8 +264,6 @@ public class EPPContact {
 	 */
 	public void addPostalInfo(EPPContactPostalDefinition newPostalContact) {
 		this.postalContacts.add(newPostalContact);
-
-		return;
 	}
 
 	/**
@@ -335,8 +330,6 @@ public class EPPContact {
 	 */
 	public void setEmail(String newEmail) {
 		this.email = newEmail;
-
-		return;
 	}
 
 	/**
@@ -385,7 +378,7 @@ public class EPPContact {
 	 */
 	public void addStatus(String aStatus) {
 		if (this.addStatuses == null) {
-			this.addStatuses = new Vector();
+			this.addStatuses = new Vector<>();
 		}
 
 		this.addStatuses.addElement(new EPPContactStatus(aStatus));
@@ -398,7 +391,7 @@ public class EPPContact {
 	 */
 	public void removeStatus(String aStatus) {
 		if (this.removeStatuses == null) {
-			this.removeStatuses = new Vector();
+			this.removeStatuses = new Vector<>();
 		}
 
 		this.removeStatuses.addElement(new EPPContactStatus(aStatus));
@@ -414,7 +407,7 @@ public class EPPContact {
 	 */
 	public void addStatus(String aStatus, String aDesc, String aLang) {
 		if (this.addStatuses == null) {
-			this.addStatuses = new Vector();
+			this.addStatuses = new Vector<>();
 		}
 
 		this.addStatuses.addElement(new EPPContactStatus(aStatus, aDesc, aLang));
@@ -430,7 +423,7 @@ public class EPPContact {
 	 */
 	public void removeStatus(String aStatus, String aDesc, String aLang) {
 		if (this.removeStatuses == null) {
-			this.removeStatuses = new Vector();
+			this.removeStatuses = new Vector<>();
 		}
 
 		this.removeStatuses.addElement(new EPPContactStatus(
@@ -444,7 +437,7 @@ public class EPPContact {
 	 *
 	 * @return DOCUMENT ME!
 	 */
-	public Vector getAddStatus() {
+	public Vector<EPPContactStatus> getAddStatus() {
 		return this.addStatuses;
 	}
 
@@ -454,7 +447,7 @@ public class EPPContact {
 	 *
 	 * @return DOCUMENT ME!
 	 */
-	public Vector getRemoveStatus() {
+	public Vector<EPPContactStatus> getRemoveStatus() {
 		return this.removeStatuses;
 	}
 
@@ -465,8 +458,6 @@ public class EPPContact {
 	 */
 	public void addContactId(String newContactId) {
 		this.contactIds.addElement(newContactId);
-
-		return;
 	}
 
 	/**
@@ -486,8 +477,6 @@ public class EPPContact {
 	 */
 	public void setTransId(String newTransId) {
 		this.transId = newTransId;
-
-		return;
 	}
 
 	/**
@@ -587,7 +576,7 @@ public class EPPContact {
 		EPPContactCreateCmd theCommand = new EPPContactCreateCmd(this.transId);
 
 		// Check for Contact ID
-		theCommand.setId((String) this.contactIds.firstElement());
+		theCommand.setId(this.contactIds.firstElement());
 
 		// Set the Authorization String
 		theCommand.setAuthInfo(new EPPAuthInfo(this.authString));
@@ -604,11 +593,8 @@ public class EPPContact {
 		theCommand.setFaxExt(this.faxExt);
 
 		// Set Postal Information
-		for (int i = 0; i < postalContacts.size(); i++) {
-			theCommand.addPostalInfo((EPPContactPostalDefinition) (
-										 postalContacts.elementAt(i)
-									 ));
-		}
+		for (int i = 0; i < postalContacts.size(); i++)
+			theCommand.addPostalInfo(postalContacts.elementAt(i));
 
 		// Set Voice Phone Number
 		theCommand.setVoice(this.voicePhone);
@@ -726,7 +712,7 @@ public class EPPContact {
 		EPPContactInfoCmd theCommand =
 			new EPPContactInfoCmd(
 								  this.transId,
-								  (String) this.contactIds.firstElement());
+				this.contactIds.firstElement());
 		
 		// Authorization string was provided?
 		if (this.authString != null) {
@@ -849,7 +835,7 @@ public class EPPContact {
 		EPPContactUpdateCmd theCommand =
 			new EPPContactUpdateCmd(
 									this.transId,
-									(String) this.contactIds.firstElement(),
+				this.contactIds.firstElement(),
 									addItems, removeItems, changeItems);
 
 		// Set command extension
@@ -918,7 +904,7 @@ public class EPPContact {
 		EPPContactTransferCmd theCommand =
 			new EPPContactTransferCmd(
 									  this.transId, this.transferOpCode,
-									  (String) this.contactIds.firstElement());
+				this.contactIds.firstElement());
 
 		if (this.authString != null) {
 			theCommand.setAuthInfo(new EPPAuthInfo(this.authString));
@@ -979,7 +965,7 @@ public class EPPContact {
 		EPPContactDeleteCmd theCommand =
 			new EPPContactDeleteCmd(
 									this.transId,
-									(String) this.contactIds.firstElement());
+				this.contactIds.firstElement());
 
 		// Set command extension
 		theCommand.setExtensions(this.extensions);
@@ -998,16 +984,22 @@ public class EPPContact {
 	 */
 	protected void resetContact() {
 		this.transId		    = null;
-		this.postalContacts     = new Vector();
+		this.postalContacts     = new Vector<>();
 		this.voicePhone		    = null;
 		this.voiceExt		    = null;
 		this.faxNumber		    = null;
 		this.faxExt			    = null;
 		this.email			    = null;
-		this.contactIds		    = new Vector();
+		this.contactIds		    = new Vector<>();
 		this.addStatuses	    = null;
 		this.removeStatuses     = null;
 		this.transferOpCode     = null;
 		this.extensions		    = null;
+	}
+
+	public Optional<EPPContactPostalDefinition> getFirstPostalInfo() {
+		if (getPostalInfo() != null && !getPostalInfo().isEmpty())
+			return Optional.of(getPostalInfo().get(0));
+		return Optional.empty();
 	}
 }

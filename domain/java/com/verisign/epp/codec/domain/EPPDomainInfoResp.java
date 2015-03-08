@@ -50,7 +50,7 @@ import com.verisign.epp.util.EPPCatFactory;
  * child &lt;domain:infData&gt; element that identifies the domain namespace
  * and the location of the domain schema. The &lt;domain:infData&gt; element
  * contains the following child elements: <br><br>
- * 
+ *
  * <ul>
  * <li>
  * A &lt;domain:name&gt; element that contains the fully qualified name of the
@@ -135,7 +135,7 @@ import com.verisign.epp.util.EPPCatFactory;
  * elements.
  * </li>
  * </ul>
- * 
+ *
  * <br><br>
  *
  * @author $Author: jim $
@@ -211,7 +211,7 @@ public class EPPDomainInfoResp extends EPPResponse {
 	 * <code>Vector</code> of <code>EPPDomainContact</code> instances
 	 * associated with domain
 	 */
-	private Vector contacts = null;
+	private Vector<EPPDomainContact> contacts = null;
 
 	/** identifier of the client that created the domain name */
 	private String createdBy = null;
@@ -253,7 +253,7 @@ public class EPPDomainInfoResp extends EPPResponse {
 	 * <code>EPPDomainInfoResp</code> default constructor.  Must call required
 	 * setter methods before     invoking <code>encode</code>, which
 	 * include:<br><br>
-	 * 
+	 *
 	 * <ul>
 	 * <li>
 	 * name - <code>setName</code>
@@ -351,7 +351,7 @@ public class EPPDomainInfoResp extends EPPResponse {
 	 *
 	 * @return java.util.Vector
 	 */
-	public java.util.Vector getStatuses() {
+	public java.util.Vector<EPPDomainStatus> getStatuses() {
 		return statuses;
 	}
 
@@ -390,7 +390,7 @@ public class EPPDomainInfoResp extends EPPResponse {
 	 *
 	 * @param newStatuses java.util.Vector
 	 */
-	public void setStatuses(Vector newStatuses) {
+	public void setStatuses(Vector<EPPDomainStatus> newStatuses) {
 		statuses = newStatuses;
 	}
 
@@ -667,11 +667,21 @@ public class EPPDomainInfoResp extends EPPResponse {
 	 * @return Vector of <code>EPPDomainContact</code> instances if defined;
 	 * 		   <code>null</code> otherwise.
 	 */
-	public Vector getContacts() {
+	public Vector<EPPDomainContact> getContacts() {
 		return contacts;
 	}
 
-	// End EPPDomainInfoResp.getContacts()
+	public EPPDomainContact getContactByType(String type) {
+		if (contacts != null)
+			for (EPPDomainContact contact : contacts)
+				if (type.equals(contact.getType()))
+					return contact;
+		return null;
+	}
+
+	public EPPDomainContact getAdminContact() {
+		return getContactByType("admin");
+	}
 
 	/**
 	 * Sets the Contacts.  This method should only be called if the Contact
@@ -679,7 +689,7 @@ public class EPPDomainInfoResp extends EPPResponse {
 	 *
 	 * @param someContacts - Vector of <code>EPPDomainContact</code> instances
 	 */
-	public void setContacts(Vector someContacts) {
+	public void setContacts(Vector<EPPDomainContact> someContacts) {
 		if (EPPFactory.getInstance().hasService(EPPDomainMapFactory.NS_CONTACT)) {
 			contacts = someContacts;
 		}
@@ -1185,7 +1195,7 @@ public class EPPDomainInfoResp extends EPPResponse {
 	 * @throws EPPCodecException DOCUMENT ME!
 	 */
 	void validateState() throws EPPCodecException {
-		
+
 		if (name == null) {
 			throw new EPPCodecException("name required attribute is not set");
 		}

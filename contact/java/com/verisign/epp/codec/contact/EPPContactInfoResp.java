@@ -33,6 +33,7 @@ import java.util.Date;
 //
 //----------------------------------------------
 // Java Core Imports
+import java.util.Optional;
 import java.util.Vector;
 
 // EPP Imports
@@ -209,7 +210,7 @@ public class EPPContactInfoResp extends EPPResponse {
 	private Date lastTransferDate = null;
 
 	/** postal contacts */
-	private java.util.Vector postalContacts = new Vector();
+	private Vector<EPPContactPostalDefinition> postalContacts = new Vector<>();
 
 	/** authorization information of contact */
 	private com.verisign.epp.codec.gen.EPPAuthInfo authInfo = null;
@@ -996,10 +997,10 @@ public class EPPContactInfoResp extends EPPResponse {
 		if (postalContacts != null) {
 			clone.postalContacts = (Vector) postalContacts.clone();
 
-			for (int i = 0; i < postalContacts.size(); i++)
-				clone.postalContacts.setElementAt(
-												  ((EPPContactPostalDefinition) postalContacts
-												   .elementAt(i)).clone(), i);
+			for (int i = 0; i < postalContacts.size(); i++) {
+				EPPContactPostalDefinition c = (EPPContactPostalDefinition) postalContacts.elementAt(i).clone();
+				clone.postalContacts.setElementAt(c, i);
+			}
 		}
 
 		if (authInfo != null) {
@@ -1034,7 +1035,7 @@ public class EPPContactInfoResp extends EPPResponse {
 	 *
 	 * @return java.util.Vector
 	 */
-	public java.util.Vector getPostalInfo() {
+	public Vector<EPPContactPostalDefinition> getPostalInfo() {
 		return postalContacts;
 	}
 
@@ -1045,7 +1046,7 @@ public class EPPContactInfoResp extends EPPResponse {
 	 *
 	 * @param newPostalContacts java.util.Vector
 	 */
-	public void setPostalInfo(java.util.Vector newPostalContacts) {
+	public void setPostalInfo(Vector<EPPContactPostalDefinition> newPostalContacts) {
 		postalContacts = newPostalContacts;
 	}
 
@@ -1301,5 +1302,10 @@ public class EPPContactInfoResp extends EPPResponse {
 		roid = newRoid;
 	}
 
-	// End EPPContactInfoResp.setRoid(String)
+	public Optional<EPPContactPostalDefinition> getFirstPostalInfo() {
+		if (getPostalInfo() != null && !getPostalInfo().isEmpty())
+			return Optional.of(getPostalInfo().get(0));
+		return Optional.empty();
+	}
+
 }

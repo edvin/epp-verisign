@@ -21,12 +21,14 @@ package com.verisign.epp.codec.gen;
 
 
 // W3C Imports
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Optional;
+import java.util.Vector;
 
 //----------------------------------------------
 //
@@ -34,7 +36,6 @@ import java.util.Iterator;
 //
 //----------------------------------------------
 // Java Core Imports
-import java.util.Vector;
 
 
 /**
@@ -399,23 +400,14 @@ public class EPPResponse implements EPPMessage {
 	 * @return Concrete <code>EPPCodecComponent</code> associated with the
 	 * 		   response if exists; <code>null</code> otherwise.
 	 */
-	public EPPCodecComponent getExtension(Class aExtensionClass) {
-		if (extensions == null) {
-			return null;
-		}
+	public <X extends EPPCodecComponent> Optional<X> getExtension(Class<X> aExtensionClass) {
+		if (extensions != null)
+			for (Object extension : extensions)
+				if (aExtensionClass.isInstance(extension))
+					return Optional.of((X) extension);
 
-		Iterator theIter = extensions.iterator();
-
-		while (theIter.hasNext()) {
-			EPPCodecComponent theExtension = (EPPCodecComponent) theIter.next();
-
-			if (aExtensionClass.isInstance(theExtension)) {
-				return theExtension;
-			}
-		}
-
-		return null;
-	} // End EPPResponse.getExtension(Class)
+		return Optional.empty();
+	}
 	
 	/**
 	 * Gets the response extension object with the specified class with the

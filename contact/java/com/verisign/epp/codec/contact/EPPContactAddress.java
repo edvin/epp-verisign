@@ -114,7 +114,7 @@ public class EPPContactAddress implements EPPCodecComponent {
 	 * Contact street, which is a <code>Vector</code> of 1 or 2
 	 * <code>String</code>'s representing     street line 1 and street line 2.
 	 */
-	private Vector streets = null;
+	private Vector<String> streets = null;
 
 	/** Contact city. */
 	private String city = null;
@@ -177,7 +177,7 @@ public class EPPContactAddress implements EPPCodecComponent {
 	 * @param aCountry contract country
 	 */
 	public EPPContactAddress(
-							 Vector someStreets, String aCity,
+							 Vector<String> someStreets, String aCity,
 							 String aStateProvince, String aPostalCode,
 							 String aCountry) {
 		streets			  = someStreets;
@@ -196,7 +196,7 @@ public class EPPContactAddress implements EPPCodecComponent {
 	 * 		   three) <code>String</code> if defined;     <code>null</code>
 	 * 		   otherwise.
 	 */
-	public Vector getStreets() {
+	public Vector<String> getStreets() {
 		return streets;
 	}
 
@@ -210,8 +210,7 @@ public class EPPContactAddress implements EPPCodecComponent {
 	 * @param aStreet contact street.
 	 */
 	public void setStreet(String aStreet) {
-		streets = new Vector();
-
+		streets = new Vector<>();
 		streets.addElement(aStreet);
 	}
 
@@ -224,7 +223,7 @@ public class EPPContactAddress implements EPPCodecComponent {
 	 * @param someStreets <code>Vector</code> of one or two street
 	 * 		  <code>String</code>'s.
 	 */
-	public void setStreets(Vector someStreets) {
+	public void setStreets(Vector<String> someStreets) {
 		streets = someStreets;
 	}
 
@@ -237,8 +236,7 @@ public class EPPContactAddress implements EPPCodecComponent {
 	 * @param aStreet2 Second part/line of contact street
 	 */
 	public void setStreets(String aStreet1, String aStreet2) {
-		streets = new Vector();
-
+		streets = new Vector<>();
 		streets.addElement(aStreet1);
 		streets.addElement(aStreet2);
 	}
@@ -253,8 +251,7 @@ public class EPPContactAddress implements EPPCodecComponent {
 	 * @param aStreet3 Third part/line of contact street
 	 */
 	public void setStreets(String aStreet1, String aStreet2, String aStreet3) {
-		streets = new Vector();
-
+		streets = new Vector<>();
 		streets.addElement(aStreet1);
 		streets.addElement(aStreet2);
 		streets.addElement(aStreet3);
@@ -542,15 +539,9 @@ public class EPPContactAddress implements EPPCodecComponent {
 		}
 
 		// Country
-		if (
-			!(
-					(country == null) ? (theComp.country == null)
-										  : country.equals(theComp.country)
-				)) {
-			return false;
-		}
+		return (country == null) ? (theComp.country == null)
+			: country.equals(theComp.country);
 
-		return true;
 	}
 
 	// End EPPContactAddress.equals(Object)
@@ -563,13 +554,12 @@ public class EPPContactAddress implements EPPCodecComponent {
 	 * @exception CloneNotSupportedException standard Object.clone exception
 	 */
 	public Object clone() throws CloneNotSupportedException {
-		EPPContactAddress clone = null;
+		EPPContactAddress clone;
 
 		clone = (EPPContactAddress) super.clone();
 
-		if (streets != null) {
-			clone.streets = (Vector) streets.clone();
-		}
+		if (streets != null)
+			clone.streets = (Vector<String>) streets.clone();
 
 		return clone;
 	}
