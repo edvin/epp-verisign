@@ -22,18 +22,7 @@ package com.verisign.epp.interfaces;
 import java.util.Optional;
 import java.util.Vector;
 
-import com.verisign.epp.codec.contact.EPPContactAddChange;
-import com.verisign.epp.codec.contact.EPPContactCheckCmd;
-import com.verisign.epp.codec.contact.EPPContactCheckResp;
-import com.verisign.epp.codec.contact.EPPContactCreateCmd;
-import com.verisign.epp.codec.contact.EPPContactDeleteCmd;
-import com.verisign.epp.codec.contact.EPPContactInfoCmd;
-import com.verisign.epp.codec.contact.EPPContactInfoResp;
-import com.verisign.epp.codec.contact.EPPContactPostalDefinition;
-import com.verisign.epp.codec.contact.EPPContactStatus;
-import com.verisign.epp.codec.contact.EPPContactTransferCmd;
-import com.verisign.epp.codec.contact.EPPContactTransferResp;
-import com.verisign.epp.codec.contact.EPPContactUpdateCmd;
+import com.verisign.epp.codec.contact.*;
 import com.verisign.epp.codec.gen.EPPAuthInfo;
 import com.verisign.epp.codec.gen.EPPCodecComponent;
 import com.verisign.epp.codec.gen.EPPCommand;
@@ -561,7 +550,7 @@ public class EPPContact {
 	 * 			  <code>getResponse</code> to get the associated server error
 	 * 			  response.
 	 */
-	public EPPResponse sendCreate() throws EPPCommandException {
+	public EPPContactCreateResp sendCreate() throws EPPCommandException {
 		// Invalid number of Contact Ids?
 		if (this.contactIds.size() != 1) {
 			throw new EPPCommandException("One Contact Id is required for sendCreate()");
@@ -609,7 +598,7 @@ public class EPPContact {
 		resetContact();
 
 		// process the command and response
-		return this.session.processDocument(theCommand, EPPResponse.class);
+		return (EPPContactCreateResp) this.session.processDocument(theCommand, EPPResponse.class);
 	}
 
 	// End EPPContact.sendCreate()
