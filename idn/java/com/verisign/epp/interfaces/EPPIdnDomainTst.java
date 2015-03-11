@@ -141,10 +141,9 @@ public class EPPIdnDomainTst extends TestCase {
 
 			if (domainResponse.hasExtension(EPPIdnLangTag.class)) {
 
-				EPPIdnLangTag ext =
-					(EPPIdnLangTag) domainResponse.getExtension(EPPIdnLangTag.class);
+//				EPPIdnLangTag ext = domainResponse.getExtension(EPPIdnLangTag.class);
 
-				System.out.println("idnLangCreate: Language Code = " + ext.getLang());
+//				System.out.println("idnLangCreate: Language Code = " + ext.getLang());
 
 			}
 
