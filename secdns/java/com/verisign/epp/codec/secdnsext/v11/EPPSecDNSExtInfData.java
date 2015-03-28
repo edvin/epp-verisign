@@ -342,7 +342,7 @@ public class EPPSecDNSExtInfData implements EPPCodecComponent {
 	 * @return <code>List</code> of dsData <code>EPPSecDNSExtDsData</code>
 	 *         instances if defined; <code>null</code> otherwise.
 	 */
-	public List getDsData() {
+	public List<EPPSecDNSExtDsData> getDsData() {
 		return this.dsData;
 	}
 
@@ -353,7 +353,7 @@ public class EPPSecDNSExtInfData implements EPPCodecComponent {
 	 * @param aDsData
 	 *            <code>List</code> of <code>EPPSecDNSExtDsData</code> instances
 	 */
-	public void setDsData(List aDsData) {
+	public void setDsData(List<EPPSecDNSExtDsData> aDsData) {
 		this.dsData = aDsData;
 	}
 
@@ -389,7 +389,7 @@ public class EPPSecDNSExtInfData implements EPPCodecComponent {
 	 * @return <code>List</code> of keyData <code>EPPSecDNSExtKeyData</code>
 	 *         instances if defined; <code>null</code> otherwise.
 	 */
-	public List getKeyData() {
+	public List<EPPSecDNSExtKeyData> getKeyData() {
 		return this.keyData;
 	}
 
@@ -400,7 +400,7 @@ public class EPPSecDNSExtInfData implements EPPCodecComponent {
 	 * @param aKeyData
 	 *            <code>List</code> of <code>EPPSecDNSExtKeyData</code> instances
 	 */
-	public void setKeyData(List aKeyData) {
+	public void setKeyData(List<EPPSecDNSExtKeyData> aKeyData) {
 		this.keyData = aKeyData;
 	}
 
