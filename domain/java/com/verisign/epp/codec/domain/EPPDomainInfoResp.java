@@ -241,7 +241,7 @@ public class EPPDomainInfoResp extends EPPResponse {
 	private java.util.Vector hosts = new Vector();
 
 	/** names of name server objects. */
-	private java.util.Vector nses = new Vector();
+	private java.util.Vector<String> nses = new Vector();
 
 	/** one or more current status descriptors. */
 	private java.util.Vector statuses = new Vector();
@@ -340,7 +340,7 @@ public class EPPDomainInfoResp extends EPPResponse {
 	 * 		   for host object references or <code>EPPHostAttr</code>
 	 * 		   instances for host attribute values if exists.
 	 */
-	public java.util.Vector getNses() {
+	public java.util.Vector<String> getNses() {
 		return nses;
 	}
 
@@ -379,7 +379,7 @@ public class EPPDomainInfoResp extends EPPResponse {
 	 * 		  instances for host object references or <code>EPPHostAttr</code>
 	 * 		  instances for host attribute values.
 	 */
-	public void setNses(Vector aServers) {
+	public void setNses(Vector<String> aServers) {
 		nses = aServers;
 	}
 
