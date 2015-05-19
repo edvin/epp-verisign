@@ -535,13 +535,13 @@ public class EPPResult implements EPPCodecComponent {
 	 * Optional Vector of <code>EPPValue</code> instances that caused the
 	 * error.
 	 */
-	private Vector values = null;
+	private Vector<EPPValue> values = null;
 
 	/**
 	 * Optional Vector of <code>EPPExtValue</code> instances that caused the
 	 * error.
 	 */
-	private Vector extValues = null;
+	private Vector<EPPExtValue> extValues = null;
 
 	/**
 	 * Language of the <code>message</code> attribute.  A value of null
@@ -778,7 +778,7 @@ public class EPPResult implements EPPCodecComponent {
 			clone.values = (Vector) values.clone();
 
 			for (int i = 0; i < values.size(); i++) {
-				clone.values.set(i, ((EPPValue) values.elementAt(i)).clone());
+				clone.values.set(i, (EPPValue) values.elementAt(i).clone());
 			}
 		}
 
@@ -787,9 +787,9 @@ public class EPPResult implements EPPCodecComponent {
 
 			for (int i = 0; i < extValues.size(); i++) {
 				clone.extValues.set(
-									i,
-									((EPPExtValue) extValues.elementAt(i))
-									.clone());
+					i,
+					(EPPExtValue) (extValues.elementAt(i))
+						.clone());
 			}
 		}
 
@@ -1004,7 +1004,7 @@ public class EPPResult implements EPPCodecComponent {
 	 * @return Vector error value <code>EPPValue</code> instances if defined;
 	 * 		   <code>null</code> otherwise.
 	 */
-	public Vector getValues() {
+	public Vector<EPPValue> getValues() {
 		return this.values;
 	}
 
@@ -1016,7 +1016,7 @@ public class EPPResult implements EPPCodecComponent {
 	 * @return Vector error value <code>EPPExtValue</code> instances if
 	 * 		   defined; <code>null</code> otherwise.
 	 */
-	public Vector getExtValues() {
+	public Vector<EPPExtValue> getExtValues() {
 		return this.extValues;
 	}
 

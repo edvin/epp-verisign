@@ -235,10 +235,11 @@ public class EPPPurpose implements EPPCodecComponent {
 	 */
 	public Element encode(Document aDocument) throws EPPEncodeException {
 		// Validate that at least one recipient is set
-		if (!this.admin && !this.contact && !this.other && !this.prov) {
-			cat.error("EPPPurpose.encode(): At least one purpose must be set");
-			throw new EPPEncodeException("EPPPurpose.encode(): At least one purpose must be set");
-		}
+		// Removed, ISNIC doesn't seem to send purpose
+//		if (!this.admin && !this.contact && !this.other && !this.prov) {
+//			cat.error("EPPPurpose.encode(): At least one purpose must be set");
+//			throw new EPPEncodeException("EPPPurpose.encode(): At least one purpose must be set");
+//		}
 
 		Element theElm = null;
 		Element root = aDocument.createElementNS(EPPCodec.NS, ELM_NAME);

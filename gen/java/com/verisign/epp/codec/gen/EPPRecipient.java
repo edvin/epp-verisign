@@ -308,13 +308,13 @@ public class EPPRecipient implements EPPCodecComponent {
 	 */
 	public Element encode(Document aDocument) throws EPPEncodeException {
 		// Validate that at least one recipient is set
-		if (
-			!this.otherRecipient && (this.oursRecipient == null)
-				&& !this.publicRecipient && !this.sameRecipient
-				&& !this.unrelatedRecipient) {
-			cat.error("EPPRecipient.encode(): At least one recipient must be set");
-			throw new EPPEncodeException("EPPRecipient.encode(): At least one recipient must be set");
-		}
+//		if (
+//			!this.otherRecipient && (this.oursRecipient == null)
+//				&& !this.publicRecipient && !this.sameRecipient
+//				&& !this.unrelatedRecipient) {
+//			cat.error("EPPRecipient.encode(): At least one recipient must be set");
+//			throw new EPPEncodeException("EPPRecipient.encode(): At least one recipient must be set");
+//		}
 
 		Element theElm = null;
 		Element root = aDocument.createElementNS(EPPCodec.NS, ELM_NAME);
