@@ -77,14 +77,14 @@ public class EPPDomainCheckResp extends EPPResponse {
 	final static String ELM_NAME = "domain:chkData";
 
 	/** Vector of <code>EPPDomainCheckResult</code> instances. */
-	private Vector results;
+	private Vector<EPPDomainCheckResult> results;
 
 	/**
 	 * <code>EPPDomainCheckResp</code> default constructor.  It will set
 	 * results attribute to an empty <code>Vector</code>.
 	 */
 	public EPPDomainCheckResp() {
-		results = new Vector();
+		results = new Vector<>();
 	}
 
 	// End EPPDomainCheckResp()
@@ -188,8 +188,8 @@ public class EPPDomainCheckResp extends EPPResponse {
 
 		for (int i = 0; i < results.size(); i++)
 			clone.results.setElementAt(
-									   ((EPPDomainCheckResult) results
-										.elementAt(i)).clone(), i);
+				(EPPDomainCheckResult) results
+					.elementAt(i).clone(), i);
 
 		return clone;
 	}
@@ -219,7 +219,7 @@ public class EPPDomainCheckResp extends EPPResponse {
 	 * @param someResults Vector of <code>EPPDomainCheckResult</code>
 	 * 		  instances.
 	 */
-	public void setCheckResults(Vector someResults) {
+	public void setCheckResults(Vector<EPPDomainCheckResult> someResults) {
 		results = someResults;
 	}
 
@@ -233,7 +233,7 @@ public class EPPDomainCheckResp extends EPPResponse {
 	 *
 	 * @return Vector of <code>EPPDomainCheckResult</code> instances.
 	 */
-	public Vector getCheckResults() {
+	public Vector<EPPDomainCheckResult> getCheckResults() {
 		return results;
 	}
 
