@@ -198,8 +198,7 @@ public class EPPSecDNSDomainTst extends TestCase {
 
 			//-- Output the secDNS:infData extension
 			if (response.hasExtension(EPPSecDNSExtInfData.class)) {
-	            EPPSecDNSExtInfData infData =(EPPSecDNSExtInfData)
-                response.getExtension(EPPSecDNSExtInfData.class);
+	            EPPSecDNSExtInfData infData = response.getExtension(EPPSecDNSExtInfData.class).orElse(null);
 
 	            
 	            Collection dsDataVec = infData.getDsData();

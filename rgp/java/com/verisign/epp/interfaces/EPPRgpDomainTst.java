@@ -803,7 +803,7 @@ public class EPPRgpDomainTst extends TestCase {
 		// Check for the RGP grace period statuses
 		if (aResp.hasExtension(EPPRgpExtInfData.class)) {
 			EPPRgpExtInfData theRgpInf = (EPPRgpExtInfData) aResp
-					.getExtension(EPPRgpExtInfData.class);
+					.getExtension(EPPRgpExtInfData.class).orElse(null);
 			List rgpStatuses = theRgpInf.getStatuses();
 			System.out.println("domainInfo: rgpStatuses.size = "
 					+ rgpStatuses.size());
