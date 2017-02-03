@@ -931,7 +931,7 @@ public class EPPSession {
 	 */
 	public EPPResponse processDocument(EPPCommand aCommand, Class aExpectedResponse)
 								throws EPPCommandException {
-		Document    theDoc	   = null;
+		Document    theDoc;
 
 		// Encode aCommand to DOM Document (theDoc)
 		try {
@@ -948,13 +948,12 @@ public class EPPSession {
 		// Asynchronous mode? 
 		if (this.mode == MODE_ASYNC) {
 			// Immediately return <code>null</code> without reading response.
-			return (EPPResponse) null;
+			return null;
 		}
 		
-		// Response response from server
 		EPPResponse theResponse = this.readResponse();
-		
-		// Error response?
+		theResponse.setDocument(theDoc);
+
 		if (!theResponse.isSuccess()) {
 			throw new EPPCommandException(
 										  "EPPSession.processDocument() : Error in response from Server",

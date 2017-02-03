@@ -128,8 +128,9 @@ public class EPPResponse implements EPPMessage {
 
 	/** the "qDate" child element (value) to the &lt;msgQ&gt; element. */
 	private java.util.Date qDate = null;
+	private Document document;
 
-	/**
+    /**
 	 * Allocates a new <code>EPPResponse</code> with default attribute values.
 	 * The defaults include the following: <br><br>
 	 * 
@@ -955,4 +956,12 @@ public class EPPResponse implements EPPMessage {
 	protected void doDecode(Element aElement) throws EPPDecodeException {
 		// Do nothing since EPPReponse can be concrete.
 	} // End EPPResponse.doDecode(Element)
+
+	public Document getDocument() {
+		return document;
+	}
+
+	public void setDocument(Document document) {
+		this.document = document;
+	}
 }
