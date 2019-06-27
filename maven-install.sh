@@ -8,8 +8,8 @@ for module in $modules; do (
 	chmod +x build.sh
 	./build.sh
 	cd ..
-	mvn install:install-file -Dpackaging=jar -DgroupId=$verisignGroupId -Dversion=$verisignVersion -DartifactId=$module -Dfile=lib/epp/epp-$module.jar
+	mvn deploy:deploy-file -Dpackaging=jar -DgroupId=$verisignGroupId -Dversion=$verisignVersion -DartifactId=$module -Dfile=lib/epp/epp-$module.jar -DrepositoryId=syse-nexus -Durl=https://nexus.syse.no/repository/maven-releases
 	jar -cvf lib/epp/epp-$module-src.jar -C $module/java .
-	mvn install:install-file -Dpackaging=jar -Dclassifier=sources -DgroupId=$verisignGroupId -Dversion=$verisignVersion -DartifactId=$module -Dfile=lib/epp/epp-$module-src.jar
+	mvn deploy:deploy-file -Dpackaging=jar -Dclassifier=sources -DgroupId=$verisignGroupId -Dversion=$verisignVersion -DartifactId=$module -Dfile=lib/epp/epp-$module-src.jar -DrepositoryId=syse-nexus -Durl=https://nexus.syse.no/repository/maven-releases
 )
 done
